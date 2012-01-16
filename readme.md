@@ -10,6 +10,7 @@ The existing tools out there are decent at what they do, but we want something m
 ### Getting started
 
 **Getting started with Git and GitHub**
+
  * [Setting up Git for Windows and connecting to GitHub](http://help.github.com/win-set-up-git/)
  * [Forking a GitHub repository](http://help.github.com/fork-a-repo/)
  * [The simple gude to GIT guide](http://rogerdudler.github.com/git-guide/)
