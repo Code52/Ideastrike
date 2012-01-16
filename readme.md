@@ -15,10 +15,12 @@ The existing tools out there are decent at what they do, but we want something m
  * [Forking a GitHub repository](http://help.github.com/fork-a-repo/)
  * [The simple gude to GIT guide](http://rogerdudler.github.com/git-guide/)
 
+Once you're familiar with Git and GitHub, clone the repository and run the ```.\build.cmd``` script to compile the code and run all the unit tests. You can use this script to test your changes quickly.
+
 ### Discussing ideas 
 
 * [Trello Board](https://trello.com/board/ideastrike/4f137b417201526045146b8a) - add ideas, or claim an idea and start working on it!
-* [JabbR Chatroom](http://jabbr.net/#/rooms/code52) - discuss things in real-time with people all over the world
+* [JabbR Chatroom](http://jabbr.net/#/rooms/code52) - discuss things in real-time with people all over the world!
 
 ### Libraries used
 
