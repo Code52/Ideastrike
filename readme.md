@@ -17,8 +17,8 @@ The existing tools out there are decent at what they do, but we want something m
 
 ### Discussing ideas 
 
-* [Trello Board](https://trello.com/board/ideastrike/4f137b417201526045146b8a)
-* [JabbR Chatroom](http://jabbr.net/#/rooms/code52)
+* [Trello Board](https://trello.com/board/ideastrike/4f137b417201526045146b8a) - add ideas, or claim an idea and start working on it!
+* [JabbR Chatroom](http://jabbr.net/#/rooms/code52) - discuss things in real-time with people all over the world
 
 ### Libraries used
 
