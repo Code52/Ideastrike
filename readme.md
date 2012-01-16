@@ -1,7 +1,11 @@
 
 ## Ideastrike
 
-A collaborative platform for awesome ideas
+We want a tool where people can suggest ideas and others can actively refine and enhance the ideas over time. 
+
+Once an idea gets enough interest to kick start a project, the other systems that we use  - at this point in time GitHub and Trello - should integrate nicely to automate the mundane tasks of project management.
+
+The existing tools out there are decent at what they do, but we want something more customisable and extensible.
 
 ### Getting started
 
