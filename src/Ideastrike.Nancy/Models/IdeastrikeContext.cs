@@ -4,6 +4,11 @@ namespace Ideastrike.Nancy.Models
 {
     public class IdeastrikeContext : DbContext
     {
+        public IdeastrikeContext(): base("Ideastrike")
+        {
+                
+        }
+
         public DbSet<Idea> Ideas { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<User> Users { get; set; }
