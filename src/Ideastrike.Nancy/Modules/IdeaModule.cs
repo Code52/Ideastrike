@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using Ideastrike.Nancy.Models;
 using Nancy;
 
@@ -6,19 +6,33 @@ namespace Ideastrike.Nancy.Modules
 {
     public class IdeaModule : NancyModule
     {
-        IIdeaRepository IdeaRep = new IdeaRepository();
-        public IdeaModule()
+       
+        public IdeaModule(IIdeaRepository ideas)
         {
             Get["/idea/{id}"] = parameters =>
             {
-                var idea = IdeaRep.GetIdea(parameters.id);                
-                return string.Format("Id:{0} Title:{1} Description:{2}", idea.Id, idea.Title, idea.Description);                
+                var idea = ideas.GetIdea(parameters.id);
+                return View["Idea/Index", new { idea.Title, idea.Description }]; 
+            };
+
+            Post["/idea"] = _ =>
+            {
+                var i = new Idea
+                            {
+                                Time = DateTime.UtcNow,
+                                Title = Request.Form.Title,
+                                Description = Request.Form.Description,
+                            };
+
+                ideas.AddIdea(i);
+                                    
+                return Response.AsRedirect("/idea/" + i.Id);
             };
 
             Get["/idea/{id}/delete"] = parameters =>
             {
                 double id = parameters.id;
-                IdeaRep.DeleteIdea(id);
+                ideas.DeleteIdea(id);
                 return string.Format("Deleted Item {0}", id);
             };
         }
