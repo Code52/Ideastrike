@@ -1,0 +1,5 @@
+﻿body {
+}
+
+#container { width: 880px;margin-left: auto;margin-right: auto;}
+#logo { background: url('/Resources/logo_large.png') no-repeat;width: 358px; height:188px}
