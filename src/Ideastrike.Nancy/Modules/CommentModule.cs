@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
 
@@ -25,7 +24,7 @@ namespace Ideastrike.Nancy.Modules
                 {
                     int id = parameters.id;
                     int idea = parameters.idea;
-                    var comment = db.Comments.Where(i => i.Id == id && i.IdeaId == idea).FirstOrDefault();
+                    var comment = db.Comments.FirstOrDefault(i => i.Id == id && i.IdeaId == idea);
                     return string.Format("Comment Id:{0}", comment.Id);
                 }
             };
@@ -37,7 +36,7 @@ namespace Ideastrike.Nancy.Modules
                     int id = parameters.id;
                     int idea = parameters.idea;
                     
-                    var comment = db.Comments.Where(i => i.Id == id && i.IdeaId == idea).FirstOrDefault();
+                    var comment = db.Comments.FirstOrDefault(i => i.Id == id && i.IdeaId == idea);
                     db.Comments.Remove(comment);
                     db.SaveChanges();
                     return string.Format("Deleted Comment {0} for Idea {1}", id, idea);
