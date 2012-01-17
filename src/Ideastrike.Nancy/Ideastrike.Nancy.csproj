@@ -98,7 +98,9 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\GitHubActivity.cs" />
     <Compile Include="Models\Idea.cs" />
+    <Compile Include="Models\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />
+    <Compile Include="Models\IIdeaRepository.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\VotesToUser.cs" />
     <Compile Include="Modules\CommentModule.cs" />
