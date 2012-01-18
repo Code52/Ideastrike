@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Ideastrike.Nancy.Models;
+﻿using Ideastrike.Nancy.Models;
 using Nancy;
 
 namespace Ideastrike.Nancy.Modules
@@ -9,10 +7,7 @@ namespace Ideastrike.Nancy.Modules
     {
         public HomeModule(IIdeaRepository ideas)
         {
-            Get["/"] = _ =>
-            {
-                return View["Home/Index"];
-            };
+            Get["/"] = _ => View["Home/Index"];
         }
     }
 }

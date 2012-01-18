@@ -96,8 +96,10 @@
     </Compile>
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\GitHubActivity.cs" />
+    <Compile Include="Models\IActivityRepository.cs" />
     <Compile Include="Models\Idea.cs" />
     <Compile Include="Models\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />

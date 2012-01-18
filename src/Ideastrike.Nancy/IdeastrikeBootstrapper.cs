@@ -13,6 +13,7 @@ namespace Ideastrike.Nancy
         protected override void ConfigureApplicationContainer(TinyIoC.TinyIoCContainer container)
         {
             container.Register<IdeaRepository>().AsSingleton();
+            container.Register<IdeastrikeContext>().AsSingleton();
 
             base.ConfigureApplicationContainer(container);
         }

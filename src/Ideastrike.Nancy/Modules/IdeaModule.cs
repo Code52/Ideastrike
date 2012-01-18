@@ -6,16 +6,16 @@ namespace Ideastrike.Nancy.Modules
 {
     public class IdeaModule : NancyModule
     {
-       
-        public IdeaModule(IIdeaRepository ideas)
+        public IdeaModule(IIdeaRepository ideas) : base("/idea")
         {
-            Get["/idea/{id}"] = parameters =>
-            {
-                var idea = ideas.GetIdea(parameters.id);
-                return View["Idea/Index", new { idea.Title, idea.Description }]; 
-            };
+            Get["/{id}"] = parameters =>
+                               {
+                                   int id = parameters.id;
+                                   Idea idea = ideas.GetIdea(id);
+                                   return View["Idea/Index", new { idea.Id, idea.Title, idea.Description, Activities = idea.Activities }];
+                               };
 
-            Post["/idea"] = _ =>
+            Post["/"] = _ =>
             {
                 var i = new Idea
                             {
@@ -25,13 +25,13 @@ namespace Ideastrike.Nancy.Modules
                             };
 
                 ideas.AddIdea(i);
-                                    
+
                 return Response.AsRedirect("/idea/" + i.Id);
             };
 
-            Get["/idea/{id}/delete"] = parameters =>
+            Get["/{id}/delete"] = parameters =>
             {
-                double id = parameters.id;
+                int id = parameters.id;
                 ideas.DeleteIdea(id);
                 return string.Format("Deleted Item {0}", id);
             };
