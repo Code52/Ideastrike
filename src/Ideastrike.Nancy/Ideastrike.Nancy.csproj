@@ -71,6 +71,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\jquery-1.7.min.js" />
+    <Content Include="Resources\media.css" />
+    <Content Include="Resources\modernizr-2.0.min.js" />
+    <Content Include="Resources\bootstrap.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Resources\logo_large.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -81,6 +85,7 @@
     <Content Include="Resources\logo_small.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\respond.min.js" />
     <Content Include="Resources\style.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -129,6 +134,7 @@
   <ItemGroup>
     <Content Include="Views\Idea\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
