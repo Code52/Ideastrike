@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Ideastrike.Nancy.Models
@@ -18,11 +19,14 @@ namespace Ideastrike.Nancy.Models
 
         public bool AddActivity(int ideaid, Activity activity)
         {
-            var firstOrDefault = db.Ideas.FirstOrDefault(i => i.Id == ideaid);
-            if (firstOrDefault == null)
+            var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaid);
+            if (idea == null)
                 return false;
 
-            firstOrDefault.Activities.Add(activity);
+            if (idea.Activities == null)
+                idea.Activities= new Collection<Activity>();
+
+            idea.Activities.Add(activity);
             db.SaveChanges();
             return true;
         }
