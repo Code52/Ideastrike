@@ -1,4 +1,3 @@
-
 ## Ideastrike
 
 We want a tool where people can suggest ideas and others can actively refine and enhance the ideas over time. 
@@ -25,3 +24,4 @@ Once you're familiar with Git and GitHub, clone the repository and run the ```.\
 ### Libraries used
 
  * NancyFx
+ * Entity Framework 4.1 Magic Unicorn Edition

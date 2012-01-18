@@ -1,23 +1,13 @@
-﻿using System;
-using System.Linq;
-using Ideastrike.Nancy.Models;
+﻿using Ideastrike.Nancy.Models;
 using Nancy;
 
 namespace Ideastrike.Nancy.Modules
 {
     public class HomeModule : NancyModule
     {
-        public HomeModule()
+        public HomeModule(IIdeaRepository ideas)
         {
-            Get["/"] = _ =>
-            {
-                using (var db = new IdeastrikeContext())
-                {
-                    db.Ideas.Add(new Idea {Title = "I heard you like ideas, so I put an idea in your ideas", Time = DateTime.UtcNow});
-                    db.SaveChanges();
-                    return View["Home/Index", string.Format("Hello, world. There are {0} ideas", db.Ideas.Count())];
-                }
-            };
+            Get["/"] = _ => View["Home/Index"];
         }
     }
 }

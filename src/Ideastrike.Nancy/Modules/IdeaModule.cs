@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using Ideastrike.Nancy.Models;
 using Nancy;
 
@@ -6,28 +6,34 @@ namespace Ideastrike.Nancy.Modules
 {
     public class IdeaModule : NancyModule
     {
-        public IdeaModule()
+        public IdeaModule(IIdeaRepository ideas) : base("/idea")
         {
-            Get["/idea/{id}"] = parameters =>
+            Get["/{id}"] = parameters =>
+                               {
+                                   int id = parameters.id;
+                                   Idea idea = ideas.GetIdea(id);
+                                   return View["Idea/Index", new { idea.Id, idea.Title, idea.Description, Activities = idea.Activities }];
+                               };
+
+            Post["/"] = _ =>
             {
-                using (var db = new IdeastrikeContext())
-                {
-                    double id = parameters.id;
-                    var idea = db.Ideas.FirstOrDefault(i => i.Id == id);
-                    return string.Format("Id:{0} Title:{1} Description:{2}", idea.Id, idea.Title, idea.Description);
-                }
+                var i = new Idea
+                            {
+                                Time = DateTime.UtcNow,
+                                Title = Request.Form.Title,
+                                Description = Request.Form.Description,
+                            };
+
+                ideas.AddIdea(i);
+
+                return Response.AsRedirect("/idea/" + i.Id);
             };
 
-            Get["/idea/{id}/delete"] = parameters =>
+            Get["/{id}/delete"] = parameters =>
             {
-                using (var db = new IdeastrikeContext())
-                {
-                    double id = parameters.id;
-                    var idea = db.Ideas.FirstOrDefault(i => i.Id == id);
-                    db.Ideas.Remove(idea);
-                    db.SaveChanges();
-                    return string.Format("Deleted Item {0}", id);
-                }
+                int id = parameters.id;
+                ideas.DeleteIdea(id);
+                return string.Format("Deleted Item {0}", id);
             };
         }
     }

@@ -6,11 +6,11 @@ namespace Ideastrike.Nancy.Models
     {
         public IdeastrikeContext(): base("Ideastrike")
         {
-                
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         public DbSet<Idea> Ideas { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Activity> Activities { get; set; }
         public DbSet<User> Users { get; set; }
         //public DbSet<VotesToUser> VotesToUsers { get; set; }
     }

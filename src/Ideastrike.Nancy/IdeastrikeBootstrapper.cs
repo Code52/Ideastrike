@@ -1,0 +1,27 @@
+using Autofac;
+using Ideastrike.Nancy.Models;
+using Nancy.Bootstrappers.Autofac;
+
+namespace Ideastrike.Nancy
+{
+    public class IdeastrikeBootstrapper : AutofacNancyBootstrapper
+    {
+        protected override void  ConfigureApplicationContainer(Autofac.ILifetimeScope existingContainer)
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<IdeastrikeContext>()
+                .AsSelf()
+                .SingleInstance();
+
+            builder.RegisterType<IdeaRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            builder.RegisterType<ActivityRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            builder.Update(existingContainer.ComponentRegistry);
+        }
+    }
+}

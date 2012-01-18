@@ -35,12 +35,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.2.5.2.830\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\packages\Autofac.2.5.2.830\lib\NET40\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.9.0\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Bootstrappers.Autofac">
+      <HintPath>..\packages\Nancy.Bootstrappers.Autofac.0.9.0\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Hosting.Aspnet">
       <HintPath>..\packages\Nancy.Hosting.Aspnet.0.9.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
@@ -74,6 +83,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\jquery-1.7.min.js" />
+    <Content Include="Resources\media.css" />
+    <Content Include="Resources\modernizr-2.0.min.js" />
+    <Content Include="Resources\bootstrap.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Resources\logo_large.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -84,6 +97,7 @@
     <Content Include="Resources\logo_small.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\respond.min.js" />
     <Content Include="Resources\style.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -97,11 +111,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\GitHubActivity.cs" />
+    <Compile Include="Models\IActivityRepository.cs" />
     <Compile Include="Models\Idea.cs" />
+    <Compile Include="Models\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />
+    <Compile Include="Models\IIdeaRepository.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\VotesToUser.cs" />
     <Compile Include="Modules\CommentModule.cs" />
@@ -125,6 +144,10 @@
   <ItemGroup>
     <Content Include="Views\Comment\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Idea\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
