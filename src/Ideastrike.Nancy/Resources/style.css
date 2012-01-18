@@ -1,10 +1,25 @@
-﻿body {
-}
-
-#container { width: 880px;margin-left: auto;margin-right: auto;}
-#logo { background: url('/Resources/logo_large.png') no-repeat;width: 358px; height:188px}
-textarea, label { display: block;}
-
+﻿#container { width: 880px;margin-left: auto;margin-right: auto;}
+.brand { background: url('/Resources/logo_small.png') no-repeat;width: 115px;height: 57px;}
+.topbar div > ul, .nav { margin: 5px 10px 0 0;}
+.topbar form { margin-top: 10px; }
+.topbar h3 a, .topbar .brand { padding: 0px;}
+.topbar .fill{ background-color:#660000;
+               background-repeat:repeat-x;
+               background-image:-khtml-gradient(linear, left top, left bottom, from(#400000), to(#660000));
+               background-image:-moz-linear-gradient(top, #400000, #660000);
+               background-image:-ms-linear-gradient(top, #400000, #660000);
+               background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #400000), color-stop(100%, #660000));
+               background-image:-webkit-linear-gradient(top, #400000, #660000);
+               background-image:-o-linear-gradient(top, #400000, #660000);
+               background-image:linear-gradient(top, #400000, #660000);
+               filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#400000', endColorstr='#660000', GradientType=0);
+               -webkit-box-shadow:0 1px 10px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+               -moz-box-shadow:0 1px 10px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+               box-shadow:0 1px 10px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);}
+textarea#comment {width: 500px;height: 200px;}
+label { margin-right: 15px;}
+#comments { list-style-type: none;margin: 0px;padding: 0px;}
+#comments li {margin-left: 0px; margin-bottom: 25px;}
 /* Override some defaults */
 html, body {
 background-color: #eee;
@@ -25,11 +40,11 @@ background-color: #fff;
 padding: 20px;
 margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
 -webkit-border-radius: 0 0 6px 6px;
-    -moz-border-radius: 0 0 6px 6px;
-        border-radius: 0 0 6px 6px;
+-moz-border-radius: 0 0 6px 6px;
+border-radius: 0 0 6px 6px;
 -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-        box-shadow: 0 1px 2px rgba(0,0,0,.15);
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
 
 /* Page header tweaks */
@@ -53,4 +68,16 @@ border-left: 1px solid #eee;
 
 .topbar .btn {
 border: 0;
+}
+
+.votebox 
+{
+    padding: 1px;margin: 10px;
+    width: 75px;
+    text-align: center;
+    background: #F3F3F3;
+    border: 1px solid #E4E4E4;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
 }
