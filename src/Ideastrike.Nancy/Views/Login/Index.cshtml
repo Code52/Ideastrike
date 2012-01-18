@@ -11,7 +11,7 @@
               if (typeof window.janrain !== 'object') window.janrain = {};
               window.janrain.settings = {};
 
-              janrain.settings.tokenUrl = document.URL + '/token';
+              janrain.settings.tokenUrl = 'http://localhost:55103/login/token';
 
               function isReady() { janrain.ready = true; };
               if (document.addEventListener) {

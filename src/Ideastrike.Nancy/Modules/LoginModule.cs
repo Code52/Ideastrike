@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
 using System.Net;
@@ -12,10 +13,7 @@ namespace Ideastrike.Nancy.Modules
 
         public LoginModule()
         {
-            Get["/login/"] = parameters =>
-            {
-                return View["Login/Index"];
-            };
+            Get["/login/"] = parameters => View["Login/Index"];
 
             Post["/login/token"] = x =>
             {
@@ -33,19 +31,24 @@ namespace Ideastrike.Nancy.Modules
                 {
                     string userstring = j.profile.identifier.ToString();
 
-                    var userExists = db.Users.FirstOrDefault(u => u.Identifier == userstring);
+                    var userExists = db.Users.FirstOrDefault();
 
                     if(userExists == null)
                     {
-                        var u = new User {Identifier = userstring};
+                        var u = new User() {Id = Guid.NewGuid(), Identity = userstring, UserName = "New User"};
                         db.Users.Add(u);
                         db.SaveChanges();
-                        return Response.AsRedirect(string.Format("/users/new/{0}", u.Id.ToString()));
+                        return ModuleExtensions.LoginAndRedirect(this, u.Id, DateTime.Now.AddDays(1), "/profile/create");
                     }
-                    
-                    return Response.AsRedirect("/");
+
+                    return ModuleExtensions.Login(this, userExists.Id, DateTime.Now.AddDays(1), "/");
                 }
             };
+
+            Get["/logout/"] = parameters =>
+                                  {
+                                      return ModuleExtensions.LogoutAndRedirect(this, "/");
+                                  };
         }
     }
 }
