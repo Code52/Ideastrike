@@ -4,6 +4,11 @@ namespace Ideastrike.Nancy.Models
 {
     public class IdeastrikeContext : DbContext
     {
+        public IdeastrikeContext()
+        {
+            this.Configuration.ProxyCreationEnabled = false;
+        }
+
         public DbSet<Idea> Ideas { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<User> Users { get; set; }
