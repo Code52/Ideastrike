@@ -1,31 +1,27 @@
+using Autofac;
 using Ideastrike.Nancy.Models;
-using Nancy;
+using Nancy.Bootstrappers.Autofac;
 
 namespace Ideastrike.Nancy
 {
-    public class IdeastrikeBootstrapper : DefaultNancyBootstrapper
+    public class IdeastrikeBootstrapper : AutofacNancyBootstrapper
     {
-        /// <summary>
-        /// This is called once, when the Bootstrapper is executed, and is used to register dependencies that you 
-        /// either wish to have application scope lifetimes (application singletons), or be registered as multi-instance
-        /// </summary>
-        /// <param name="container">Nancy's TinyIoCContainer</param>
-        protected override void ConfigureApplicationContainer(TinyIoC.TinyIoCContainer container)
+        protected override void  ConfigureApplicationContainer(Autofac.ILifetimeScope existingContainer)
         {
-            container.Register<IdeaRepository>().AsSingleton();
-            container.Register<IdeastrikeContext>().AsSingleton();
+            var builder = new ContainerBuilder();
+            builder.RegisterType<IdeastrikeContext>()
+                .AsSelf()
+                .SingleInstance();
 
-            base.ConfigureApplicationContainer(container);
-        }
+            builder.RegisterType<IdeaRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
 
-        /// <summary>
-        /// This is called once per request, before the module matching the route is resolved, and is used to 
-        /// register singletons that will have request lifetime.
-        /// </summary>
-        /// <param name="container">Nancy's TinyIoCContainer</param>
-        protected override void ConfigureRequestContainer(TinyIoC.TinyIoCContainer container)
-        {
-            base.ConfigureRequestContainer(container);
+            builder.RegisterType<ActivityRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            builder.Update(existingContainer.ComponentRegistry);
         }
     }
 }
