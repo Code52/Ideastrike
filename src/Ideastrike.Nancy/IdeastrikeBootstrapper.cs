@@ -1,3 +1,4 @@
+using Ideastrike.Nancy.Models;
 using Nancy;
 
 namespace Ideastrike.Nancy
@@ -11,6 +12,9 @@ namespace Ideastrike.Nancy
         /// <param name="container">Nancy's TinyIoCContainer</param>
         protected override void ConfigureApplicationContainer(TinyIoC.TinyIoCContainer container)
         {
+            container.Register<IdeaRepository>().AsSingleton();
+            container.Register<IdeastrikeContext>().AsSingleton();
+
             base.ConfigureApplicationContainer(container);
         }
 

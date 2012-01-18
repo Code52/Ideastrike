@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
 
@@ -6,18 +7,29 @@ namespace Ideastrike.Nancy.Modules
 {
     public class CommentModule : NancyModule
     {
-        public CommentModule() : base ("/idea")
+        private readonly IIdeaRepository _ideas;
+        private readonly IActivityRepository _activities;
+
+        public CommentModule(IIdeaRepository ideas, IActivityRepository activities)
+            : base("/idea")
         {
-            Get["/{idea}/comment"] = parameters =>
+            _ideas = ideas;
+            _activities = activities;
+
+            Post["/{idea}/comment"] = _ =>
             {
-                using (var db = new IdeastrikeContext())
-                {
-                    db.Comments.Add(new Comment {IdeaId = parameters.idea });
-                    db.SaveChanges();
-                    return View["Comment/Index", string.Format("Hello, world. There are {0} comments for Idea {1}", db.Comments.Count(), parameters.idea)];
-                }
+                int id = _.Idea;
+                var comment = new Comment
+                                {
+                                    Time = DateTime.UtcNow,
+                                    Text = Request.Form.comment
+                                };
+                _activities.AddActivity(id, comment);
+
+                return Response.AsRedirect(string.Format("/idea/{0}#{1}", id, comment.Id));
             };
 
+            /*
             Get["/{idea}/comment/{id}"] = parameters =>
             {
                 using (var db = new IdeastrikeContext())
@@ -41,7 +53,7 @@ namespace Ideastrike.Nancy.Modules
                     db.SaveChanges();
                     return string.Format("Deleted Comment {0} for Idea {1}", id, idea);
                 }
-            };
+            };*/
         }
     }
 }
