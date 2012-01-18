@@ -1,16 +1,36 @@
-﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
-<form action="/idea" method="POST">
-    <div>
-        <h3>submit a new idea</h3>
-        <label for="Title">Title</label>
-        <input id="Title" name="Title" type="text" />
-        <br />
+
+<div class="page-header">
+    <h1><small>Yo Dawg, I Heard You Like Ideas</small></h1>
+</div>
+<div class="row">
+    <div class="span10">
+        <h2>Submit a New Idea</h2><br />
+
+        <form action="/idea" method="POST">
+            <div class="clearfix">
+                <label for="Title">Title</label>
+                <div class="input">
+                    <input id="Title" name="Title" type="text" />
+                </div>
+            </div>
         
-        <label for="Description">Description</label>
-        <textarea id="Description" name="Description"></textarea>
-        <input type="submit" />
+            <div class="clearfix">
+                <label for="Description">Description</label>
+                <div class="input">
+                    <textarea id="Description" name="Description" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn primary">Submit</button>
+            </div>
+        </form>
     </div>
-</form>
+    <div class="span4">
+        <h3>Popular Ideas</h3>
+
+    </div>
+</div>
