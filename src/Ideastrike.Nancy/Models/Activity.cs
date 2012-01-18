@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Ideastrike.Nancy.Models
@@ -6,5 +7,7 @@ namespace Ideastrike.Nancy.Models
     {
         [Key]
         public virtual int Id { get; set; }
+
+        public DateTime Time { get; set; }
     }
 }

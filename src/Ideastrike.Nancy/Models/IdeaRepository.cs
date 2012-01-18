@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Ideastrike.Nancy.Models
 {
     public class IdeaRepository : IIdeaRepository
     {
-        private IdeastrikeContext db = new IdeastrikeContext();
+        private readonly IdeastrikeContext db;
+
+        public IdeaRepository(IdeastrikeContext db)
+        {
+            this.db = db;
+        }
 
         IEnumerable<Idea> IIdeaRepository.GetAllIdeas()
         {
@@ -20,16 +23,15 @@ namespace Ideastrike.Nancy.Models
             db.SaveChanges();
         }
 
-        void IIdeaRepository.DeleteIdea(double IdeaId)
+        void IIdeaRepository.DeleteIdea(int id)
         {
-            double id = IdeaId;
             var idea = db.Ideas.FirstOrDefault(i => i.Id == id);
             db.Ideas.Remove(idea);
             db.SaveChanges();
            
         }
 
-        Idea IIdeaRepository.GetIdea(double id)
+        Idea IIdeaRepository.GetIdea(int id)
         {
             return db.Ideas.FirstOrDefault(i => i.Id == id);
         }                    
@@ -45,7 +47,5 @@ namespace Ideastrike.Nancy.Models
         {
             return db.Ideas.Count();
         }
-
-        
     }
 }

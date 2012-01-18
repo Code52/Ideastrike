@@ -5,7 +5,9 @@ namespace Ideastrike.Nancy.Models
     {
         [Key]
         public int Id { get; set; }
+
         public int IdeaId { get; set; }
+        public string Text { get; set; }
         
     }
 }

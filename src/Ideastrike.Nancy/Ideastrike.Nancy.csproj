@@ -96,8 +96,10 @@
     </Compile>
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\GitHubActivity.cs" />
+    <Compile Include="Models\IActivityRepository.cs" />
     <Compile Include="Models\Idea.cs" />
     <Compile Include="Models\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />
@@ -123,6 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Comment\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Idea\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
