@@ -105,6 +105,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DevelopmentDatabaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
