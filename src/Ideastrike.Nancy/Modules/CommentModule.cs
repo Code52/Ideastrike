@@ -16,11 +16,14 @@ namespace Ideastrike.Nancy.Modules
             _ideas = ideas;
             _activities = activities;
 
-            Post["/{idea}/comment"] = _ =>
+            Post["/{idea}/comment"] = parameters =>
             {
-                int id = _.Idea;
+                int id = parameters.Idea;
+                int userId = Request.Form.userId;
+                // TODO: check for user Id
                 var comment = new Comment
                                 {
+                                    UserId = userId,
                                     Time = DateTime.UtcNow,
                                     Text = Request.Form.comment
                                 };

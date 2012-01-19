@@ -21,9 +21,8 @@
     <ul id="features">
         @foreach (var a in idea.Features)
         {
-            <li>
-                @a.Text<br />
-                <sub>@a.Time</sub> </li>
+            <!-- TODO: Markdownify this text? -->
+            <li> @a.Text<br /> <sub>@a.Time</sub> </li>
         }
     </ul>
     <!-- TODO: comment on a feature -->
@@ -36,8 +35,10 @@ else
 <form action="/idea/@idea.Id/feature" method="POST">
 <div>
     <label for="feaure">suggest a feature</label>
+    <!--  TODO: can we hook in some anti-forgery bits? -->
     <input type="text" id="feature" name="feature"></input><br />
     <br />
+    <input type="hidden" name="userId" value="@Model.UserId"/>
     <label for="submit">
     </label>
     <input type="submit" />
@@ -64,9 +65,10 @@ else
     <div>
         <label for="comment">leave a comment</label>
         <textarea id="comment" name="comment"></textarea><br />
+        <input type="hidden" name="userId" value="@Model.UserId"/>
         <br />
-        <label for="submit">
-        </label>
+        <label for="submit"></label>
+        
         <input type="submit" />
     </div>
 </form>

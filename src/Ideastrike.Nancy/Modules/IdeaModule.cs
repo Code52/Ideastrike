@@ -30,7 +30,9 @@ namespace Ideastrike.Nancy.Modules
 								   if (idea == null)
                                        return View["Shared/404"];
 
-                                   return View["Idea/Index", new { Idea = idea, UserHasVoted = false }];
+                                   return View["Idea/Index", new { Idea = idea, 
+                                       UserId = 2, // TODO: not hard-code these
+                                       UserHasVoted = false }];
                                };
 
             // save result of edit to database
