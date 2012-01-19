@@ -28,7 +28,7 @@ namespace Ideastrike.Nancy.Models
             var idea = db.Ideas.FirstOrDefault(i => i.Id == id);
             db.Ideas.Remove(idea);
             db.SaveChanges();
-           
+
         }
 
         public Idea GetIdea(int id)
@@ -49,18 +49,28 @@ namespace Ideastrike.Nancy.Models
         public void Vote(Idea idea, int userId, int value)
         {
             idea.Votes.Add(new Vote
-            {
-                IdeaId = idea.Id,
-                UserId = userId,
-                Value = value
-            });
+                               {
+                                   IdeaId = idea.Id,
+                                   UserId = userId,
+                                   Value = value
+                               });
 
             UpdateIdea(idea);
         }
 
-        public int CountIdeas()
+        public void Comment(Idea idea, int userId, string comment)
         {
-            return db.Ideas.Count();
+            throw new System.NotImplementedException();
+        }
+
+        public int Count
+        {
+            get
+            {
+                {
+                    return db.Ideas.Count();
+                }
+            }
         }
     }
 }

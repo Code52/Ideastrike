@@ -21,7 +21,7 @@ namespace Ideastrike.Nancy.Modules
 
                                };
 
-            Post["/"] = _ =>
+            Post["/new"] = _ =>
             {
                 var i = new Idea
                             {
@@ -45,6 +45,19 @@ namespace Ideastrike.Nancy.Modules
                                     Status = "OK",
                                     NewVotes = idea.Votes.Sum(v => v.Value)
                                 });
+            };
+
+            Post["/{id}/comment"] = parameters =>
+            {
+                // TODO: when viewing an idea, can add a comment
+                var idea = ideas.GetIdea(parameters.id);
+                var comment = ideas.Comment(idea, parameters.userid, parameters.Content);
+
+                return Response.AsJson(new
+                {
+                    Status = "OK",
+                    NewComment = comment
+                });
             };
 
             Get["/{id}/delete"] = parameters =>
