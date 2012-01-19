@@ -58,11 +58,6 @@ namespace Ideastrike.Nancy.Models
             UpdateIdea(idea);
         }
 
-        public void Comment(Idea idea, int userId, string comment)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public int Count
         {
             get

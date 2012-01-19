@@ -10,6 +10,17 @@ namespace Ideastrike.Nancy.Modules
         public IdeaModule(IIdeaRepository ideas)
             : base("/idea")
         {
+            // edit an existing idea
+            Get["/{id}/edit"] = parameters =>
+            {
+                // TODO: get result result in database 
+                int id = parameters.id;
+                Idea idea = ideas.GetIdea(id);
+
+                return View["Idea/Edit", idea];
+            };
+
+            // view 
             Get["/{id}"] = parameters =>
                                {
                                    int id = parameters.id;
@@ -18,9 +29,17 @@ namespace Ideastrike.Nancy.Modules
                                        return View["Shared/404"];
 
                                    return View["Idea/Index", idea];
-
                                };
 
+            // save result of edit to database
+            Post["/{id}/edit"] = _ =>
+            {
+                // TODO: update result in database 
+                // TODO: return redirect
+                return View["/idea/index", 1];
+            };
+
+            // save result of create to database
             Post["/new"] = _ =>
             {
                 var i = new Idea
@@ -35,6 +54,8 @@ namespace Ideastrike.Nancy.Modules
                 return Response.AsRedirect("/idea/" + i.Id);
             };
 
+            // someone else votes for the idea
+            // NOTE: should this be a POST instead of a GET?
             Get["/{id}/vote/{userid}"] = parameters =>
             {
                 Idea idea = ideas.GetIdea(parameters.id);
@@ -47,23 +68,26 @@ namespace Ideastrike.Nancy.Modules
                                 });
             };
 
-            Post["/{id}/comment"] = parameters =>
+            // the user decides to repeal his vote
+            // NOTE: should this be a POST instead of a GET?
+            Get["/{id}/unvote/{userid}"] = parameters =>
             {
-                // TODO: when viewing an idea, can add a comment
-                var idea = ideas.GetIdea(parameters.id);
-                var comment = ideas.Comment(idea, parameters.userid, parameters.Content);
+                // TODO: implementation 
 
                 return Response.AsJson(new
                 {
-                    Status = "OK",
-                    NewComment = comment
+                    Status = "Error",
+                    
                 });
             };
 
+            // should this be a POST instead of a GET?
+            
             Get["/{id}/delete"] = parameters =>
             {
                 int id = parameters.id;
                 ideas.DeleteIdea(id);
+                // TODO: return a JSON result?
                 return string.Format("Deleted Item {0}", id);
             };
         }

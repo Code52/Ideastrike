@@ -26,6 +26,7 @@ namespace Ideastrike.Nancy.Modules
                                 };
                 _activities.AddActivity(id, comment);
 
+                // why not return JSON here and leave it up to client to render inline?
                 return Response.AsRedirect(string.Format("/idea/{0}#{1}", id, comment.Id));
             };
 
