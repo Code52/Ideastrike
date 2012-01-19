@@ -23,9 +23,6 @@ namespace Ideastrike.Nancy.Models
             if (idea == null)
                 return false;
 
-            if (idea.Activities == null)
-                idea.Activities= new Collection<Activity>();
-
             idea.Activities.Add(activity);
             db.SaveChanges();
             return true;

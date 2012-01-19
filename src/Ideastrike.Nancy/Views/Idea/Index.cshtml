@@ -4,38 +4,56 @@
 }
 <div class="pull-right votebox">
     <form>
-        <h3>9000</h3>
-        votes<br /><br />
-        <input type="button" value="vote"/>
+    <!-- Yes, I know this isn't going to be correct -->
+    <h3 id="votecount">@Model.Votes.Count</h3>
+    votes<br />
+    <br />
+    <input type="button" value="vote" onclick="vote()" />
     </form>
 </div>
 <h1>@Model.Title</h1>
 @Model.Description
-
 <hr />
 @if (Model.Activities != null)
 { 
-    <h4>Activity</h4>
+    <h4>
+        Activity</h4>
     <ul id="comments">
         @foreach (var a in Model.Activities)
         {
             <li>
                 @a.Text<br />
-                <sub>@a.Time</sub>
-            </li>
+                <sub>@a.Time</sub> </li>
         }
     </ul>
 }
 else
 {
-    <h4>No activity yet, add the first comment!</h4>
+    <h4>
+        No activity yet, add the first comment!</h4>
 }
-
 <form action="/idea/@Model.Id/comment" method="POST">
 <div>
-    <label for="comment">comment</label>
-    <textarea id="comment" name="comment" ></textarea><br /><br />
-    <label for="submit"></label>
+    <label for="comment">
+        comment</label>
+    <textarea id="comment" name="comment"></textarea><br />
+    <br />
+    <label for="submit">
+    </label>
     <input type="submit" />
 </div>
 </form>
+@section PageScript {
+    <script>
+        function vote() {
+            $.ajax({
+                url: "/idea/@Model.Id/vote/9",
+                context: document.body,
+                success: function (data) {
+                    /* This is really nasty, surely there is a better way? */
+                    $("#votecount").replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
+                }
+            });
+        }
+    </script>
+}
