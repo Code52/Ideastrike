@@ -1,81 +1,83 @@
-﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+@{ var idea = Model.Idea; }
 <div class="pull-right votebox">
     <form>
     <!-- Yes, I know this isn't going to be correct -->
-    <h3 id="votecount">@Model.Votes.Count</h3>
+    <h3 id="votecount">@idea.Votes.Count</h3>
     votes<br />
     <br />
-    <input type="button" value="vote" onclick="vote()" />
+    <input type="button" value="vote" data-has-voted="@Model.UserHasVoted" onclick="vote()" />
     </form>
 </div>
-<h1>@Model.Title</h1>
-@Model.Description
+<h1>@idea.Title</h1>
+@idea.Description
 <hr />
-@if (Model.Features != null)
+@if (idea.Features.Count > 0)
 { 
     <h4>Features</h4>
     <ul id="features">
-        @foreach (var a in Model.Features)
-        {
-            <li>
-                @a.Text<br />
-                <sub>@a.Time</sub>
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <h4>No feature requests yet, add the first one!</h4>
-}
-
-<form action="/idea/@Model.Id/feature" method="POST">
-<div>
-    <label for="feaure">feature request</label>
-    <input type="text" id="feature" name="feature" ></input><br /><br />
-    <label for="submit"></label>
-    <input type="submit" />
-</div>
-</form>
-
-<hr />
-@if (Model.Activities != null)
-{ 
-    <h4>
-        Activity</h4>
-    <ul id="comments">
-        @foreach (var a in Model.Activities)
+        @foreach (var a in idea.Features)
         {
             <li>
                 @a.Text<br />
                 <sub>@a.Time</sub> </li>
         }
     </ul>
+    <!-- TODO: comment on a feature -->
 }
 else
 {
     <h4>
-        No activity yet, add the first comment!</h4>
+        No feature requests yet, add the first one!</h4>
 }
-<form action="/idea/@Model.Id/comment" method="POST">
+<form action="/idea/@idea.Id/feature" method="POST">
 <div>
-    <label for="comment">
-        comment</label>
-    <textarea id="comment" name="comment"></textarea><br />
+    <label for="feaure">suggest a feature</label>
+    <input type="text" id="feature" name="feature"></input><br />
     <br />
     <label for="submit">
     </label>
     <input type="submit" />
 </div>
 </form>
+<hr />
+@if (idea.Activities.Count > 0)
+{ 
+    <h4>
+        Activity</h4>
+    <ul id="comments">
+        @foreach (var a in idea.Activities)
+        {
+            <li>@a.Text<br /><sub>@a.Time</sub> </li>
+        }
+    </ul>
+    <!-- TODO: reply to a comment -->
+}
+else
+{
+    <h4>No activity yet, add the first comment!</h4>
+}
+<form action="/idea/@idea.Id/comment" method="POST">
+    <div>
+        <label for="comment">leave a comment</label>
+        <textarea id="comment" name="comment"></textarea><br />
+        <br />
+        <label for="submit">
+        </label>
+        <input type="submit" />
+    </div>
+</form>
+
+
+
 @section PageScript {
     <script>
         function vote() {
             $.ajax({
-                url: "/idea/@Model.Id/vote/9",
+                url: "/idea/@idea.Id/vote/9",
                 context: document.body,
                 success: function (data) {
                     /* This is really nasty, surely there is a better way? */
