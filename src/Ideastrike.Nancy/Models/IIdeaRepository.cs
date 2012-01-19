@@ -4,13 +4,13 @@ namespace Ideastrike.Nancy.Models
 {
     public interface IIdeaRepository
     {
-        IEnumerable<Idea> GetAllIdeas();
-        Idea GetIdea(int id);
+        IEnumerable<Idea> GetAll();
+        Idea Get(int id);
 
-        void AddIdea(Idea idea);
-        void DeleteIdea(int id);
-        void UpdateIdea(Idea idea);
+        void Add(Idea idea);
+        void Delete(int id);
+        void Update(Idea idea);
         void Vote(Idea idea, int userId, int value);
-        int CountIdeas();
+        int Count { get; }
     }
 }

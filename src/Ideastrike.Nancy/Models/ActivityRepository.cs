@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Ideastrike.Nancy.Models
@@ -12,12 +12,17 @@ namespace Ideastrike.Nancy.Models
             this.db = db;
         }
 
-        public Activity GetActivity(int id)
+        public Activity Get(int id)
         {
             return db.Activities.FirstOrDefault(i => i.Id == id);
         }
 
-        public bool AddActivity(int ideaid, Activity activity)
+        public IEnumerable<Activity> GetAll()
+        {
+            return db.Activities.ToList();
+        }
+
+        public bool Add(int ideaid, Activity activity)
         {
             var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaid);
             if (idea == null)
