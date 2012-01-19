@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Ideastrike.Nancy.Models
@@ -34,7 +33,10 @@ namespace Ideastrike.Nancy.Models
 
         public Idea GetIdea(int id)
         {
-            return db.Ideas.FirstOrDefault(i => i.Id == id);
+            return db.Ideas
+                .Include("Activities")
+                .Include("Votes")
+                .FirstOrDefault(i => i.Id == id);
         }
 
         public void UpdateIdea(Idea idea)
