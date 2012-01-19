@@ -14,10 +14,11 @@ namespace Ideastrike.Nancy.Modules
                                {
                                    int id = parameters.id;
                                    Idea idea = ideas.GetIdea(id);
-                                   if (idea == null)
+								   if (idea == null)
                                        return View["Shared/404"];
 
                                    return View["Idea/Index", idea];
+
                                };
 
             Post["/"] = _ =>
