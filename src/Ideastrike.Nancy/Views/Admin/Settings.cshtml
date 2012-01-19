@@ -1,0 +1,46 @@
+﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+<form action="/admin/settings" method="POST">
+<fieldset>
+    <legend>General Settings</legend>
+    <div class="clearfix">
+        <label for="title">Site Title</label>
+        <div class="input">
+            <input class="xlarge" id="title" name="title" value="@Model.Title" size="30" type="text" />
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="yourname">Your Name</label>
+        <div class="input">
+            <input class="xlarge"  value="@Model.Name" id="yourname" name="yourname" size="30" type="text" />
+            <span class="help-block">The name of the individual or organisation running the show</span>
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="welcomemessage">
+            Welcome Message</label>
+        <div class="input">
+            <textarea id="welcomemessage" name="welcomemessage">@Model.WelcomeMessage</textarea>
+            <span class="help-block">This is what visitors will see at the root of your Ideastrike
+                install</span>
+        </div>
+    </div>
+        <div class="clearfix">
+        <label for="homepage">Home Page</label>
+        <div class="input">
+            <input class="xlarge" id="homepage" name="homepage"  value="@Model.HomePage"  size="30" type="text" />
+            <span class="help-block">Link back to your website</span>
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="analyticskey">Google Analytics</label>
+        <div class="input">
+            <input class="xlarge" id="analyticskey" name="analyticskey" value="@Model.GAnalyticsKey"  size="30" type="text" />
+                <span class="help-block">It should look something like UA-XXXXXXX-X</span>
+        </div>
+    </div>
+    <button type="submit" class="btn primary">Save</button>
+</fieldset>
+</form>

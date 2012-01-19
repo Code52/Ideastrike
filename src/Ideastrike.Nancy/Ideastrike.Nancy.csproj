@@ -118,8 +118,11 @@
     <Compile Include="Models\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />
     <Compile Include="Models\IIdeaRepository.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vote.cs" />
+    <Compile Include="Modules\AdminModule.cs" />
+    <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="Modules\CommentModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\IdeaModule.cs" />
@@ -145,6 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\404.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
