@@ -1,8 +1,7 @@
-﻿
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
-
 <div class="row">
     <div class="span10">
         <h2>Submit a New Idea</h2><br />
@@ -28,6 +27,14 @@
     </div>
     <div class="span4">
         <h3>Popular Ideas</h3>
-
+        <ul>
+            @foreach (var i in Model)
+            {
+                <li>
+                    <a href="/idea/@i.Id">@i.Title</a><br />
+                    @i.Time
+                </li> 
+            }
+        </ul>
     </div>
 </div>

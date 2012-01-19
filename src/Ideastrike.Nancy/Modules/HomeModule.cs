@@ -7,7 +7,8 @@ namespace Ideastrike.Nancy.Modules
     {
         public HomeModule(IIdeaRepository ideas)
         {
-            Get["/"] = _ => View["Home/Index"];
+            Get["/"] = _ => View["Home/Index", ideas.GetAllIdeas()];
+
         }
     }
 }
