@@ -10,7 +10,7 @@ namespace Ideastrike.Nancy.Models
         void AddIdea(Idea idea);
         void DeleteIdea(int id);
         void UpdateIdea(Idea idea);
-
+        void Vote(Idea idea, int userId, int value);
         int CountIdeas();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Ideastrike.Nancy.Models
@@ -12,18 +13,18 @@ namespace Ideastrike.Nancy.Models
             this.db = db;
         }
 
-        IEnumerable<Idea> IIdeaRepository.GetAllIdeas()
+        public IEnumerable<Idea> GetAllIdeas()
         {
             return (db.Ideas.ToList());
         }
 
-        void IIdeaRepository.AddIdea(Idea idea)
+        public void AddIdea(Idea idea)
         {
             db.Ideas.Add(idea);
             db.SaveChanges();
         }
 
-        void IIdeaRepository.DeleteIdea(int id)
+        public void DeleteIdea(int id)
         {
             var idea = db.Ideas.FirstOrDefault(i => i.Id == id);
             db.Ideas.Remove(idea);
@@ -31,19 +32,31 @@ namespace Ideastrike.Nancy.Models
            
         }
 
-        Idea IIdeaRepository.GetIdea(int id)
+        public Idea GetIdea(int id)
         {
             return db.Ideas.FirstOrDefault(i => i.Id == id);
-        }                    
+        }
 
-        void IIdeaRepository.UpdateIdea(Idea idea)
+        public void UpdateIdea(Idea idea)
         {
             var tmpIdea = db.Ideas.Single(i => i.Id == idea.Id);
             tmpIdea = idea;
             db.SaveChanges();
         }
 
-        int IIdeaRepository.CountIdeas()
+        public void Vote(Idea idea, int userId, int value)
+        {
+            idea.Votes.Add(new Vote
+            {
+                IdeaId = idea.Id,
+                UserId = userId,
+                Value = value
+            });
+
+            UpdateIdea(idea);
+        }
+
+        public int CountIdeas()
         {
             return db.Ideas.Count();
         }
