@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -17,18 +18,14 @@ namespace Ideastrike.Nancy.Models
             return db.Features.FirstOrDefault(i => i.Id == id);
         }
 
-        public bool Add(int ideaid, Feature feature)
+        public void Add(int ideaId, Feature feature)
         {
-            var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaid);
+            var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaId);
             if (idea == null)
-                return false;
-
-            if (idea.Features == null)
-                idea.Features = new Collection<Feature>();
+                throw new KeyNotFoundException("Idea not found.");
 
             idea.Features.Add(feature);
             db.SaveChanges();
-            return true;
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Ideastrike.Nancy.Models
     {
         Activity Get(int id);
         IEnumerable<Activity> GetAll();
-        bool Add(int ideaid, Activity activity);
+        void Add(int ideaId, Activity activity);
+        void Delete(int ideaId, int activiyId);
     }
 }

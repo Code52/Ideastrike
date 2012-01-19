@@ -22,15 +22,24 @@ namespace Ideastrike.Nancy.Models
             return db.Activities.ToList();
         }
 
-        public bool Add(int ideaid, Activity activity)
+        public void Add(int ideaId, Activity activity)
         {
-            var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaid);
+            var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaId);
             if (idea == null)
-                return false;
+                throw new KeyNotFoundException("Idea not found.");
 
             idea.Activities.Add(activity);
             db.SaveChanges();
-            return true;
+        }
+
+        public void Delete(int ideaId, int activityId)
+        {
+            var activity = db.Activities.FirstOrDefault(i => i.Id == activityId && i.IdeaId == ideaId);
+            if (activity == null)
+                throw new KeyNotFoundException("Activity not found.");
+
+            db.Activities.Remove(activity);
+            db.SaveChanges();
         }
     }
 }

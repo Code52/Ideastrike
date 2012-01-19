@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
 
@@ -29,31 +28,13 @@ namespace Ideastrike.Nancy.Modules
                 return Response.AsRedirect(string.Format("/idea/{0}#{1}", id, comment.Id));
             };
 
-            /*
-            Get["/{idea}/comment/{id}"] = parameters =>
-            {
-                using (var db = new IdeastrikeContext())
-                {
-                    int id = parameters.id;
-                    int idea = parameters.idea;
-                    var comment = db.Comments.FirstOrDefault(i => i.Id == id && i.IdeaId == idea);
-                    return string.Format("Comment Id:{0}", comment.Id);
-                }
-            };
-
             Get["/{idea}/comment/{id}/delete"] = parameters =>
             {
-                using (var db = new IdeastrikeContext())
-                {
-                    int id = parameters.id;
-                    int idea = parameters.idea;
-                    
-                    var comment = db.Comments.FirstOrDefault(i => i.Id == id && i.IdeaId == idea);
-                    db.Comments.Remove(comment);
-                    db.SaveChanges();
-                    return string.Format("Deleted Comment {0} for Idea {1}", id, idea);
-                }
-            };*/
+                int comment = parameters.id;
+                int idea = parameters.idea;
+                _activities.Delete(idea, comment);
+                return string.Format("Deleted Comment {0} for Idea {1}", comment, idea);
+            };
         }
     }
 }
