@@ -9,7 +9,7 @@ namespace Ideastrike.Nancy
         protected override void Seed(IdeastrikeContext context)
         {
             context.Ideas.Add(new Idea
-                                  { 
+                                  {
                                       Time = DateTime.Now,
                                       Author = new User { Id = 1, Username = "aeoth" },
                                       Title = "So Meta",
