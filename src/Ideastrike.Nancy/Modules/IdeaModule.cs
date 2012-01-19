@@ -10,6 +10,8 @@ namespace Ideastrike.Nancy.Modules
         public IdeaModule(IIdeaRepository ideas)
             : base("/idea")
         {
+            Get["/new"] = _ => View["Idea/New", ideas.GetAllIdeas()];
+
             // edit an existing idea
             Get["/{id}/edit"] = parameters =>
             {
