@@ -11,6 +11,7 @@ namespace Ideastrike.Nancy.Models
         {
             Activities = new Collection<Activity>();
             Votes = new Collection<Vote>();
+			Features = new Collection<Feature>();
         }
 
         [Key]
@@ -20,8 +21,8 @@ namespace Ideastrike.Nancy.Models
         public string Description { get; set; }
         public DateTime Time { get; set; }
         public User Author { get; set; }
-
+		public ICollection<Vote> Votes { get; set; }
         public ICollection<Activity> Activities { get; set; }
-        public ICollection<Vote> Votes { get; set; }
+        public ICollection<Feature> Features { get; set; }
     }
 }

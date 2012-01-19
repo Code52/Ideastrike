@@ -14,6 +14,34 @@
 <h1>@Model.Title</h1>
 @Model.Description
 <hr />
+@if (Model.Features != null)
+{ 
+    <h4>Features</h4>
+    <ul id="features">
+        @foreach (var a in Model.Features)
+        {
+            <li>
+                @a.Text<br />
+                <sub>@a.Time</sub>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <h4>No feature requests yet, add the first one!</h4>
+}
+
+<form action="/idea/@Model.Id/feature" method="POST">
+<div>
+    <label for="feaure">feature request</label>
+    <input type="text" id="feature" name="feature" ></input><br /><br />
+    <label for="submit"></label>
+    <input type="submit" />
+</div>
+</form>
+
+<hr />
 @if (Model.Activities != null)
 { 
     <h4>

@@ -9,7 +9,7 @@ namespace Ideastrike.Nancy
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<IdeastrikeContext>()); 
+            Database.SetInitializer(new DevelopmentDatabaseInitializer()); 
         }
 
         protected void Session_Start(object sender, EventArgs e)

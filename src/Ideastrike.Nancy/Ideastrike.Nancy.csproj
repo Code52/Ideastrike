@@ -105,6 +105,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+ <Compile Include="DevelopmentDatabaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -112,6 +113,9 @@
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\FeatureRepository.cs" />
+    <Compile Include="Models\IFeatureRepository.cs" />
+    <Compile Include="Models\Feature.cs" />
     <Compile Include="Models\GitHubActivity.cs" />
     <Compile Include="Models\IActivityRepository.cs" />
     <Compile Include="Models\Idea.cs" />
@@ -124,6 +128,7 @@
     <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="Modules\CommentModule.cs" />
+    <Compile Include="Modules\FeatureModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\IdeaModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -151,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Feature\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\Settings.cshtml" />

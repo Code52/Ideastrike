@@ -21,6 +21,10 @@ namespace Ideastrike.Nancy
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
+            builder.RegisterType<FeatureRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
             builder.Update(existingContainer.ComponentRegistry);
         }
     }

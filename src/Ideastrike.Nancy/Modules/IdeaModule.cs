@@ -13,11 +13,12 @@ namespace Ideastrike.Nancy.Modules
             Get["/{id}"] = parameters =>
                                {
                                    int id = parameters.id;
-                                   Idea idea = ideas.GetIdea(id);
-                                   if (idea == null)
+                                   Idea idea = ideas.Get(id);
+								   if (idea == null)
                                        return View["Shared/404"];
 
                                    return View["Idea/Index", idea];
+
                                };
 
             Post["/"] = _ =>
@@ -29,14 +30,14 @@ namespace Ideastrike.Nancy.Modules
                                 Description = Request.Form.Description,
                             };
 
-                ideas.AddIdea(i);
+                ideas.Add(i);
 
                 return Response.AsRedirect("/idea/" + i.Id);
             };
 
             Get["/{id}/vote/{userid}"] = parameters =>
             {
-                Idea idea = ideas.GetIdea(parameters.id);
+                Idea idea = ideas.Get(parameters.id);
                 ideas.Vote(idea, parameters.userid, 1);
 
                 return Response.AsJson(new
@@ -49,7 +50,7 @@ namespace Ideastrike.Nancy.Modules
             Get["/{id}/delete"] = parameters =>
             {
                 int id = parameters.id;
-                ideas.DeleteIdea(id);
+                ideas.Delete(id);
                 return string.Format("Deleted Item {0}", id);
             };
         }
