@@ -24,7 +24,7 @@ namespace Ideastrike.Nancy.Modules
                                     Time = DateTime.UtcNow,
                                     Text = Request.Form.feature
                                 };
-                _features.AddFeature(id, feature);
+                _features.Add(id, feature);
 
                 return Response.AsRedirect(string.Format("/idea/{0}#{1}", id, feature.Id));
             };

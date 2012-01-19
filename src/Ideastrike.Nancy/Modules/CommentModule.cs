@@ -33,7 +33,7 @@ namespace Ideastrike.Nancy.Modules
                                     Time = DateTime.UtcNow,
                                     Text = Request.Form.comment
                                 };
-                _activities.AddActivity(id, comment);
+                _activities.Add(id, comment);
 
                 // why not return JSON here and leave it up to client to render inline?
                 return Response.AsRedirect(string.Format("/idea/{0}#{1}", id, comment.Id));

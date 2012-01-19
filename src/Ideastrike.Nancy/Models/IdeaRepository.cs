@@ -12,18 +12,18 @@ namespace Ideastrike.Nancy.Models
             this.db = db;
         }
 
-        public IEnumerable<Idea> GetAllIdeas()
+        public IEnumerable<Idea> GetAll()
         {
             return (db.Ideas.ToList());
         }
 
-        public void AddIdea(Idea idea)
+        public void Add(Idea idea)
         {
             db.Ideas.Add(idea);
             db.SaveChanges();
         }
 
-        public void DeleteIdea(int id)
+        public void Delete(int id)
         {
             var idea = db.Ideas.FirstOrDefault(i => i.Id == id);
             db.Ideas.Remove(idea);
@@ -31,7 +31,7 @@ namespace Ideastrike.Nancy.Models
 
         }
 
-        public Idea GetIdea(int id)
+        public Idea Get(int id)
         {
             return db.Ideas
                 .Include("Activities")
@@ -39,10 +39,10 @@ namespace Ideastrike.Nancy.Models
                 .FirstOrDefault(i => i.Id == id);
         }
 
-        public void UpdateIdea(Idea idea)
+        public void Update(Idea idea)
         {
             var tmpIdea = db.Ideas.Single(i => i.Id == idea.Id);
-            tmpIdea = idea;
+            tmpIdea = idea; // wha?
             db.SaveChanges();
         }
 
@@ -55,16 +55,12 @@ namespace Ideastrike.Nancy.Models
                                    Value = value
                                });
 
-            UpdateIdea(idea);
+            Update(idea);
         }
 
         public int Count
         {
-            get
-            {
-                {
-                    return db.Ideas.Count();
-                }
+            get { return db.Ideas.Count(); }
             }
         }
     }

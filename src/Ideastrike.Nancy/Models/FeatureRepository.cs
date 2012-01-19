@@ -12,12 +12,12 @@ namespace Ideastrike.Nancy.Models
             this.db = db;
         }
 
-        public Feature GetFeature(int id)
+        public Feature Get(int id)
         {
             return db.Features.FirstOrDefault(i => i.Id == id);
         }
 
-        public bool AddFeature(int ideaid, Feature feature)
+        public bool Add(int ideaid, Feature feature)
         {
             var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaid);
             if (idea == null)

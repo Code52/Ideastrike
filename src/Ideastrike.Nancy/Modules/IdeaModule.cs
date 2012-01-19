@@ -26,7 +26,7 @@ namespace Ideastrike.Nancy.Modules
             Get["/{id}"] = parameters =>
                                {
                                    int id = parameters.id;
-                                   Idea idea = ideas.GetIdea(id);
+                                   Idea idea = ideas.Get(id);
 								   if (idea == null)
                                        return View["Shared/404"];
 
@@ -53,7 +53,7 @@ namespace Ideastrike.Nancy.Modules
                                 Description = Request.Form.Description,
                             };
 
-                ideas.AddIdea(i);
+                ideas.Add(i);
 
                 return Response.AsRedirect("/idea/" + i.Id);
             };
@@ -62,7 +62,7 @@ namespace Ideastrike.Nancy.Modules
             // NOTE: should this be a POST instead of a GET?
             Get["/{id}/vote/{userid}"] = parameters =>
             {
-                Idea idea = ideas.GetIdea(parameters.id);
+                Idea idea = ideas.Get(parameters.id);
                 ideas.Vote(idea, parameters.userid, 1);
 
                 return Response.AsJson(new
@@ -90,7 +90,7 @@ namespace Ideastrike.Nancy.Modules
             Get["/{id}/delete"] = parameters =>
             {
                 int id = parameters.id;
-                ideas.DeleteIdea(id);
+                ideas.Delete(id);
                 // TODO: return a JSON result?
                 return string.Format("Deleted Item {0}", id);
             };
