@@ -11,7 +11,7 @@ namespace Ideastrike.Nancy.Models
         {
             Activities = new Collection<Activity>();
             Votes = new Collection<Vote>();
-			Features = new Collection<Features>();
+			Features = new Collection<Feature>();
         }
 
         [Key]
