@@ -105,23 +105,25 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
- <Compile Include="DevelopmentDatabaseInitializer.cs" />
+    <Compile Include="DevelopmentDatabaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
-    <Compile Include="Models\ActivityRepository.cs" />
+    <Compile Include="Models\Repositories\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\FeatureRepository.cs" />
-    <Compile Include="Models\IFeatureRepository.cs" />
+    <Compile Include="Models\Repositories\FeatureRepository.cs" />
+    <Compile Include="Models\Repositories\IFeatureRepository.cs" />
     <Compile Include="Models\Feature.cs" />
     <Compile Include="Models\GitHubActivity.cs" />
-    <Compile Include="Models\IActivityRepository.cs" />
+    <Compile Include="Models\Repositories\IActivityRepository.cs" />
     <Compile Include="Models\Idea.cs" />
-    <Compile Include="Models\IdeaRepository.cs" />
+    <Compile Include="Models\Repositories\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />
-    <Compile Include="Models\IIdeaRepository.cs" />
+    <Compile Include="Models\Repositories\IIdeaRepository.cs" />
+    <Compile Include="Models\Repositories\ISettingsRepository.cs" />
+    <Compile Include="Models\Repositories\SettingsRepository.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vote.cs" />
