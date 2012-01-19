@@ -61,7 +61,6 @@ namespace Ideastrike.Nancy.Models
         public int Count
         {
             get { return db.Ideas.Count(); }
-            }
         }
     }
 }
