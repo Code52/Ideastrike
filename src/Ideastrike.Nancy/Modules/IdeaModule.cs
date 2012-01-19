@@ -12,7 +12,7 @@ namespace Ideastrike.Nancy.Modules
                                {
                                    int id = parameters.id;
                                    Idea idea = ideas.GetIdea(id);
-                                   return View["Idea/Index", new { idea.Id, idea.Title, idea.Description, Activities = idea.Activities }];
+                                   return View["Idea/Index", new { idea.Id, idea.Title, idea.Description, Features = idea.Features, Activities = idea.Activities }];
                                };
 
             Post["/"] = _ =>
