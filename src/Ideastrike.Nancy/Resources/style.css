@@ -73,14 +73,19 @@ border: 0;
 
 .sidebox 
 {
-    padding: 1px;margin: 10px;
+
     width: 85px;
     text-align: center;
-    background: #F3F3F3;
+   
+}
+.sidebox .voteinfo {  background: #F3F3F3;
     border: 1px solid #E4E4E4;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
-    border-radius: 6px;
-}
-.votebox form { margin: 0px;}
-.votebox form input { margin-bottom: 0px; }
+    padding: 5px;
+    border-radius: 6px;margin: 10px;margin-bottom: 5px;}
+.voteinfo h3 { line-height: 1em;}
+.sidebox form button { width: 65px;height: 25px;}
+.ideaheader { padding-top: 16px;line-height: 1em;}
+.ideadate { font-size: 0.8em;text-transform: uppercase;}
+.ideadesc { color: black;}

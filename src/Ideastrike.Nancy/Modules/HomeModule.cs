@@ -24,7 +24,7 @@ namespace Ideastrike.Nancy.Modules
             _settings = settings;
             Get["/"] = _ => ListIdeas(_ideas.GetAll(), SelectedTab.Popular);
             Get["/top"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Votes.Count), SelectedTab.Hot);
-            Get["/new"] = _ => ListIdeas(_ideas.GetAll().OrderBy(i => i.Time), SelectedTab.New);
+            Get["/new"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Time), SelectedTab.New);
         }
 
         Response ListIdeas(IEnumerable<Idea> ideas, SelectedTab selected)
