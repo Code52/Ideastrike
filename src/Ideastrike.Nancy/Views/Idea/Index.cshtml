@@ -1,4 +1,5 @@
-﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿@using Ideastrike.Nancy.Helpers
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
@@ -32,7 +33,7 @@
         @foreach (var a in Model.Features)
         {
             <li>
-                @a.Text<br />
+                 @MarkdownHelper.Markdown(a.Text)<br />
                 <sub>@a.Time</sub> </li>
         }
     </ul>
