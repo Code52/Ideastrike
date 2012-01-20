@@ -4,14 +4,16 @@
 }
 <div class="row">
     <div class="span10">
-        <h2>Activity Feed</h2>
+        <h1>@Model.Title</h1>
+        @Model.WelcomeMessage
 
+        <h2>Activity Feed</h2>
         <!-- TODO: Feed -->
     </div>
     <div class="span4">
         <h3>Popular Ideas</h3>
         <ul>
-            @foreach (var i in Model)
+            @foreach (var i in Model.Ideas)
             {
                 <li>
                     <a href="/idea/@i.Id">@i.Title</a><br />

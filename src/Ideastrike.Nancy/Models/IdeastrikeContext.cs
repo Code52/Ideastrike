@@ -14,5 +14,6 @@ namespace Ideastrike.Nancy.Models
         public DbSet<Feature> Features { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<Setting> Settings { get; set; }
     }
 }
