@@ -10,7 +10,7 @@ namespace Ideastrike.Nancy
         {
             context.Ideas.Add(new Idea
                                   {
-                                      Time = DateTime.Now,
+                                      Time = DateTime.UtcNow,
                                       Author = new User { Id = 1, Username = "aeoth" },
                                       Title = "So Meta",
                                       Description = "Put an idea in your idea so you can idea when you idea",
@@ -18,7 +18,7 @@ namespace Ideastrike.Nancy
 
             context.Ideas.Add(new Idea
             {
-                Time = DateTime.Now,
+                Time = DateTime.UtcNow,
                 Author = new User { Id = 2, Username = "shiftkey" },
                 Title = "Lorem Ipsum",
                 Description = "This is also another idea",

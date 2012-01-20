@@ -44,20 +44,36 @@
     @foreach (var i in Model.Ideas)
     {
         <li>
-            <div class="pull-left votebox">
+            <div class="pull-left sidebox">
                 <form>
-                    <h3 id="votecount">@i.Votes.Count</h3>
-                    votes<br />
-                    <br />
-                    <input type="button" value="vote" onclick="vote()" />
+                    <div class="voteinfo">
+                        <h3 id="votecount">@i.Votes.Count</h3>
+                        votes
+                    </div>
+                    <button type="button" class="btn" onclick="vote(@i.Id)">vote</button>
                 </form>
             </div>
 
-            <h3><a href="/idea/@i.Id">@i.Title</a></h3>
-            @MarkdownHelper.Markdown(i.Description)
-            @i.Time
-
+            <h3 class="ideaheader"><a href="/idea/@i.Id">@i.Title</a></h3>
+            <div class="ideadate">@FriendlyTimeHelper.Parse(i.Time)</div>
+            <div class="ideadesc">@MarkdownHelper.Markdown(i.Description)</div>
+            
             <div class="clearfix"></div>
         </li> 
     }
 </ul>
+
+@section PageScript {
+    <script>
+        function vote(id) {
+            $.ajax({
+                url: "/idea/" + id +"/vote/9",
+                context: document.body,
+                success: function(data) {
+                    /* This is really nasty, surely there is a better way? */
+                    $("#votecount").replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
+                }
+            });
+        }
+    </script>
+}
