@@ -99,6 +99,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\respond.min.js" />
+    <Content Include="Resources\social.js" />
     <Content Include="Resources\style.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
