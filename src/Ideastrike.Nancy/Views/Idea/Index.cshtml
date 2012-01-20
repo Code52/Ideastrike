@@ -2,45 +2,57 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
-<div class="pull-right votebox">
-    <form>
-    <!-- Yes, I know this isn't going to be correct -->
-    <h3 id="votecount">@Model.Votes.Count</h3>
-    votes<br />
-    <br />
-    <input type="button" value="vote" onclick="vote()" />
-    </form>
+<div class="pull-right">
+    <div class="sidebox">
+        <form>
+        <!-- Yes, I know this isn't going to be correct -->
+        <h3 id="votecount">@Model.Votes.Count</h3>
+        votes<br />
+        <br />
+        <input type="button" value="vote" onclick="vote()" />
+        </form>
+    </div>
+    <div class="sidebox">
+        <div>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-text="Idea: @Model.Title - @Model.Description" data-hashtags="ideastrike">Tweet this idea!</a>
+        </div>
+        <div id="fb-root"></div><div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+    </div>
 </div>
+
 <h1>@Model.Title</h1>
-@Model.Description
+    @Model.Description
+
 <hr />
 @if (Model.Features != null)
 { 
-    <h4>Features</h4>
+    <h4>
+        Features</h4>
     <ul id="features">
         @foreach (var a in Model.Features)
         {
             <li>
                 @a.Text<br />
-                <sub>@a.Time</sub>
-            </li>
+                <sub>@a.Time</sub> </li>
         }
     </ul>
 }
 else
 {
-    <h4>No feature requests yet, add the first one!</h4>
+    <h4>
+        No feature requests yet, add the first one!</h4>
 }
-
 <form action="/idea/@Model.Id/feature" method="POST">
 <div>
-    <label for="feaure">feature request</label>
-    <input type="text" id="feature" name="feature" ></input><br /><br />
-    <label for="submit"></label>
+    <label for="feaure">
+        feature request</label>
+    <input type="text" id="feature" name="feature"></input><br />
+    <br />
+    <label for="submit">
+    </label>
     <input type="submit" />
 </div>
 </form>
-
 <hr />
 @if (Model.Activities != null)
 { 
@@ -83,5 +95,24 @@ else
                 }
             });
         }
+
+        !function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        } (document, "script", "twitter-wjs");
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        } (document, 'script', 'facebook-jssdk'));
     </script>
 }
