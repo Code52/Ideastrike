@@ -11,7 +11,7 @@ namespace Ideastrike.Nancy.Modules
         public AdminModule(IdeastrikeContext dbContext, ISettingsRepository settings)
             : base("/admin")
         {
-            Get["/"] = _ => "";
+            Get["/"] = _ => View["Admin/Index", settings];
             Get["/moderation"] = _ => "";
             Get["/search"] = _ => "";
             Get["/forums"] = _ => "";

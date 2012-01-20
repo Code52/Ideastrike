@@ -14,7 +14,7 @@ namespace Ideastrike.Nancy.Models
 
         public IEnumerable<Idea> GetAll()
         {
-            return (db.Ideas.ToList());
+            return db.Ideas.Include("Votes");
         }
 
         public void Add(Idea idea)

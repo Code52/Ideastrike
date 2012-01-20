@@ -1,42 +1,63 @@
-﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿@using Ideastrike.Nancy.Helpers
+@using Ideastrike.Nancy.Modules
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
-<div class="row">
-    <div class="span10">
-        <h1>@Model.Title</h1>
-        @Model.WelcomeMessage
-
-        <h3>Submit a New Idea</h3>
-        <form action="/idea" method="POST">
-            <div class="clearfix">
-                <label for="Title">Title</label>
-                <div class="input">
-                    <input id="Title" name="Title" type="text" />
-                </div>
-            </div>
-        
-            <div class="clearfix">
-                <label for="Description">Description</label>
-                <div class="input">
-                    <textarea id="Description" name="Description" rows="10"></textarea>
-                </div>
-            </div>
-            <div class="actions">
-                <button type="submit" class="btn primary">Submit</button>
-            </div>
-        </form>
-    </div>
-    <div class="span4">
-        <h3>Popular Ideas</h3>
-        <ul>
-            @foreach (var i in Model.Ideas)
-            {
-                <li>
-                    <a href="/idea/@i.Id">@i.Title</a><br />
-                    @i.Time
-                </li> 
-            }
-        </ul>
+<h1>@Model.Title</h1>
+@MarkdownHelper.Markdown(Model.WelcomeMessage)
+<h3>Submit a New Idea</h3>
+<form action="/idea" method="POST">
+<div class="clearfix">
+    <label for="Title">Title</label>
+    <div class="input">
+        <input id="Title" name="Title" type="text" />
     </div>
 </div>
+<div class="clearfix">
+    <label for="Description">Description</label>
+    <div class="input">
+        <textarea id="Description" name="Description" rows="10"></textarea>
+    </div>
+</div>
+<div class="actions">
+    <button type="submit" class="btn primary">Submit</button>
+</div>
+</form>
+<ul class="pills">
+    <li @if (Model.Selected == SelectedTab.Popular)
+        {@:class="active"
+        }
+        ><a href="/">Popular</a></li>
+    <li @if (Model.Selected == SelectedTab.Hot)
+        {@:class="active"
+        }
+        ><a href="/top">Top</a></li>
+
+    <li @if (Model.Selected == SelectedTab.New)
+        {@:class="active"
+        }>
+        <a href="/new">New</a>
+    </li>
+</ul>
+<ul id="ideas">
+    @foreach (var i in Model.Ideas)
+    {
+        <li>
+            <div class="pull-left votebox">
+                <form>
+                    <h3 id="votecount">@i.Votes.Count</h3>
+                    votes<br />
+                    <br />
+                    <input type="button" value="vote" onclick="vote()" />
+                </form>
+            </div>
+
+            <h3><a href="/idea/@i.Id">@i.Title</a></h3>
+            @MarkdownHelper.Markdown(i.Description)
+            @i.Time
+
+            <div class="clearfix"></div>
+        </li> 
+    }
+</ul>
