@@ -5,13 +5,14 @@ using Nancy;
 using Xunit;
 
 
-namespace IdeaStrike.Tests.HomeModuleTests
+namespace IdeaStrike.Tests.IdeaModuleTests
 {
-    public class when_viewing_the_home_page : IdeaStrikeSpecBase
+    public class when_viewing_the_idea_page : IdeaStrikeSpecBase
     {
-        public when_viewing_the_home_page()
+
+        public when_viewing_the_idea_page()
         {
-            var testRequest = GetTestRequest("/");
+            var testRequest = GetTestRequest("/idea/0/");
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 

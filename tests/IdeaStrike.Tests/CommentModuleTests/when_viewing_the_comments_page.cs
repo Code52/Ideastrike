@@ -5,20 +5,20 @@ using Nancy;
 using Xunit;
 
 
-namespace IdeaStrike.Tests.HomeModuleTests
+namespace IdeaStrike.Tests.CommentModuleTests
 {
-    public class when_viewing_the_home_page : IdeaStrikeSpecBase
+    public class when_viewing_the_comments_page : IdeaStrikeSpecBase
     {
-        public when_viewing_the_home_page()
+        public when_viewing_the_comments_page()
         {
-            var testRequest = GetTestRequest("/");
+            var testRequest = PostTestRequest("/idea/0/comment/");
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 
         [Fact]
         public void it_should_set_the_status_code_to_ok()
         {
-            Assert.Equal(HttpStatusCode.OK, testResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.SeeOther, testResponse.StatusCode);
         }
     }
 }

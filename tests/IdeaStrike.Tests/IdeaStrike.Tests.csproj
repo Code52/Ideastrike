@@ -64,7 +64,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminModuleTests\when_viewing_the_admin_page.cs" />
+    <Compile Include="CommentModuleTests\when_viewing_the_comments_page.cs" />
+    <Compile Include="FeatureModuleTests\when_viewing_the_feature_page.cs" />
     <Compile Include="HomeModuleTests\when_viewing_the_home_page.cs" />
+    <Compile Include="IdeaModuleTests\when_viewing_the_idea_page.cs" />
     <Compile Include="IdeaStrikeSpecBase.cs" />
     <Compile Include="IdeaStrikeTestBootStrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

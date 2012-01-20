@@ -21,6 +21,21 @@ namespace IdeaStrike.Tests
             ideaStrikeTestBootstrapper.Initialise();
             engine = ideaStrikeTestBootstrapper.GetEngine();
         }
+
+        private static Request CreateTestRequest(string httpMethod, string route)
+        {
+            return new Request(httpMethod, route, "http");
+        }
+
+        protected static Request GetTestRequest(string route)
+        {
+            return CreateTestRequest("Get", route);
+        }
+
+        public static Request PostTestRequest(string route)
+        {
+            return CreateTestRequest("POST", route);
+        }
     }
 }
 
