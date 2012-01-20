@@ -48,6 +48,9 @@ namespace Ideastrike.Nancy.Models
 
         public void Vote(Idea idea, int userId, int value)
         {
+            if (db.Votes.Any(v => v.UserId == userId && v.IdeaId == idea.Id))
+                return;
+
             idea.Votes.Add(new Vote
             {
                 IdeaId = idea.Id,
