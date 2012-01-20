@@ -47,7 +47,7 @@
             <div class="pull-left sidebox">
                 <form>
                     <div class="voteinfo">
-                        <h3 id="votecount">@i.Votes.Count</h3>
+                        <h3 id="votecount@(i.Id)">@i.Votes.Count</h3>
                         votes
                     </div>
                     <button type="button" class="btn" onclick="vote(@i.Id)">vote</button>
@@ -71,7 +71,7 @@
                 context: document.body,
                 success: function(data) {
                     /* This is really nasty, surely there is a better way? */
-                    $("#votecount").replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
+                    $("#votecount"+ id).replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
                 }
             });
         }
