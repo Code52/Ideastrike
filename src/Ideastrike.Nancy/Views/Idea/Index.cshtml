@@ -15,7 +15,10 @@
     </div>
     <div class="sidebox">
         <div>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-text="Idea: @Model.Title - @Model.Description" data-hashtags="ideastrike">Tweet this idea!</a>
+            <a href="https://twitter.com/share" 
+               class="twitter-share-button" 
+               data-text="Idea: @idea.Title - @idea.Description" 
+               data-hashtags="ideastrike">Tweet this idea!</a>
         </div>
         <div id="fb-root"></div><div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
     </div>
@@ -44,14 +47,12 @@ else
 }
 <form action="/idea/@idea.Id/feature" method="POST">
 <div>
-    <label for="feature">
     <label for="feature">feature request</label>
     <!--  TODO: can we hook in some anti-forgery bits? -->
-    <input type="text" id="feature" name="feature" ></input><br /><br />
+    <input type="text" id="feature" name="feature" /><br /><br />
     <br />
     <input type="hidden" name="userId" value="@Model.UserId"/>
-    <label for="submit">
-    </label>
+    <label for="submit"></label>
     <input type="submit" />
 </div>
 </form>
