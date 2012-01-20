@@ -4,8 +4,10 @@
 }
 <div class="row">
     <div class="span10">
-        <h2>Submit a New Idea</h2><br />
+        <h1>@Model.Title</h1>
+        @Model.WelcomeMessage
 
+        <h3>Submit a New Idea</h3>
         <form action="/idea" method="POST">
             <div class="clearfix">
                 <label for="Title">Title</label>
@@ -28,7 +30,7 @@
     <div class="span4">
         <h3>Popular Ideas</h3>
         <ul>
-            @foreach (var i in Model)
+            @foreach (var i in Model.Ideas)
             {
                 <li>
                     <a href="/idea/@i.Id">@i.Title</a><br />
