@@ -33,8 +33,8 @@
 @if (idea.Features.Count > 0)
 { 
     <div class="features">
-        <h4>
-            Features</h4>
+        <h3>
+            Features</h3>
         <ul>
             @foreach (var a in idea.Features)
             {
@@ -59,17 +59,28 @@
 }
 else
 {
-    <h4>
-        No feature requests yet, add the first one!</h4>
+    <h3>
+        No features suggested yet, be the first!</h3>
 }
 <form action="/idea/@idea.Id/feature" method="POST">
 <div class="add-feature">
     <h4>
         Got something to add?</h4>
     <div class="options">
-        <button type="button" disabled="disabled" class="btn">
+        <button type="button" 
+                disabled="disabled" 
+                id="edit-new-feature"
+                class="btn edit" 
+                data-other="#preview-new-feature"
+                data-editor="#new-feature"
+                data-view="#new-feature-view">
             Edit</button>
-        <button type="button" class="btn">
+        <button type="button" 
+                id="preview-new-feature"
+                class="btn preview"
+                data-other="#edit-new-feature"
+                data-editor="#new-feature" 
+                data-view="#new-feature-view">
             Preview</button>
     </div>
     <!-- TODO: i want this text to change dynamically 
@@ -82,7 +93,10 @@ else
     <label for="feature" id="label-text">
         how about ...</label>
     <!--  TODO: can we hook in some anti-forgery bits? -->
-    <textarea id="feature" name="feature"></textarea><br />
+    <textarea id="new-feature" name="feature"></textarea><br />
+    <div id="new-feature-view">
+    </div>
+    <br />
     <br />
     <br />
     <input type="hidden" name="userId" value="@Model.UserId"/>
@@ -96,7 +110,7 @@ else
 { 
     <div class="comments">
         <h4>
-            Activity</h4>
+            Comments</h4>
         <ul>
             @foreach (var a in idea.Activities)
             {
@@ -136,8 +150,8 @@ else
         <button type="button" class="btn">
             Preview</button>
     </div>
-
-    <label for="comment">leave a comment</label>
+    <label for="comment">
+        leave a comment</label>
     <textarea id="comment" name="comment"></textarea><br />
     <input type="hidden" name="userId" value="@Model.UserId"/>
     <br />
@@ -158,6 +172,40 @@ else
                 }
             });
         }
+
+        $(document).ready(function () {
+            $(".preview").click(previewText);
+            $(".edit").click(editText);
+        });
+
+        function previewText() {
+            var elem = $(this);
+            var other = $(elem.data("other"));
+            var editor = $(elem.data("editor"));
+            var view = $(elem.data("view"));
+
+            var converter = new Showdown.converter();
+            var formatted = converter.makeHtml(editor.val());
+            view.html(formatted);
+            editor.hide();
+            view.show();
+            elem.attr("disabled", "disabled");
+            other.removeAttr("disabled");
+        }
+        
+        function editText() {
+            var elem = $(this);
+            var other = $(elem.data("other"));
+            var editor = $(elem.data("editor"));
+            var view = $(elem.data("view"));
+            // clear markdown
+            view.html('');
+            editor.show();
+            view.hide();
+            elem.attr("disabled", "disabled");
+            other.removeAttr("disabled");
+        }
     </script>
     <script src="/Resources/social.js"></script>
+    <script src="/Resources/showdown.js"></script>
 }
