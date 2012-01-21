@@ -7,7 +7,7 @@ namespace Ideastrike.Nancy.Models
         public string AuthorUrl { get; set; }
         public string Sha { get; set; }
         public string CommitUrl { get; set; }
-        public string AuthorName { get; set; }
         public string GravatarUrl { get; set; }
+        public string AuthorName { get; set; }
     }
 }

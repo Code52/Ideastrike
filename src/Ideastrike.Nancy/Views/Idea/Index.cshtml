@@ -106,7 +106,7 @@ else
 
 <h4>Activity Feed</h4>
 <div id="activity-feed">
-    <ul></ul>
+    <ol></ol>
 </div>
 
 <div class="expander" data-element="#add-comment">
@@ -179,11 +179,11 @@ else
             $(".hide-on-start").hide();
             $(".expander").click(toggleExpander)
                 .css("cursor", "pointer");
-            loadFeed($("#activity-feed ul"), @idea.Id);
+            loadFeed($("#activity-feed ol"), @idea.Id);
         });
         
-        var comment_template = '<li><div class="row"><div class="span8 text">{{ text }}</div></div><div class="row"><div class="span1 gravatar"><img src="{{GravatarUrl}}" /></div><div class="span8 author">{{Author}}</div><sub>{{FriendlyTime}}</sub></div></li>';
-        var github_template = '<li class="commit commit-group-item js-navigation-item js-details-container"><img class="gravatar" height="36" src="{{GravatarUrl}}" width="36"><p class="commit-title "><a href="{{CommitUrl}}" class="message">{{Message}}</a></p><div class="commit-meta"><div class="commit-links"><span style="display:none" id="clippy_1820" class="clippy-text">{{Sha}}</span><a href="{{hyperlink}}" class="gobutton " data-key="c"><span class="sha">ed5704e73a</span></a><a href="{{hyperlink}}" class="browse-button" title="Browse the code at this point in the history" rel="nofollow">Browse code</a></div><div class="authorship"><span class="author-name"><a href="{{AuthorUrl}}">{{AuthorName}}</a></span>authored <time class="js-relative-date" datetime="2012-01-20T23:59:28-08:00" title="2012-01-20 23:59:28">{{friendly-time}}</time></div></div></li>';
+        var comment_template = '<li><div class="row"><div class="span8 text">{{ Text }}</div></div><div class="row"><div class="span1 gravatar"><img src="{{GravatarUrl}}" /></div><div class="span8 author">{{Author}}</div><sub>{{FriendlyTime}}</sub></div></li>';
+        var github_template = '<li class="commit commit-group-item js-navigation-item js-details-container"><img class="gravatar" height="36" src="{{GravatarUrl}}" width="36"><p class="commit-title "><a href="{{CommitUrl}}" class="message">{{Text}}</a></p><div class="commit-meta"><div class="commit-links"><span style="display:none" id="clippy_1820" class="clippy-text">{{Sha}}</span><a href="{{hyperlink}}" class="gobutton " data-key="c"><span class="sha">ed5704e73a</span></a><a href="{{hyperlink}}" class="browse-button" title="Browse the code at this point in the history" rel="nofollow">Browse code</a></div><div class="authorship"><span class="author-name"><a href="{{AuthorUrl}}">{{AuthorName}}</a></span>&nbsp;authored&nbsp;<time class="js-relative-date" datetime="2012-01-20T23:59:28-08:00" title="2012-01-20 23:59:28">{{friendly-time}}</time></div></div></li>';
 
         function loadFeed(elem, id) {
                $.ajax({

@@ -6,7 +6,8 @@ namespace Ideastrike.Nancy.Models
     public class Activity
     {
         [Key]
-        public virtual int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         public int IdeaId { get; set; }
 

@@ -17,14 +17,10 @@ namespace Ideastrike.Nancy.Models.ViewModels
             TotalVotes = idea.Votes.Count;
 
             Features = idea.Features.Select(f => new FeatureViewModel(f)).ToList();
-            Activities = idea.Activities.Select(f => new ActivityViewModel(f)).ToList();
         }
 
         public IEnumerable<FeatureViewModel> Features { get; set; }
         
-        [Obsolete("Make a secondary call to fetch these and render dynamically")]
-        public IEnumerable<ActivityViewModel> Activities { get; set; }
-
         public bool UserHasVoted { get; set; }
         public int TotalVotes { get; private set; }
         public string Title { get; private set; }
