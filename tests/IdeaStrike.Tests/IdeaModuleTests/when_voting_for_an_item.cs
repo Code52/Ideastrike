@@ -11,7 +11,7 @@ namespace IdeaStrike.Tests.IdeaModuleTests
 
         public when_voting_for_an_item()
         {
-            var testRequest = GetTestRequest("/idea/0/vote/" + ideaGuid.ToString());
+            var testRequest = PostTestRequest("/idea/0/vote/" + ideaGuid.ToString());
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 
