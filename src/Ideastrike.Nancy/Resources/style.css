@@ -18,7 +18,7 @@
                box-shadow:0 1px 10px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);}
 textarea {width: 350px;height: 200px;}
 label { margin-right: 15px;}
-#comments { list-style-type: none;margin: 0px;padding: 0px;}
+#comments, #ideas { list-style-type: none;margin: 0px;padding: 0px;}
 #comments li {margin-left: 0px; margin-bottom: 25px;}
 
 /* Override some defaults */
@@ -73,12 +73,19 @@ border: 0;
 
 .sidebox 
 {
-    padding: 1px;margin: 10px;
+
     width: 85px;
     text-align: center;
-    background: #F3F3F3;
+   
+}
+.sidebox .voteinfo {  background: #F3F3F3;
     border: 1px solid #E4E4E4;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
-    border-radius: 6px;
-}
+    padding: 5px;
+    border-radius: 6px;margin: 10px;margin-bottom: 5px;}
+.voteinfo h3 { line-height: 1em;}
+.sidebox form button { width: 65px;height: 25px;}
+.ideaheader { padding-top: 16px;line-height: 1em;}
+.ideadate { font-size: 0.8em;text-transform: uppercase;}
+.ideadesc { color: black;}

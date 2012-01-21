@@ -8,7 +8,7 @@ if "%config%" == "" (
 %WINDIR%\Microsoft.NET\Framework\v4.0.30319\msbuild src/Ideastrike.sln /p:Configuration="%config%" /m /v:M /fl /flp:LogFile=msbuild.log;Verbosity=Normal /nr:false
 
 :: remove all obj folder contents
-for /D %%f in (".\src\tests\*") do @(
+for /D %%f in (".\tests\*") do @(
 del /S /Q "%%f\obj\*"
 )
 
