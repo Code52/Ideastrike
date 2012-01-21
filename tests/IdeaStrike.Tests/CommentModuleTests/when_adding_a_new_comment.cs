@@ -11,7 +11,9 @@ namespace IdeaStrike.Tests.CommentModuleTests
     {
         public when_adding_a_new_comment()
         {
-            var testRequest = PostTestRequest("/idea/0/comment/");
+            var testRequest = PostTestRequest("/comment/0/add");
+            testRequest.Form.userId = 1;
+            testRequest.Form.comment = "words";
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 
