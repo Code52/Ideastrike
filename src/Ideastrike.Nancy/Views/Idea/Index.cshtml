@@ -1,13 +1,13 @@
-﻿@using Ideastrike.Nancy.Helpers
-﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+@{ var idea = Model.Idea; }
 <div class="pull-right">
     <div class="sidebox">
         <form>
             <div class="voteinfo">
-                <h3 id="votecount">@Model.Votes.Count</h3>
+                <h3 id="votecount">@idea.TotalVotes</h3>
                 votes
             </div>
             <button class="btn" type="button" onclick="vote()">vote</button>
@@ -15,103 +15,208 @@
     </div>
     <div class="sidebox">
         <div>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-text="Idea: @Model.Title - @Model.Description" data-hashtags="ideastrike">Tweet this idea!</a>
+            <!-- TODO: get URL for this page rather than description -->
+            <a href="https://twitter.com/share" 
+               class="twitter-share-button" 
+               data-text="Idea: @idea.Title" 
+               data-hashtags="ideastrike">Tweet this idea!</a>
         </div>
-        <div id="fb-root"></div><div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+        <div id="fb-root">
+        </div>
+        <div class="fb-like" data-send="false" data-layout="button_count" data-width="450"
+            data-show-faces="true">
+        </div>
     </div>
 </div>
-
-<h1>@Model.Title</h1>
-    @MarkdownHelper.Markdown(Model.Description)
-
+<h1>@idea.Title</h1>
+<div class="description">
+    @idea.Description
+</div>
 <hr />
-@if (Model.Features != null)
+@if (idea.Features.Count > 0)
 { 
-    <h4>
-        Features</h4>
-    <ul id="features">
-        @foreach (var a in Model.Features)
-        {
-            <li>
-                 @MarkdownHelper.Markdown(a.Text)<br />
-                <sub>@a.Time</sub> </li>
-        }
-    </ul>
+    <div class="features">
+        <h3>
+            Features</h3>
+        <ul>
+            @foreach (var a in idea.Features)
+            {
+                <li>
+                    <div class="row">
+                        <div class="span8 text">@a.Text</div>
+                    </div>
+                    <div class="row">
+                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
+                        <div class="span8 author">@a.Author</div>
+                        <sub class="span8 time">@a.FriendlyTime</sub>
+                        <div class="comment">
+                            <!-- TODO: comment on a feature -->
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
 }
 else
 {
-    <h4>No feature requests yet, add the first one!</h4>
+    <h3>
+        No features suggested yet, be the first!</h3>
 }
-<form action="/idea/@Model.Id/feature" method="POST">
-<div>
-    <label for="feaure">feature request</label>
-    <input type="text" id="feature" name="feature"></input><br />
+<div class="expander" data-element="#add-feature">
+    <h4>
+        Got something to add?</h4>
+</div>
+<div id="add-feature" class="hide-on-start add-feature">
+    <form action="/idea/@idea.Id/feature" method="POST">
+    <div class="options">
+        <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
+            data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
+            Edit</button>
+        <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
+            data-editor="#new-feature" data-view="#new-feature-view">
+            Preview</button>
+    </div>
+    <!-- TODO: i want this text to change dynamically 
+            text to rotate through:
+            - how about ...
+            - it would be cool if ...
+            - can it also do ...
+            - etc
+            -->
+    <label for="feature" id="label-text">
+        how about ...</label>
+    <!--  TODO: can we hook in some anti-forgery bits? -->
+    <textarea id="new-feature" name="feature"></textarea><br />
+    <div id="new-feature-view">
+    </div>
     <br />
+    <br />
+    <br />
+    <input type="hidden" name="userId" value="@Model.UserId"/>
     <label for="submit">
     </label>
     <button class="btn primary" type="submit">Add Feature</button>
+    </form>
 </div>
-</form>
 <hr />
-@if (Model.Activities != null)
+@if (idea.Activities.Count > 0)
 { 
-    <h4>
-        Activity</h4>
-    <ul id="comments">
-        @foreach (var a in Model.Activities)
-        {
-            <li>
-                @a.Text<br />
-                <sub>@a.Time</sub> 
-            </li>
-        }
-    </ul>
+    <div class="comments">
+        <h4>Activity Feed</h4>
+        <ul>
+            @foreach (var a in idea.Activities)
+            {
+                <li>
+                    <!-- TODO: this is not suitable for all the formatt we want to support -->
+                    <div class="row">
+                        <div class="span8 text">@a.Text</div>
+                    </div>
+                    <div class="row">
+                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
+                        <div class="span8 author">@a.Author</div>
+                        <sub>@a.FriendlyTime</sub> 
+                    </div>
+                    <div class="comment">
+                        <!-- TODO: reply to an activity -->
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="comment">
+        <!-- TODO: new comment -->
+    </div>
+
 }
 else
 {
     <h4>No activity yet, add the first comment!</h4>
 }
-<form action="/idea/@Model.Id/comment" method="POST">
-<div>
+<div class="expander" data-element="#add-comment">
+    <h4>Leave a comment</h4>
+</div>
+<div id="add-comment" class="hide-on-start add-comment">
+    <form action="/comment/@idea.Id/add" method="POST">
+    <div class="options">
+        <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
+            data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
+            Edit</button>
+        <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
+            data-editor="#new-comment" data-view="#new-comment-view">
+            Preview</button>
+    </div>
     <label for="comment">
-        comment</label>
-    <textarea id="comment" name="comment"></textarea><br />
+        leave a comment</label>
+    <textarea id="new-comment" name="comment"></textarea><br />
+    <div id="new-comment-view">
+    </div>
+    <input type="hidden" name="userId" value="@Model.UserId"/>
     <br />
     <label for="submit">
     </label>
     <button class="btn primary" type="submit">Add Comment</button>
+    </form>
 </div>
-</form>
 @section PageScript {
     <script>
         function vote() {
             $.ajax({
-                url: "/idea/@Model.Id/vote/9",
+                url: "/idea/@idea.Id/vote/9",
                 context: document.body,
                 success: function (data) {
-                    /* This is really nasty, surely there is a better way? */
-                    $("#votecount").replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
+                    $("#votecount").text(data.NewVotes);
                 }
             });
         }
 
-        !function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (!d.getElementById(id)) {
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "//platform.twitter.com/widgets.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }
-        } (document, "script", "twitter-wjs");
+        $(document).ready(function () {
+            $(".preview").click(previewText);
+            $(".edit").click(editText);
+            $(".hide-on-start").hide();
+            $(".expander").click(toggleExpander)
+                          .css("cursor", "pointer");
+        });
 
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-            fjs.parentNode.insertBefore(js, fjs);
-        } (document, 'script', 'facebook-jssdk'));
+        function toggleExpander() {
+            var elem = $(this);
+            var other = $(elem.data("element"));
+
+            if (other.is(":visible")) {
+                other.hide();
+            } else {
+                other.show();
+            }
+        }
+
+        function previewText() {
+            var elem = $(this);
+            var other = $(elem.data("other"));
+            var editor = $(elem.data("editor"));
+            var view = $(elem.data("view"));
+
+            var converter = new Showdown.converter();
+            var formatted = converter.makeHtml(editor.val());
+            view.html(formatted);
+            editor.hide();
+            view.show();
+            elem.attr("disabled", "disabled");
+            other.removeAttr("disabled");
+        }
+
+        function editText() {
+            var elem = $(this);
+            var other = $(elem.data("other"));
+            var editor = $(elem.data("editor"));
+            var view = $(elem.data("view"));
+            // clear markdown
+            view.html('');
+            editor.show();
+            view.hide();
+            elem.attr("disabled", "disabled");
+            other.removeAttr("disabled");
+        }
     </script>
+    <script src="/Resources/social.js"></script>
+    <script src="/Resources/showdown.js"></script>
 }

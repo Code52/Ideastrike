@@ -11,6 +11,7 @@ namespace Ideastrike.Nancy.Models
         void Delete(int id);
         void Update(Idea idea);
         void Vote(Idea idea, int userId, int value);
+        
         int Count { get; }
     }
 }

@@ -1,0 +1,35 @@
+﻿.features, .comments {
+    margin-bottom: 20px;
+}
+
+.features ul, .comments ul {
+    margin: 0;
+}
+
+.features .gravatar, .comments .gravatar {
+    padding-left: 10px;
+}
+
+.features li, .comments li {
+    list-style-type: none;
+}
+
+.features .time, .comments .time {
+    margin-top: 10px;
+}
+
+.features .author, .features .author
+{
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.features .text, .comments .text {
+    font-size: 1.3em;
+    padding-bottom: 10px;
+}
+
+.add-feature .options, .add-comment .options  {
+    margin-left: 150px;
+    margin-bottom: 5px;   
+}

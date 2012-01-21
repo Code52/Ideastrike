@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Nancy;
+﻿using Nancy;
 using Xunit;
-using Moq;
-using Ideastrike.Nancy.Models;
 
 
 namespace IdeaStrike.Tests.IdeaModuleTests
