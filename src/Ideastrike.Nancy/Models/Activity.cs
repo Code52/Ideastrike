@@ -8,6 +8,8 @@ namespace Ideastrike.Nancy.Models
         [Key]
         public virtual int Id { get; set; }
 
+        public Idea Idea { get; set; }
+
         public DateTime Time { get; set; }
     }
 }

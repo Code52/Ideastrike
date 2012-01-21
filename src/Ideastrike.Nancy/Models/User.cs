@@ -14,6 +14,8 @@ namespace Ideastrike.Nancy.Models
 
         public string Identity { get; set; }
 
+        public bool IsActive { get; set; }
+
         [NotMapped]
         public IEnumerable<string> Claims { get; set; } // User Admin levels claims - https://github.com/NancyFx/Nancy/blob/master/src/Nancy.Demo.Authentication/AuthenticationBootstrapper.cs
     }

@@ -3,58 +3,77 @@
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>@Model.Title</title>
+    <meta name="viewport" content="width=device-width" />
+    @* TODO: Minimize, I usually use Squishit *@
+    <link href="@Url.Content("~/Resources/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Resources/media.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Resources/style.css")" rel="stylesheet" />
+    @RenderSection("HeadContent", false)
+    <script src="@Url.Content("~/Resources/modernizr-2.0.min.js")"></script>
+    <script src="@Url.Content("~/Resources/respond.min.js")"></script>
+    <script type="text/javascript">
+        (function () {
+            if (typeof window.janrain !== 'object') window.janrain = {};
+            window.janrain.settings = {};
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+            janrain.settings.tokenUrl = '@(string.Format(@"{0}login/token", HttpContext.Current.Request.Url))';
 
-  <title>IdeaStrike</title>
-  <meta name="viewport" content="width=device-width" />
+            function isReady() { janrain.ready = true; };
+            if (document.addEventListener) {
+                document.addEventListener("DOMContentLoaded", isReady, false);
+            } else {
+                window.attachEvent('onload', isReady);
+            }
 
-  @* TODO: Minimize, I usually use Squishit *@
-  <link href="@Url.Content("~/Resources/bootstrap.min.css")" rel="stylesheet" />
-  <link href="@Url.Content("~/Resources/media.css")" rel="stylesheet" />
-  <link href="@Url.Content("~/Resources/style.css")" rel="stylesheet" />
+            var e = document.createElement('script');
+            e.type = 'text/javascript';
+            e.id = 'janrainAuthWidget';
 
-  @RenderSection("HeadContent", false)
- 
-  <script src="@Url.Content("~/Resources/modernizr-2.0.min.js")"></script>
-  <script src="@Url.Content("~/Resources/respond.min.js")"></script>
+            if (document.location.protocol === 'https:') {
+                e.src = 'https://rpxnow.com/js/lib/code52/engage.js';
+            } else {
+                e.src = 'http://widget-cdn.rpxnow.com/js/lib/code52/engage.js';
+            }
+
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(e, s);
+        })();
+    </script>
 </head>
 <body>
     <div class="topbar">
-      <div class="fill">
-        <div class="container">
-          <a class="brand" href="/"></a>
-          <ul class="nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/">New Idea</a></li>
-            <li><a href="/">Ideas</a></li>
-          </ul>
-          <form action="/login" class="pull-right">
-            <input class="input-small" type="text" placeholder="Username">
-            <input class="input-small" type="password" placeholder="Password">
-            <button class="btn" type="submit">Sign in</button>
-          </form>
+        <div class="fill">
+            <div class="container">
+                <a class="brand" href="/"></a>
+                <ul class="nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">New Idea</a></li>
+                    <li><a href="/">Ideas</a></li>
+                </ul>
+                <div class="pull-right">
+                    <a class="janrainEngage" href="#">Sign In</a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    
     <div class="container">
         <div class="content">
             @RenderBody()
         </div>
-
         <footer>
-            <p>&copy; IdeaStrike 2012</p>
+            <p><a href=""https://github.com/code52/ideastrike">Powered by Ideastrike</a></p>
         </footer>
-
-    </div> <!-- /container -->
-
+    </div>
+    <!-- /container -->
     <!-- Script at the bottom for fast page loading -->
     <script src="@Url.Content("~/Resources/jquery-1.7.min.js")"></script>
-
     @RenderSection("PageScript", false)
 </body>
 </html>

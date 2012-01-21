@@ -44,6 +44,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="MarkdownDeep">
+      <HintPath>..\packages\MarkdownDeep.NET.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.9.0\lib\net40\Nancy.dll</HintPath>
@@ -73,6 +76,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Nancy.Viewengines.Razor.0.9.0\lib\net40\System.Web.Razor.dll</HintPath>
@@ -111,27 +115,38 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DevelopmentDatabaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="Helpers\FormsAuthentication.cs" />
     <Compile Include="Helpers\FormsAuthenticationConfiguration.cs" />
-    <Compile Include="Helpers\IUsernameMapper.cs" />
+    <Compile Include="Models\Repositories\IUserRepository.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
-    <Compile Include="Models\ActivityRepository.cs" />
+    <Compile Include="Models\Repositories\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Repositories\FeatureRepository.cs" />
+    <Compile Include="Models\Repositories\IFeatureRepository.cs" />
+    <Compile Include="Models\Feature.cs" />
     <Compile Include="Models\GitHubActivity.cs" />
-    <Compile Include="Models\IActivityRepository.cs" />
+    <Compile Include="Models\Repositories\IActivityRepository.cs" />
     <Compile Include="Models\Idea.cs" />
-    <Compile Include="Models\IdeaRepository.cs" />
+    <Compile Include="Models\Repositories\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />
-    <Compile Include="Models\IIdeaRepository.cs" />
+    <Compile Include="Models\Repositories\IIdeaRepository.cs" />
+    <Compile Include="Models\Repositories\ISettingsRepository.cs" />
+    <Compile Include="Models\Repositories\SettingsRepository.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UsernameMapper.cs" />
-    <Compile Include="Models\VotesToUser.cs" />
+    <Compile Include="Models\Repositories\UserRepository.cs" />
+    <Compile Include="Models\Vote.cs" />
+    <Compile Include="Modules\AdminModule.cs" />
+    <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="Modules\CommentModule.cs" />
+    <Compile Include="Modules\FeatureModule.cs" />
     <Compile Include="Modules\UserModule.cs" />
     <Compile Include="Modules\LoginModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
@@ -156,12 +171,23 @@
   <ItemGroup>
     <Content Include="Views\Idea\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Shared\404.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Feature\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Login\Error.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

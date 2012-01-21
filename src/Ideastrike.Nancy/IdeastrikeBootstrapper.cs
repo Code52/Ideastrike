@@ -1,5 +1,6 @@
 using Autofac;
 using Ideastrike.Nancy.Models;
+using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
@@ -8,7 +9,7 @@ namespace Ideastrike.Nancy
 {
     public class IdeastrikeBootstrapper : AutofacNancyBootstrapper
     {
-        protected override void  ConfigureApplicationContainer(Autofac.ILifetimeScope existingContainer)
+        protected override void ConfigureApplicationContainer(Autofac.ILifetimeScope existingContainer)
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<IdeastrikeContext>()
@@ -23,7 +24,15 @@ namespace Ideastrike.Nancy
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
-            builder.RegisterType<UsernameMapper>()
+            builder.RegisterType<FeatureRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            builder.RegisterType<SettingsRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            builder.RegisterType<UserRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
@@ -43,7 +52,7 @@ namespace Ideastrike.Nancy
                 new FormsAuthenticationConfiguration()
                 {
                     RedirectUrl = "~/login",
-                    UserMapper = container.Resolve<IUserMapper>(),
+                    UserMapper = container.Resolve<IUserRepository>(),
                 };
 
             FormsAuthentication.Enable(pipelines, formsAuthConfiguration);

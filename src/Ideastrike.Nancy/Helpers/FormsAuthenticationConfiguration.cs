@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Ideastrike.Nancy.Models;
 using Nancy.Authentication.Forms;
 using Nancy.Cryptography;
 
@@ -34,7 +35,7 @@ namespace Ideastrike
         /// <summary>
         /// Gets or sets the username/identifier mapper
         /// </summary>
-        public IUserMapper UserMapper { get; set; }
+        public IUserRepository UserMapper { get; set; }
 
         /// <summary>
         /// Gets or sets the cryptography configuration
