@@ -4,7 +4,7 @@ using Ideastrike.Nancy.Models;
 
 namespace Ideastrike.Nancy
 {
-    public class DevelopmentDatabaseInitializer : DropCreateDatabaseAlways<IdeastrikeContext>
+    public class DevelopmentDatabaseInitializer : DropCreateDatabaseIfModelChanges<IdeastrikeContext>
     {
         protected override void Seed(IdeastrikeContext context)
         {
