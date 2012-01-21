@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models.ViewModels;
@@ -62,11 +61,19 @@ namespace Ideastrike.Nancy.Modules
                                };
 
             // save result of edit to database
-            Post["/{id}/edit"] = _ =>
+            Post["/{id}/edit"] = parameters =>
             {
-                // TODO: update result in database 
-                // TODO: return redirect
-                return View["/idea/index", 1];
+                int id = parameters.id;
+                var idea = _ideas.Get(id);
+                if (idea == null)
+                    return View["404"];
+
+                idea.Title = Request.Form.Title;
+                idea.Description = Request.Form.Description;
+
+                _ideas.Update(idea);
+
+                return Response.AsRedirect(string.Format("/idea/{0}", idea.Id));
             };
 
             // save result of create to database
