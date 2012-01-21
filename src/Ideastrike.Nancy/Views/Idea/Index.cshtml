@@ -194,7 +194,7 @@ else
                     context: document.body,
                     success: function (data) {
                         updateVoteCount(data);
-                        elem.data("user-voted", "false");
+                        elem.data("voted", "false");
                         elem.text("vote");
                     }
                 });
