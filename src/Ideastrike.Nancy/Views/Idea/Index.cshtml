@@ -1,5 +1,4 @@
-﻿@using Ideastrike.Nancy.Helpers
-﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
@@ -30,7 +29,9 @@
     </div>
 </div>
 <h1>@idea.Title</h1>
-@idea.Description
+<div class="description">
+    @idea.Description
+</div>
 <hr />
 @if (idea.Features.Count > 0)
 { 
@@ -102,24 +103,24 @@ else
 @if (idea.Activities.Count > 0)
 { 
     <div class="comments">
-        <h4>
-            Comments</h4>
+        <h4>Activity Feed</h4>
         <ul>
             @foreach (var a in idea.Activities)
             {
                 <li>
+                    <!-- TODO: this is not suitable for all the formatt we want to support -->
                     <div class="row">
                         <div class="span8 text">@a.Text</div>
                     </div>
                     <div class="row">
                         <div class="span1 gravatar">
-                            <img src="@Model.TestHash" /></div>
-                        <div class="span8 author">
-                            shiftkey</div>
-                <sub>@a.Time</sub> </li>
+                            <img src="" />
+                        </div>
+                        <div class="span8 author">shiftkey</div>
+                        <sub>@a.Time</sub> 
                     </div>
                     <div class="comment">
-                        <!-- TODO: reply to a comment -->
+                        <!-- TODO: reply to an activity -->
                     </div>
                 </li>
             }
