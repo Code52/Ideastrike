@@ -1,0 +1,17 @@
+﻿.features li {
+    list-style-type: none;
+}
+
+.features .time {
+    margin-top: 10px;
+}
+
+.features .author 
+{
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.features .text {
+    font-size: 1.3em;
+}
