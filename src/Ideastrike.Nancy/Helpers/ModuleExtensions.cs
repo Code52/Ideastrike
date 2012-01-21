@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Ideastrike.Nancy.Models;
 using Nancy;
 using Nancy.Extensions;
 
@@ -76,6 +77,22 @@ namespace Ideastrike
         public static Response LogoutWithoutRedirect(this NancyModule module)
         {
             return FormsAuthentication.LogOutResponse();
+        }
+
+        public static bool IsLoggedIn(this NancyContext context)
+        {
+            return !(context == null || context.CurrentUser == null ||
+                     string.IsNullOrWhiteSpace(context.CurrentUser.UserName));
+        }
+
+        public static string Username(this NancyContext context)
+        {
+            return (context == null || context.CurrentUser == null || string.IsNullOrWhiteSpace(context.CurrentUser.UserName)) ? string.Empty : context.CurrentUser.UserName;
+        }
+
+        public static User GetCurrentUser(this NancyContext context, IUserRepository _users)
+        {
+            return _users.FindBy(u => u.UserName == context.CurrentUser.UserName).FirstOrDefault();
         }
     }
 }

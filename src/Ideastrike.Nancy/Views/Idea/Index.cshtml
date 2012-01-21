@@ -191,7 +191,7 @@ else
             if (hasVoted == "false") {
                 $.ajax({
                     type: "POST",
-                    url: "/idea/@idea.Id/vote/9",
+                    url: "/idea/@idea.Id/vote",
                     context: document.body,
                     success: function (data) {
                         updateVoteCount(data);

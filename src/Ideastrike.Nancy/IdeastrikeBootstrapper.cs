@@ -1,7 +1,6 @@
 using Autofac;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
-using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
 
@@ -42,15 +41,9 @@ namespace Ideastrike.Nancy
 
         protected override void RequestStartup(ILifetimeScope container, IPipelines pipelines)
         {
-            // At request startup we modify the request pipelines to
-            // include forms authentication - passing in our now request
-            // scoped user name mapper.
-            //
-            // The pipelines passed in here are specific to this request,
-            // so we can add/remove/update items in them as we please.
             var formsAuthConfiguration =
-                new FormsAuthenticationConfiguration()
-                {
+                new FormsAuthenticationConfiguration
+                    {
                     RedirectUrl = "~/login",
                     UserMapper = container.Resolve<IUserRepository>(),
                 };
