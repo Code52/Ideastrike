@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 
-namespace Ideastrike.Nancy.Models
+namespace Ideastrike.Nancy.Models.Repositories
 {
-    public interface IActivityRepository
+    public interface IActivityRepository : IGenericRepository<Activity>
     {
-        Activity Get(int id);
-        IEnumerable<Activity> GetAll();
         bool Add(int ideaid, Activity activity);
     }
 }

@@ -21,8 +21,9 @@ namespace Ideastrike.Nancy.Models
         public string Description { get; set; }
         public DateTime Time { get; set; }
         public User Author { get; set; }
-		public ICollection<Vote> Votes { get; set; }
-        public ICollection<Activity> Activities { get; set; }
-        public ICollection<Feature> Features { get; set; }
+        public Status Status { get; set; }
+		public virtual ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; }
+        public virtual ICollection<Feature> Features { get; set; }
     }
 }

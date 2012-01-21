@@ -1,35 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
+using Ideastrike.Nancy.Models.Repositories;
 
 namespace Ideastrike.Nancy.Models
 {
-    public class ActivityRepository : IActivityRepository
+    public class ActivityRepository : GenericRepository<IdeastrikeContext, Activity>, IActivityRepository
     {
-        private readonly IdeastrikeContext db;
-
-        public ActivityRepository(IdeastrikeContext db)
-        {
-            this.db = db;
-        }
-
-        public Activity Get(int id)
-        {
-            return db.Activities.FirstOrDefault(i => i.Id == id);
-        }
-
-        public IEnumerable<Activity> GetAll()
-        {
-            return db.Activities.ToList();
-        }
-
         public bool Add(int ideaid, Activity activity)
         {
-            var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaid);
+            var idea = Context.Ideas.Find(ideaid);
             if (idea == null)
                 return false;
 
             idea.Activities.Add(activity);
-            db.SaveChanges();
+            Context.SaveChanges();
             return true;
         }
     }

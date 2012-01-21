@@ -15,7 +15,7 @@ namespace IdeaStrike.Tests.IdeaModuleTests
         [Fact]
         public void it_should_register_the_vote()
         {
-            mockIdeasRepo.Verify(B => B.Vote(It.IsAny<Idea>(), 0, 1));
+            mockIdeasRepo.Verify(B => B.Vote(It.IsAny<Idea>().Id, 0, 1));
         }
     }
 }

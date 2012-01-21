@@ -4,6 +4,7 @@ using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models.ViewModels;
 using Nancy;
+using Ideastrike.Nancy.Models.Repositories;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -95,13 +96,12 @@ namespace Ideastrike.Nancy.Modules
             // NOTE: should this be a POST instead of a GET?
             Get["/{id}/vote/{userid}"] = parameters =>
             {
-                Idea idea = ideas.Get(parameters.id);
-                ideas.Vote(idea, parameters.userid, 1);
+                int votes = ideas.Vote(parameters.id, parameters.userid, 1);
 
                 return Response.AsJson(new
                                 {
                                     Status = "OK",
-                                    NewVotes = idea.Votes.Sum(v => v.Value)
+                                    NewVotes = votes
                                 });
             };
 

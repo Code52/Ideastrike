@@ -4,7 +4,7 @@ using Ideastrike.Nancy.Models;
 
 namespace Ideastrike.Nancy
 {
-    public class DevelopmentDatabaseInitializer : DropCreateDatabaseIfModelChanges<IdeastrikeContext>
+    public class DevelopmentDatabaseInitializer : DropCreateDatabaseAlways<IdeastrikeContext>
     {
         protected override void Seed(IdeastrikeContext context)
         {
@@ -29,6 +29,11 @@ namespace Ideastrike.Nancy
             context.Settings.Add(new Setting { Key = "WelcomeMessage", Value = "You've been.... Ideastruck"});
             context.Settings.Add(new Setting { Key = "HomePage", Value = "http://www.code52.org" });
             context.Settings.Add(new Setting { Key = "GAnalyticsKey", Value = "" });
+
+            context.Statuses.Add(new Status { Title = "New" });
+            context.Statuses.Add(new Status { Title = "Active" });
+            context.Statuses.Add(new Status { Title = "Completed" });
+            context.Statuses.Add(new Status { Title = "Declined" });
 
             // TODO: define some more data
 

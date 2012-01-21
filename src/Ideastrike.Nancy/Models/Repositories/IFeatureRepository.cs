@@ -1,8 +1,8 @@
+using Ideastrike.Nancy.Models.Repositories;
 namespace Ideastrike.Nancy.Models
 {
-    public interface IFeatureRepository
+    public interface IFeatureRepository : IGenericRepository<Feature>
     {
-        Feature Get(int id);
         bool Add(int ideaid, Feature feature);
     }
 }

@@ -1,25 +1,14 @@
 using System.Collections.ObjectModel;
 using System.Linq;
+using Ideastrike.Nancy.Models.Repositories;
 
-namespace Ideastrike.Nancy.Models
+namespace Ideastrike.Nancy.Models.Repositories
 {
-    public class FeatureRepository : IFeatureRepository
+    public class FeatureRepository : GenericRepository<IdeastrikeContext, Feature>, IFeatureRepository
     {
-        private readonly IdeastrikeContext db;
-
-        public FeatureRepository(IdeastrikeContext db)
-        {
-            this.db = db;
-        }
-
-        public Feature Get(int id)
-        {
-            return db.Features.FirstOrDefault(i => i.Id == id);
-        }
-
         public bool Add(int ideaid, Feature feature)
         {
-            var idea = db.Ideas.FirstOrDefault(i => i.Id == ideaid);
+            var idea = Context.Ideas.Find(ideaid);
             if (idea == null)
                 return false;
 
@@ -27,7 +16,7 @@ namespace Ideastrike.Nancy.Models
                 idea.Features = new Collection<Feature>();
 
             idea.Features.Add(feature);
-            db.SaveChanges();
+            Context.SaveChanges();
             return true;
         }
     }
