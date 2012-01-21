@@ -1,19 +1,20 @@
 using Autofac;
 using Ideastrike.Nancy;
+using System;
 
 namespace IdeaStrike.Tests
 {
     public class IdeaStrikeTestBootStrapper : IdeastrikeBootstrapper
     {
-        private readonly ContainerBuilder builder;
-        public IdeaStrikeTestBootStrapper(ContainerBuilder builder)
+        private readonly Func<ContainerBuilder> builder;
+        public IdeaStrikeTestBootStrapper(Func<ContainerBuilder> builder)
         {
             this.builder = builder;
         }
 
-        protected override void ConfigureApplicationContainer(ILifetimeScope existingContainer)
+        protected override void ConfigureRequestContainer(ILifetimeScope existingContainer)
         {
-            builder.Update(existingContainer.ComponentRegistry);
+            builder().Update(existingContainer.ComponentRegistry);
         }
     }
 }
