@@ -8,7 +8,7 @@ namespace IdeaStrike.Tests.IdeaModuleTests
     {
         public when_voting_for_an_item()
         {
-            var testRequest = GetTestRequest("/idea/0/vote/0");
+            var testRequest = PostTestRequest("/idea/0/vote/0");
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 
