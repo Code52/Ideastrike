@@ -21,7 +21,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/new"] = _ => View["Idea/New", new
             {
-                Title = string.Format("{0} - {1}", "New Idea", _settings.Title),
+                Title = string.Format("New Idea - {0}", _settings.Title),
                 Ideas = _ideas.GetAll()
             }];
 
@@ -34,7 +34,12 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return View["404"];
 
-                return View["Idea/Edit", idea];
+                return View["Idea/Edit", new
+                {
+                    Title = string.Format("Edit Idea: '{0}' - {1}", idea.Title, _settings.Title),
+                    PopularIdeas = _ideas.GetAll(),
+                    Idea = idea
+                }];
             };
 
             // view 
