@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
-using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models.ViewModels;
 using Nancy;
-using Ideastrike.Nancy.Models.Repositories;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -26,7 +23,6 @@ namespace Ideastrike.Nancy.Modules
                 Ideas = _ideas.GetAll()
             }];
 
-            // edit an existing idea
             Get["/{id}/edit"] = parameters =>
             {
                 int id = parameters.id;
@@ -43,7 +39,6 @@ namespace Ideastrike.Nancy.Modules
                 }];
             };
 
-            // view 
             Get["/{id}"] = parameters =>
                                {
                                    int id = parameters.id;
@@ -63,11 +58,19 @@ namespace Ideastrike.Nancy.Modules
                                };
 
             // save result of edit to database
-            Post["/{id}/edit"] = _ =>
+            Post["/{id}/edit"] = parameters =>
             {
-                // TODO: update result in database 
-                // TODO: return redirect
-                return View["/idea/index", 1];
+                int id = parameters.id;
+                var idea = _ideas.Get(id);
+                if (idea == null)
+                    return View["404"];
+
+                idea.Title = Request.Form.Title;
+                idea.Description = Request.Form.Description;
+
+                _ideas.Save();
+
+                return Response.AsRedirect(string.Format("/idea/{0}", idea.Id));
             };
 
             // save result of create to database
@@ -86,8 +89,7 @@ namespace Ideastrike.Nancy.Modules
             };
 
             // someone else votes for the idea
-            // NOTE: should this be a POST instead of a GET?
-            Get["/{id}/vote/{userid}"] = parameters =>
+            Post["/{id}/vote/{userid}"] = parameters =>
             {
                 int votes = ideas.Vote(parameters.id, parameters.userid, 1);
 
@@ -99,26 +101,28 @@ namespace Ideastrike.Nancy.Modules
             };
 
             // the user decides to repeal his vote
-            // NOTE: should this be a POST instead of a GET?
-            Get["/{id}/unvote/{userid}"] = parameters =>
+            Post["/{id}/unvote/{userid}"] = parameters =>
             {
-                // TODO: implementation 
+                int votes = ideas.Unvote(parameters.id, parameters.userid);
 
                 return Response.AsJson(new
                 {
-                    Status = "Error",
-
+                    Status = "OK",
+                    NewVotes = votes
                 });
             };
 
-            // should this be a POST instead of a GET?
-
-            Get["/{id}/delete"] = parameters =>
+            Post["/{id}/delete"] = parameters =>
             {
                 int id = parameters.id;
                 ideas.Delete(id);
-                // TODO: return a JSON result?
-                return string.Format("Deleted Item {0}", id);
+                ideas.Save();
+
+                // TODO: test
+                return Response.AsJson(new
+                {
+                    Status = "Error"
+                });
             };
         }
     }
