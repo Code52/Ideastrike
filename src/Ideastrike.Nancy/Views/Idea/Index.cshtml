@@ -1,15 +1,16 @@
-﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿@using Ideastrike.Nancy.Helpers
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
 <div class="pull-right">
     <div class="sidebox">
         <form>
-        <!-- Yes, I know this isn't going to be correct -->
-        <h3 id="votecount">@Model.Votes.Count</h3>
-        votes<br />
-        <br />
-        <input type="button" value="vote" onclick="vote()" />
+            <div class="voteinfo">
+                <h3 id="votecount">@Model.Votes.Count</h3>
+                votes
+            </div>
+            <button class="btn" type="button" onclick="vote()">vote</button>
         </form>
     </div>
     <div class="sidebox">
@@ -21,7 +22,7 @@
 </div>
 
 <h1>@Model.Title</h1>
-    @Model.Description
+    @MarkdownHelper.Markdown(Model.Description)
 
 <hr />
 @if (Model.Features != null)
@@ -32,25 +33,23 @@
         @foreach (var a in Model.Features)
         {
             <li>
-                @a.Text<br />
+                 @MarkdownHelper.Markdown(a.Text)<br />
                 <sub>@a.Time</sub> </li>
         }
     </ul>
 }
 else
 {
-    <h4>
-        No feature requests yet, add the first one!</h4>
+    <h4>No feature requests yet, add the first one!</h4>
 }
 <form action="/idea/@Model.Id/feature" method="POST">
 <div>
-    <label for="feaure">
-        feature request</label>
+    <label for="feaure">feature request</label>
     <input type="text" id="feature" name="feature"></input><br />
     <br />
     <label for="submit">
     </label>
-    <input type="submit" />
+    <button class="btn primary" type="submit">Add Feature</button>
 </div>
 </form>
 <hr />
@@ -63,14 +62,14 @@ else
         {
             <li>
                 @a.Text<br />
-                <sub>@a.Time</sub> </li>
+                <sub>@a.Time</sub> 
+            </li>
         }
     </ul>
 }
 else
 {
-    <h4>
-        No activity yet, add the first comment!</h4>
+    <h4>No activity yet, add the first comment!</h4>
 }
 <form action="/idea/@Model.Id/comment" method="POST">
 <div>
@@ -80,7 +79,7 @@ else
     <br />
     <label for="submit">
     </label>
-    <input type="submit" />
+    <button class="btn primary" type="submit">Add Comment</button>
 </div>
 </form>
 @section PageScript {
