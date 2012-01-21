@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Nancy;
+﻿using Nancy;
 using Xunit;
-using Moq;
-using Ideastrike.Nancy.Models;
-
 
 namespace IdeaStrike.Tests.CommentModuleTests
 {
@@ -21,7 +15,7 @@ namespace IdeaStrike.Tests.CommentModuleTests
         public void it_should_set_the_status_code_to_OK()
         {
             //noop - The GET method is commented out in the CommentModule
-            //Assert.Equal(HttpStatusCode.SeeOther, testResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.SeeOther, testResponse.StatusCode);
         }
     }
 }
