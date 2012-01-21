@@ -1,21 +1,27 @@
 ﻿using System;
+using System.Linq;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models.ViewModels;
 using Nancy;
+using Nancy.Security;
 
 namespace Ideastrike.Nancy.Modules
 {
     public class IdeaModule : NancyModule
     {
         private readonly IIdeaRepository _ideas;
+        private readonly IUserRepository _users;
         private readonly ISettingsRepository _settings;
 
-        public IdeaModule(IIdeaRepository ideas, ISettingsRepository settings)
+        public IdeaModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings)
             : base("/idea")
         {
+            
+
             _ideas = ideas;
             _settings = settings;
+            _users = users;
 
             Get["/new"] = _ => View["Idea/New", new
             {
@@ -46,20 +52,30 @@ namespace Ideastrike.Nancy.Modules
                                    if (idea == null)
                                        return View["404"];
 
+                                   var user = Context.CurrentUser == null ? null : _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+
                                    var viewModel = new IdeaViewModel(idea) { UserHasVoted = false };
 
-                                   return View["Idea/Index",
-                                       new
-                                       {
-                                           Title = string.Format("{0} - {1}", idea.Title, _settings.Title),
-                                           Idea = viewModel,
-                                           UserId = 2 // TODO: not hard-code these
-                                       }];
+                                   dynamic model = new
+                                                       {
+                                                           Title =
+                                                               string.Format("{0} - {1}", idea.Title, _settings.Title),
+                                                           Idea = viewModel,
+                                                           UserId = Guid.Empty,
+                                                       };
+
+                                   if (user != null)
+                                       model.UserId = user.Id; // TODO: not hard-code these
+
+                                   return View["Idea/Index", model];
                                };
 
             // save result of edit to database
             Post["/{id}/edit"] = parameters =>
             {
+                this.RequiresAuthentication();
+
                 int id = parameters.id;
                 var idea = _ideas.Get(id);
                 if (idea == null)
@@ -75,18 +91,23 @@ namespace Ideastrike.Nancy.Modules
 
             // save result of create to database
             Post["/new"] = _ =>
-            {
-                var i = new Idea
-                            {
-                                Time = DateTime.UtcNow,
-                                Title = Request.Form.Title,
-                                Description = Request.Form.Description,
-                            };
+                               {
+                                   var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
 
-                ideas.Add(i);
+                                   if(user == null) return Response.AsRedirect("/idea/"); //TODO: Problem looking up the user? Return an error
 
-                return Response.AsRedirect("/idea/" + i.Id);
-            };
+                                   var i = new Idea
+                                               {
+                                                   Author = user,
+                                                   Time = DateTime.UtcNow,
+                                                   Title = Request.Form.Title,
+                                                   Description = Request.Form.Description,
+                                               };
+
+                                   ideas.Add(i);
+
+                                   return Response.AsRedirect("/idea/" + i.Id);
+                               };
 
             // someone else votes for the idea
             Post["/{id}/vote/{userid}"] = parameters =>

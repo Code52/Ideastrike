@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ideastrike.Nancy.Models.Repositories;
 
@@ -16,9 +17,9 @@ namespace Ideastrike.Nancy.Models
             return idea;
         }
 
-        public int Vote(int ideaId, int userId, int value)
+        public int Vote(int ideaId, Guid userId, int value)
         {
-            if (Context.Votes.Any(v => v.UserId == userId && v.IdeaId == ideaId))
+            if (Context.Votes.Any(v => v.User.Id == userId && v.IdeaId == ideaId))
                 return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
 
             Context.Votes.Add(new Vote
@@ -32,9 +33,9 @@ namespace Ideastrike.Nancy.Models
             return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
         }
 
-        public int Unvote(int ideaId, int userId)
+        public int Unvote(int ideaId, Guid userId)
         {
-            if (!Context.Votes.Any(v => v.UserId == userId && v.IdeaId == ideaId))
+            if (!Context.Votes.Any(v => v.User.Id == userId && v.IdeaId == ideaId))
                 return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
 
             var votesToRemove = Context.Votes.Where(v => v.UserId == userId && v.IdeaId == ideaId).ToList();

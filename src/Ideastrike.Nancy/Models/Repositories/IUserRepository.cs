@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using Ideastrike.Nancy.Models;
+using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Security;
 
 namespace Ideastrike.Nancy.Models
@@ -22,8 +24,12 @@ namespace Ideastrike.Nancy.Models
 
         User GetUserFromUserIdentity(string identity);
 
-        IEnumerable<User> GetAll();
-
-        void Add(User users);
+        IQueryable<User> GetAll();
+        IQueryable<User> FindBy(Expression<Func<User, bool>> predicate);
+        User Get(Guid id);
+        void Add(User entity);
+        void Delete(Guid id);
+        void Edit(User entity);
+        void Save();
     }
 }

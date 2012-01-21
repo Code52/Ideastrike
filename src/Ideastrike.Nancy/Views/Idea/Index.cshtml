@@ -69,39 +69,42 @@ else
     <h4>
         Got something to add?</h4>
 </div>
-<div id="add-feature" class="hide-on-start add-feature">
-    <form action="/idea/@idea.Id/feature" method="POST">
-    <!-- TODO: i want this text to change dynamically 
-            text to rotate through:
-            - how about ...
-            - it would be cool if ...
-            - can it also do ...
-            - etc
-            -->
-    <!--  TODO: can we hook in some anti-forgery bits? -->
-    <label for="feature" id="label-text">
-        how about ...</label>
-    <div class="input">
-        <div class="options">
-            <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
-                data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
-                Edit</button>
-            <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
-                data-editor="#new-feature" data-view="#new-feature-view">
-                Preview</button>
+@if (Model.UserId != Guid.Empty)
+{
+    <div id="add-feature" class="hide-on-start add-feature">
+        <form action="/idea/@idea.Id/feature" method="POST">
+        <!-- TODO: i want this text to change dynamically 
+                text to rotate through:
+                - how about ...
+                - it would be cool if ...
+                - can it also do ...
+                - etc
+                -->
+        <!--  TODO: can we hook in some anti-forgery bits? -->
+        <label for="feature" id="label-text">
+            how about ...</label>
+        <div class="input">
+            <div class="options">
+                <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
+                    data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
+                    Edit</button>
+                <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
+                    data-editor="#new-feature" data-view="#new-feature-view">
+                    Preview</button>
+            </div>
+            <textarea id="new-feature" name="feature"></textarea><br />
+            <div id="new-feature-view">
+            </div>
         </div>
-        <textarea id="new-feature" name="feature"></textarea><br />
-        <div id="new-feature-view">
-        </div>
+        <br />
+        <input type="hidden" name="userId" value="@Model.UserId"/>
+        <label for="submit">
+        </label>
+        <button class="btn primary" type="submit">
+            Add Feature</button>
+        </form>
     </div>
-    <br />
-    <input type="hidden" name="userId" value="@Model.UserId"/>
-    <label for="submit">
-    </label>
-    <button class="btn primary" type="submit">
-        Add Feature</button>
-    </form>
-</div>
+}
 <hr />
 @if (idea.Activities.Count > 0)
 { 
@@ -136,35 +139,41 @@ else
 }
 else
 {
-    <h4>No activity yet, add the first comment!</h4>
+    <h4>
+        No activity yet, add the first comment!</h4>
 }
-<div class="expander" data-element="#add-comment">
-    <h4>Leave a comment</h4>
-</div>
-<div id="add-comment" class="hide-on-start add-comment">
-    <form action="/comment/@idea.Id/add" method="POST">
-    <label for="comment">
-        leave a comment</label>
-    <div class="input">
-        <div class="options">
-            <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
-                data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
-                Edit</button>
-            <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
-                data-editor="#new-comment" data-view="#new-comment-view">
-                Preview</button>
-        </div>
-        <textarea id="new-comment" name="comment"></textarea><br />
-        <div id="new-comment-view">
-        </div>
+@if (Model.UserId != Guid.Empty)
+{
+    <div class="expander" data-element="#add-comment">
+        <h4>
+            Leave a comment</h4>
     </div>
-    <input type="hidden" name="userId" value="@Model.UserId"/>
-    <br />
-    <label for="submit"></label>
-    <button class="btn primary" type="submit">
-        Add Comment</button>
-    </form>
-</div>
+    <div id="add-comment" class="hide-on-start add-comment">
+        <form action="/comment/@idea.Id/add" method="POST">
+        <label for="comment">
+            leave a comment</label>
+        <div class="input">
+            <div class="options">
+                <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
+                    data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
+                    Edit</button>
+                <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
+                    data-editor="#new-comment" data-view="#new-comment-view">
+                    Preview</button>
+            </div>
+            <textarea id="new-comment" name="comment"></textarea><br />
+            <div id="new-comment-view">
+            </div>
+        </div>
+        <input type="hidden" name="userId" value="@Model.UserId"/>
+        <br />
+        <label for="submit">
+        </label>
+        <button class="btn primary" type="submit">
+            Add Comment</button>
+        </form>
+    </div>
+}
 @section PageScript {
     <script src="/Resources/social.js"></script>
     <script>

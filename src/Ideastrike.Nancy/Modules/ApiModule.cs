@@ -18,7 +18,7 @@ namespace Ideastrike.Nancy.Modules
 						idea.Title,
 						idea.Description,
 						Time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), idea.Time),
-						Author = new { idea.Author.Id, idea.Author.Username },
+						Author = new { idea.Author.Id, idea.Author.UserName },
 						VoteCount = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0
 					}));
 			};
@@ -27,7 +27,7 @@ namespace Ideastrike.Nancy.Modules
 				int id = _.id;
 				if (!db.Ideas.Any(idea => idea.Id == id))
 					return HttpStatusCode.NotFound;
-				return Response.AsJson(db.Features.Where(d => d.IdeaId == id).Select(feature =>
+				return Response.AsJson(db.Features.Where(d => d.Idea.Id == id).Select(feature =>
 					new {
 						feature.Id,
 						feature.Text,

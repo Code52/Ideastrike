@@ -1,46 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
+using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Security;
+using System.Data.Entity;
 
 namespace Ideastrike.Nancy.Models
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IdeastrikeContext db;
-
         public UserRepository(IdeastrikeContext db)
         {
-            this.db = db;
+            _entities = db;
         }
 
         public IUserIdentity GetUserFromIdentifier(Guid identifier)
         {
-            var user = db.Users.FirstOrDefault(u => u.Id == identifier);
+            var user = FindBy(u => u.Id == identifier).FirstOrDefault();
 
             return user;
         }
 
         public User GetUserFromUserIdentity(string identity)
         {
-            return db.Users.FirstOrDefault(u => u.Identity == identity);
+            return FindBy(u => u.Identity == identity).FirstOrDefault();
         }
 
-        public IEnumerable<User> GetAll()
+        private DbContext _entities;
+        public DbContext Context
         {
-            return (db.Users.ToList());
+
+            get { return _entities; }
+            set { _entities = value; }
         }
 
-        public void Add(User users)
+        public virtual IQueryable<User> GetAll()
         {
-            db.Users.Add(users);
-            db.SaveChanges();
+
+            IQueryable<User> query = _entities.Set<User>();
+            return query;
         }
 
-        public IEnumerable<User> GetActive()
+        public virtual User Get(Guid id)
         {
-            return db.Users.Where(u => u.IsActive).ToList();
+            var query = _entities.Set<User>().Find(id);
+            return query;
         }
-}
+
+        public IQueryable<User> FindBy(Expression<Func<User, bool>> predicate)
+        {
+            IQueryable<User> query = _entities.Set<User>().Where(predicate);
+            return query;
+        }
+
+        public virtual void Add(User entity)
+        {
+            _entities.Set<User>().Add(entity);
+            _entities.SaveChanges();
+        }
+
+        public virtual void Delete(Guid id)
+        {
+            var entity = Get(id);
+            _entities.Set<User>().Remove(entity);
+            _entities.SaveChanges();
+        }
+
+        public virtual void Edit(User entity)
+        {
+            _entities.Entry(entity).State = System.Data.EntityState.Modified;
+            _entities.SaveChanges();
+        }
+
+        public virtual void Save()
+        {
+            _entities.SaveChanges();
+        }
+    }
 }

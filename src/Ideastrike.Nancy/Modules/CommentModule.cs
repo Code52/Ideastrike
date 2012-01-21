@@ -3,6 +3,7 @@ using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
 using Ideastrike.Nancy.Models.Repositories;
+using Nancy.Security;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -10,17 +11,25 @@ namespace Ideastrike.Nancy.Modules
     {
         private readonly IIdeaRepository _ideas;
         private readonly IActivityRepository _activities;
+        private readonly IUserRepository _users;
 
-        public CommentModule(IIdeaRepository ideas, IActivityRepository activities)
+        public CommentModule(IIdeaRepository ideas, IActivityRepository activities, IUserRepository users)
             : base("/comment")
         {
+            this.RequiresAuthentication();
+
             _ideas = ideas;
             _activities = activities;
+            _users = users;
 
             Post["/{idea}/add"] = parameters =>
             {
                 int id = parameters.Idea;
-                int userId = Request.Form.userId; // addtional validation required
+
+                var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+                if (user == null) return Response.AsRedirect(string.Format("/idea/{0}", id)); //TODO: Problem looking up the user? Return an error
+
 
                 var text = Request.Form.comment;
                 if (string.IsNullOrEmpty(text)) // additional validation required
@@ -30,7 +39,7 @@ namespace Ideastrike.Nancy.Modules
 
                 var comment = new Comment
                                 {
-                                    UserId = userId,
+                                    User = user,
                                     Time = DateTime.UtcNow,
                                     Text = Request.Form.comment
                                 };

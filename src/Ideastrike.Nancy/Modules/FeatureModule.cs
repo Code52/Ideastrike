@@ -3,6 +3,7 @@ using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
 using Ideastrike.Nancy.Models.Repositories;
+using Nancy.Security;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -16,6 +17,8 @@ namespace Ideastrike.Nancy.Modules
         {
             _ideas = ideas;
             _features = features;
+
+            this.RequiresAuthentication();
 
             Post["/{idea}/feature"] = _ =>
             {
