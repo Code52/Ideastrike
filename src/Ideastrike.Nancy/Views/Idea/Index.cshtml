@@ -10,7 +10,7 @@
             <h3 id="votecount">@idea.TotalVotes</h3>
             votes
         </div>
-        <button class="btn" type="button" onclick="vote()">
+        <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
             vote</button>
         </form>
     </div>
@@ -79,7 +79,8 @@ else
             - etc
             -->
     <!--  TODO: can we hook in some anti-forgery bits? -->
-    <label for="feature" id="label-text">how about ...</label>
+    <label for="feature" id="label-text">
+        how about ...</label>
     <div class="input">
         <div class="options">
             <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
@@ -135,12 +136,10 @@ else
 }
 else
 {
-    <h4>
-        No activity yet, add the first comment!</h4>
+    <h4>No activity yet, add the first comment!</h4>
 }
 <div class="expander" data-element="#add-comment">
-    <h4>
-        Leave a comment</h4>
+    <h4>Leave a comment</h4>
 </div>
 <div id="add-comment" class="hide-on-start add-comment">
     <form action="/comment/@idea.Id/add" method="POST">
@@ -161,8 +160,7 @@ else
     </div>
     <input type="hidden" name="userId" value="@Model.UserId"/>
     <br />
-    <label for="submit">
-    </label>
+    <label for="submit"></label>
     <button class="btn primary" type="submit">
         Add Comment</button>
     </form>
@@ -170,22 +168,46 @@ else
 @section PageScript {
     <script src="/Resources/social.js"></script>
     <script>
+        function updateVoteCount(data) {
+            $("#votecount").text(data.NewVotes);
+        }
+
         function vote() {
-            $.ajax({
-                url: "/idea/@idea.Id/vote/9",
-                context: document.body,
-                success: function (data) {
-                    $("#votecount").text(data.NewVotes);
-                }
-            });
+            var elem = $(this);
+            var hasVoted = elem.data("voted").toLowerCase();
+
+            if (hasVoted == "false") {
+                $.ajax({
+                    type: "POST",
+                    url: "/idea/@idea.Id/vote/9",
+                    context: document.body,
+                    success: function (data) {
+                        updateVoteCount(data);
+                        elem.data("voted", "true");
+                        elem.text("unvote");
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/idea/@idea.Id/unvote/9",
+                    context: document.body,
+                    success: function (data) {
+                        updateVoteCount(data);
+                        elem.data("user-voted", "false");
+                        elem.text("vote");
+                    }
+                });
+            }
         }
 
         $(document).ready(function () {
+            $("#vote").click(vote);
             $(".preview").click(previewText);
             $(".edit").click(editText);
             $(".hide-on-start").hide();
             $(".expander").click(toggleExpander)
-                          .css("cursor", "pointer");
+                .css("cursor", "pointer");
         });
     </script>
 }

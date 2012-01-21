@@ -32,6 +32,17 @@ namespace Ideastrike.Nancy.Models
             return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
         }
 
+        public int Unvote(int ideaId, int userId)
+        {
+            if (!Context.Votes.Any(v => v.UserId == userId && v.IdeaId == ideaId))
+                return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
+
+            var votesToRemove = Context.Votes.Where(v => v.UserId == userId && v.IdeaId == ideaId).ToList();
+            votesToRemove.ForEach(v => Context.Votes.Remove(v));
+            Save();
+            return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
+        }
+
         public int Count
         {
             get { return Context.Ideas.Count(); }
