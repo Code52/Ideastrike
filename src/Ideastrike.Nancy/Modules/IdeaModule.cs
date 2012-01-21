@@ -41,13 +41,11 @@ namespace Ideastrike.Nancy.Modules
                                    if (idea == null)
                                        return View["404"];
 
-                                   var viewModel = new IdeaViewModel(idea);
-                                   viewModel.UserHasVoted = false;
+                                   var viewModel = new IdeaViewModel(idea) { UserHasVoted = false };
 
                                    return View["Idea/Index",
                                        new
                                        {
-                                           TestHash = "me@brendanforster.com".ToGravatarUrl(40),
                                            Title = string.Format("{0} - {1}", idea.Title, _settings.Title),
                                            Idea = viewModel,
                                            UserId = 2 // TODO: not hard-code these

@@ -117,6 +117,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GravatarExtensions.cs" />
+    <Compile Include="Helpers\FriendlyTimeHelper.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />

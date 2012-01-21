@@ -1,3 +1,4 @@
+﻿@using Ideastrike.Nancy.Helpers
 ﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
@@ -6,10 +7,11 @@
 <div class="pull-right">
     <div class="sidebox">
         <form>
-        <!-- Yes, I know this isn't going to be correct -->
-        <h3 id="votecount">@idea.TotalVotes</h3>votes<br />
-        <br />
-        <input type="button" value="vote" data-has-voted="@idea.UserHasVoted" onclick="vote()" />
+            <div class="voteinfo">
+                <h3 id="votecount">@idea.TotalVotes</h3>
+                votes
+            </div>
+            <button class="btn" type="button" onclick="vote()">vote</button>
         </form>
     </div>
     <div class="sidebox">
@@ -43,11 +45,9 @@
                         <div class="span8 text">@a.Text</div>
                     </div>
                     <div class="row">
-                        <div class="span1 gravatar">
-                            <img src="@Model.TestHash" /></div>
-                        <div class="span8 author">
-                            shiftkey</div>
-                        <sub class="span8 time">@a.Time</sub>
+                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
+                        <div class="span8 author">@a.Author</div>
+                        <sub class="span8 time">@a.FriendlyTime</sub>
                         <div class="comment">
                             <!-- TODO: comment on a feature -->
                         </div>
@@ -95,7 +95,7 @@ else
     <input type="hidden" name="userId" value="@Model.UserId"/>
     <label for="submit">
     </label>
-    <input type="submit" />
+    <button class="btn primary" type="submit">Add Feature</button>
     </form>
 </div>
 <hr />
@@ -116,7 +116,7 @@ else
                             <img src="@Model.TestHash" /></div>
                         <div class="span8 author">
                             shiftkey</div>
-                        <sub class="span8 time">@a.Time</sub>
+                <sub>@a.Time</sub> </li>
                     </div>
                     <div class="comment">
                         <!-- TODO: reply to a comment -->
@@ -156,7 +156,7 @@ else
     <br />
     <label for="submit">
     </label>
-    <input type="submit" />
+    <button class="btn primary" type="submit">Add Comment</button>
     </form>
 </div>
 @section PageScript {
