@@ -10,7 +10,7 @@ namespace Ideastrike.Nancy
         {
             context.Ideas.Add(new Idea
                                   {
-                                      Time = DateTime.Now,
+                                      Time = DateTime.UtcNow,
                                       Author = new User { Id = Guid.NewGuid(), UserName = "aeoth" },
                                       Title = "So Meta",
                                       Description = "Put an idea in your idea so you can idea when you idea",
@@ -18,7 +18,7 @@ namespace Ideastrike.Nancy
 
             context.Ideas.Add(new Idea
             {
-                Time = DateTime.Now,
+                Time = DateTime.UtcNow,
                 Author = new User { Id = Guid.NewGuid(), UserName = "shiftkey" },
                 Title = "Lorem Ipsum",
                 Description = "This is also another idea",
@@ -29,6 +29,11 @@ namespace Ideastrike.Nancy
             context.Settings.Add(new Setting { Key = "WelcomeMessage", Value = "You've been.... Ideastruck"});
             context.Settings.Add(new Setting { Key = "HomePage", Value = "http://www.code52.org" });
             context.Settings.Add(new Setting { Key = "GAnalyticsKey", Value = "" });
+
+            context.Statuses.Add(new Status { Title = "New" });
+            context.Statuses.Add(new Status { Title = "Active" });
+            context.Statuses.Add(new Status { Title = "Completed" });
+            context.Statuses.Add(new Status { Title = "Declined" });
 
             // TODO: define some more data
 

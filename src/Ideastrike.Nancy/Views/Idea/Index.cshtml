@@ -2,86 +2,212 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
-<div class="pull-right votebox">
-    <form>
-    <!-- Yes, I know this isn't going to be correct -->
-    <h3 id="votecount">@Model.Votes.Count</h3>
-    votes<br />
-    <br />
-    <input type="button" value="vote" onclick="vote()" />
-    </form>
+@{ var idea = Model.Idea; }
+<div class="pull-right">
+    <div class="sidebox">
+        <form>
+        <div class="voteinfo">
+            <h3 id="votecount">@idea.TotalVotes</h3>
+            votes
+        </div>
+        <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
+            vote</button>
+        </form>
+    </div>
+    <div class="sidebox">
+        <div>
+            <!-- TODO: get URL for this page rather than description -->
+            <a href="https://twitter.com/share" 
+               class="twitter-share-button" 
+               data-text="Idea: @idea.Title" 
+               data-hashtags="ideastrike">Tweet this idea!</a>
+        </div>
+        <div id="fb-root">
+        </div>
+        <div class="fb-like" data-send="false" data-layout="button_count" data-width="450"
+            data-show-faces="true">
+        </div>
+    </div>
 </div>
-<h1>@Model.Title</h1>
-@Model.Description
+<h1>@idea.Title</h1>
+<div class="description">
+    @idea.Description
+</div>
 <hr />
-@if (Model.Features != null)
+@if (idea.Features.Count > 0)
 { 
-    <h4>Features</h4>
-    <ul id="features">
-        @foreach (var a in Model.Features)
-        {
-            <li>
-                @a.Text<br />
-                <sub>@a.Time</sub>
-            </li>
-        }
-    </ul>
+    <div class="features">
+        <h3>
+            Features</h3>
+        <ul>
+            @foreach (var a in idea.Features)
+            {
+                <li>
+                    <div class="row">
+                        <div class="span8 text">@a.Text</div>
+                    </div>
+                    <div class="row">
+                        <div class="span1 gravatar">
+                            <img src="@a.GravatarUrl" /></div>
+                        <div class="span8 author">@a.Author</div>
+                        <sub class="span8 time">@a.FriendlyTime</sub>
+                        <div class="comment">
+                            <!-- TODO: comment on a feature -->
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
 }
 else
 {
-    <h4>No feature requests yet, add the first one!</h4>
+    <h3>
+        No features suggested yet, be the first!</h3>
 }
-
-<form action="/idea/@Model.Id/feature" method="POST">
-<div>
-    <label for="feaure">feature request</label>
-    <input type="text" id="feature" name="feature" ></input><br /><br />
-    <label for="submit"></label>
-    <input type="submit" />
+<div class="expander" data-element="#add-feature">
+    <h4>
+        Got something to add?</h4>
 </div>
-</form>
-
-<hr />
-@if (Model.Activities != null)
-{ 
-    <h4>
-        Activity</h4>
-    <ul id="comments">
-        @foreach (var a in Model.Activities)
-        {
-            <li>
-                @a.Text<br />
-                <sub>@a.Time</sub> </li>
-        }
-    </ul>
-}
-else
-{
-    <h4>
-        No activity yet, add the first comment!</h4>
-}
-<form action="/idea/@Model.Id/comment" method="POST">
-<div>
-    <label for="comment">
-        comment</label>
-    <textarea id="comment" name="comment"></textarea><br />
+<div id="add-feature" class="hide-on-start add-feature">
+    <form action="/idea/@idea.Id/feature" method="POST">
+    <!-- TODO: i want this text to change dynamically 
+            text to rotate through:
+            - how about ...
+            - it would be cool if ...
+            - can it also do ...
+            - etc
+            -->
+    <!--  TODO: can we hook in some anti-forgery bits? -->
+    <label for="feature" id="label-text">
+        how about ...</label>
+    <div class="input">
+        <div class="options">
+            <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
+                data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
+                Edit</button>
+            <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
+                data-editor="#new-feature" data-view="#new-feature-view">
+                Preview</button>
+        </div>
+        <textarea id="new-feature" name="feature"></textarea><br />
+        <div id="new-feature-view">
+        </div>
+    </div>
     <br />
+    <input type="hidden" name="userId" value="@Model.UserId"/>
     <label for="submit">
     </label>
-    <input type="submit" />
+    <button class="btn primary" type="submit">
+        Add Feature</button>
+    </form>
 </div>
-</form>
+<hr />
+@if (idea.Activities.Count > 0)
+{ 
+    <div class="comments">
+        <h4>
+            Activity Feed</h4>
+        <ul>
+            @foreach (var a in idea.Activities)
+            {
+                <li>
+                    <!-- TODO: this is not suitable for all the formatt we want to support -->
+                    <div class="row">
+                        <div class="span8 text">@a.Text</div>
+                    </div>
+                    <div class="row">
+                        <div class="span1 gravatar">
+                            <img src="@a.GravatarUrl" /></div>
+                        <div class="span8 author">@a.Author</div>
+                        <sub>@a.FriendlyTime</sub>
+                    </div>
+                    <div class="comment">
+                        <!-- TODO: reply to an activity -->
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="comment">
+        <!-- TODO: new comment -->
+    </div>
+
+}
+else
+{
+    <h4>No activity yet, add the first comment!</h4>
+}
+<div class="expander" data-element="#add-comment">
+    <h4>Leave a comment</h4>
+</div>
+<div id="add-comment" class="hide-on-start add-comment">
+    <form action="/comment/@idea.Id/add" method="POST">
+    <label for="comment">
+        leave a comment</label>
+    <div class="input">
+        <div class="options">
+            <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
+                data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
+                Edit</button>
+            <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
+                data-editor="#new-comment" data-view="#new-comment-view">
+                Preview</button>
+        </div>
+        <textarea id="new-comment" name="comment"></textarea><br />
+        <div id="new-comment-view">
+        </div>
+    </div>
+    <input type="hidden" name="userId" value="@Model.UserId"/>
+    <br />
+    <label for="submit"></label>
+    <button class="btn primary" type="submit">
+        Add Comment</button>
+    </form>
+</div>
 @section PageScript {
+    <script src="/Resources/social.js"></script>
     <script>
-        function vote() {
-            $.ajax({
-                url: "/idea/@Model.Id/vote/9",
-                context: document.body,
-                success: function (data) {
-                    /* This is really nasty, surely there is a better way? */
-                    $("#votecount").replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
-                }
-            });
+        function updateVoteCount(data) {
+            $("#votecount").text(data.NewVotes);
         }
+
+        function vote() {
+            var elem = $(this);
+            var hasVoted = elem.data("voted").toLowerCase();
+
+            if (hasVoted == "false") {
+                $.ajax({
+                    type: "POST",
+                    url: "/idea/@idea.Id/vote/9",
+                    context: document.body,
+                    success: function (data) {
+                        updateVoteCount(data);
+                        elem.data("voted", "true");
+                        elem.text("unvote");
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/idea/@idea.Id/unvote/9",
+                    context: document.body,
+                    success: function (data) {
+                        updateVoteCount(data);
+                        elem.data("user-voted", "false");
+                        elem.text("vote");
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            $("#vote").click(vote);
+            $(".preview").click(previewText);
+            $(".edit").click(editText);
+            $(".hide-on-start").hide();
+            $(".expander").click(toggleExpander)
+                .css("cursor", "pointer");
+        });
     </script>
 }

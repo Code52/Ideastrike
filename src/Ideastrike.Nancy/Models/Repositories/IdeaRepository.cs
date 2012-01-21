@@ -1,72 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Ideastrike.Nancy.Models.Repositories;
 
 namespace Ideastrike.Nancy.Models
 {
-    public class IdeaRepository : IIdeaRepository
+    public class IdeaRepository : GenericRepository<IdeastrikeContext, Idea>, IIdeaRepository
     {
-        private readonly IdeastrikeContext db;
-
-        public IdeaRepository(IdeastrikeContext db)
+        public override Idea Get(int id)
         {
-            this.db = db;
-        }
-
-        public IEnumerable<Idea> GetAll()
-        {
-            return (db.Ideas.ToList());
-        }
-
-        public void Add(Idea idea)
-        {
-            db.Ideas.Add(idea);
-            db.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var idea = db.Ideas.FirstOrDefault(i => i.Id == id);
-            db.Ideas.Remove(idea);
-            db.SaveChanges();
-           
-        }
-
-        public Idea Get(int id)
-        {
-            return db.Ideas
-                .Include("Activities")
+            var idea = Context.Ideas
                 .Include("Votes")
+                .Include("Activities")
+                .Include("Features")
                 .FirstOrDefault(i => i.Id == id);
+            return idea;
         }
 
-        public void Update(Idea idea)
+        public int Vote(int ideaId, int userId, int value)
         {
-            var tmpIdea = db.Ideas.Single(i => i.Id == idea.Id);
-            tmpIdea = idea; // wha?
-            db.SaveChanges();
-        }
+            if (Context.Votes.Any(v => v.UserId == userId && v.IdeaId == ideaId))
+                return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
 
-        public void Vote(Idea idea, Guid userId, int value)
-        {
-            if (db.Votes.Any(v => v.User.Id == userId && v.Idea.Id == idea.Id))
-                return;
-
-            var user = db.Users.FirstOrDefault(u => u.Id == userId);
-
-            idea.Votes.Add(new Vote
+            Context.Votes.Add(new Vote
             {
-                Idea = idea,
-                User = user,
+                IdeaId = ideaId,
+                UserId = userId,
                 Value = value
             });
 
-            Update(idea);
+            Save();
+            return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
+        }
+
+        public int Unvote(int ideaId, int userId)
+        {
+            if (!Context.Votes.Any(v => v.UserId == userId && v.IdeaId == ideaId))
+                return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
+
+            var votesToRemove = Context.Votes.Where(v => v.UserId == userId && v.IdeaId == ideaId).ToList();
+            votesToRemove.ForEach(v => Context.Votes.Remove(v));
+            Save();
+            return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
         }
 
         public int Count
         {
-            get { return db.Ideas.Count(); }
+            get { return Context.Ideas.Count(); }
         }
     }
 }

@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ideastrike.Nancy.Models
+﻿namespace Ideastrike.Nancy.Models.Repositories
 {
-    public interface IIdeaRepository
+    public interface IIdeaRepository : IGenericRepository<Idea>
     {
-        IEnumerable<Idea> GetAll();
-        Idea Get(int id);
-
-        void Add(Idea idea);
-        void Delete(int id);
-        void Update(Idea idea);
-        void Vote(Idea idea, Guid userId, int value);
+        int Vote(int ideaId, int userId, int value);
+        int Unvote(int ideaId, int userId);
         int Count { get; }
     }
 }

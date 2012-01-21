@@ -90,6 +90,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\ideastrike.css" />
+    <Content Include="Resources\ideastrike.js" />
     <Content Include="Resources\jquery-1.7.min.js" />
     <Content Include="Resources\media.css" />
     <Content Include="Resources\modernizr-2.0.min.js" />
@@ -105,6 +107,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\respond.min.js" />
+    <Content Include="Resources\showdown.js" />
+    <Content Include="Resources\social.js" />
     <Content Include="Resources\style.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -119,6 +123,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GravatarExtensions.cs" />
+    <Compile Include="Helpers\FriendlyTimeHelper.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="Helpers\FormsAuthentication.cs" />
     <Compile Include="Helpers\FormsAuthenticationConfiguration.cs" />
@@ -126,6 +132,12 @@
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\Repositories\GenericRepository.cs" />
+    <Compile Include="Models\Repositories\IGenericRepository.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
+    <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
+    <Compile Include="Models\ViewModels\IdeaViewModel.cs" />
     <Compile Include="Models\Repositories\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Repositories\FeatureRepository.cs" />
@@ -182,6 +194,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\Settings.cshtml" />
+  </ItemGroup>
+<ItemGroup>
+    <Content Include="Views\Idea\New.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Idea\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />

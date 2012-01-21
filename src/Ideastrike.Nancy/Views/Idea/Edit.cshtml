@@ -1,0 +1,73 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+@{ var idea = Model.Idea; }
+<div class="row">
+    <div class="span10">
+        <h2>
+            Edit an idea</h2>
+        <br />
+        <form action="/idea/@idea.Id/edit" method="POST">
+        <div class="clearfix">
+            <label for="Title">
+                Title</label>
+            <div class="input">
+                <input id="Title" name="Title" type="text" value="@idea.Title" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="Description">
+                Description</label>
+            <div class="input">
+                <div class="options">
+                    <button type="button"
+                            disabled="disabled" 
+                            id="edit-new-idea" 
+                            class="btn edit" 
+                            data-other="#preview-new-idea"
+                            data-editor="#new-idea" 
+                            data-view="#new-idea-view">
+                        Edit</button>
+                    <button type="button" 
+                            id="preview-new-idea" 
+                            class="btn preview" 
+                            data-other="#edit-new-idea"
+                            data-editor="#new-idea" 
+                            data-view="#new-idea-view">
+                        Preview</button>
+                </div>
+                <textarea id="new-idea" name="Description" rows="10">@idea.Description</textarea>
+                <div id="new-idea-view">
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn primary">
+                Submit</button>
+        </div>
+        </form>
+    </div>
+    <!-- TODO: partial view? -->
+    <div class="span4">
+        <h3>
+            Popular Ideas</h3>
+        <ul>
+            @foreach (var i in Model.PopularIdeas)
+            {
+                <li><a href="/idea/@i.Id">@i.Title</a><br />
+                    @i.Time
+                </li> 
+            }
+        </ul>
+    </div>
+</div>
+
+@section PageScript {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".preview").click(previewText);
+            $(".edit").click(editText);
+        });
+    </script>
+}
