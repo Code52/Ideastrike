@@ -7,17 +7,17 @@
     <div class="sidebox">
         <form>
         <!-- Yes, I know this isn't going to be correct -->
-        <h3 id="votecount">@idea.Votes.Count</h3>
-        votes<br />
+        <h3 id="votecount">@idea.TotalVotes</h3>votes<br />
         <br />
-        <input type="button" value="vote" data-has-voted="@Model.UserHasVoted" onclick="vote()" />
+        <input type="button" value="vote" data-has-voted="@idea.UserHasVoted" onclick="vote()" />
         </form>
     </div>
     <div class="sidebox">
         <div>
+            <!-- TODO: get URL for this page rather than description -->
             <a href="https://twitter.com/share" 
                class="twitter-share-button" 
-               data-text="Idea: @idea.Title - @idea.Description" 
+               data-text="Idea: @idea.Title" 
                data-hashtags="ideastrike">Tweet this idea!</a>
         </div>
         <div id="fb-root">
@@ -132,8 +132,7 @@ else
 }
 else
 {
-    <h4>
-        No activity yet, add the first comment!</h4>
+    <h4>No activity yet, add the first comment!</h4>
 }
 <div class="expander" data-element="#add-comment">
     <h4>Leave a comment</h4>

@@ -120,6 +120,8 @@
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
+    <Compile Include="Models\ViewModels\IdeaViewModel.cs" />
     <Compile Include="Models\Repositories\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Repositories\FeatureRepository.cs" />

@@ -3,6 +3,7 @@ using System.Linq;
 using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
+using Ideastrike.Nancy.Models.ViewModels;
 using Nancy;
 
 namespace Ideastrike.Nancy.Modules
@@ -40,14 +41,16 @@ namespace Ideastrike.Nancy.Modules
                                    if (idea == null)
                                        return View["404"];
 
+                                   var viewModel = new IdeaViewModel(idea);
+                                   viewModel.UserHasVoted = false;
+
                                    return View["Idea/Index",
                                        new
                                        {
                                            TestHash = "me@brendanforster.com".ToGravatarUrl(40),
                                            Title = string.Format("{0} - {1}", idea.Title, _settings.Title),
-                                           Idea = idea,
-                                           UserId = 2, // TODO: not hard-code these
-                                           UserHasVoted = false
+                                           Idea = viewModel,
+                                           UserId = 2 // TODO: not hard-code these
                                        }];
                                };
 
