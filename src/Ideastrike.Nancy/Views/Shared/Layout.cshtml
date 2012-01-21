@@ -23,7 +23,10 @@
             if (typeof window.janrain !== 'object') window.janrain = {};
             window.janrain.settings = {};
 
-            janrain.settings.tokenUrl = '@(string.Format(@"{0}login/token", HttpContext.Current.Request.Url))';
+            janrain.settings.tokenUrl = '@(string.Format(@"{0}", 
+                                    HttpContext.Current.Request.Url.PathAndQuery == "/" ?
+                                    HttpContext.Current.Request.Url.ToString() + "login/token"
+                                    : HttpContext.Current.Request.Url.ToString().Replace(HttpContext.Current.Request.Url.PathAndQuery, "/login/token")))';
 
             function isReady() { janrain.ready = true; };
             if (document.addEventListener) {
@@ -58,7 +61,7 @@
                     <li><a href="/">Ideas</a></li>
                 </ul>
                 <div class="pull-right">
-                    <a class="janrainEngage" href="#">Sign In</a>
+                        <a class="janrainEngage" href="#">Sign In</a>
                 </div>
             </div>
         </div>
