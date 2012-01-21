@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autofac;
 using Ideastrike.Nancy;
-using Ideastrike.Nancy.Models;
-using Ideastrike.Nancy.Models.Repositories;
-using Nancy;
-using Moq;
 
 namespace IdeaStrike.Tests
 {

@@ -3,6 +3,7 @@ using Autofac;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models;
 using Moq;
+
 namespace IdeaStrike.Tests
 {
     public class IdeaStrikeSpecBase
