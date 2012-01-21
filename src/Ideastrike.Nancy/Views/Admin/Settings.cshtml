@@ -2,6 +2,11 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+<ul class="pills">
+    <li><a href="/admin/">Admin Home</a></li>
+    <li class="active"><a href="/admin/settings">Settings</a></li>
+</ul>
+
 <form action="/admin/settings" method="POST">
 <fieldset>
     <legend>General Settings</legend>
@@ -37,9 +42,11 @@
         <label for="analyticskey">Google Analytics</label>
         <div class="input">
             <input class="xlarge" id="analyticskey" name="analyticskey" value="@Model.GAnalyticsKey"  size="30" type="text" />
-                <span class="help-block">It should look something like UA-XXXXXXX-X</span>
+            <span class="help-block">It should look something like UA-XXXXXXX-X</span>
         </div>
     </div>
-    <button type="submit" class="btn primary">Save</button>
+     <div class="input">
+        <button type="submit" class="btn primary">Save</button>
+     </div>
 </fieldset>
 </form>
