@@ -60,6 +60,9 @@
     <Reference Include="Nancy.ViewEngines.Razor">
       <HintPath>..\packages\Nancy.Viewengines.Razor.0.9.0\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.DynamicData" />
@@ -100,6 +103,7 @@
     <Content Include="Resources\logo_small.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\mustache.js" />
     <Content Include="Resources\respond.min.js" />
     <Content Include="Resources\showdown.js" />
     <Content Include="Resources\social.js" />
@@ -182,7 +186,7 @@
   <ItemGroup>
     <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
-<ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Idea\New.cshtml" />
   </ItemGroup>
   <ItemGroup>

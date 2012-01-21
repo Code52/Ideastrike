@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models.ViewModels;
@@ -57,6 +59,22 @@ namespace Ideastrike.Nancy.Modules
                                        }];
                                };
 
+            Get["/{id}/activity"] = parameters =>
+                                        {
+                                            int id = parameters.id;
+                                            var idea = _ideas.Get(id);
+                                            if (idea == null)
+                                                return Response.AsJson(new { Status = "error" });
+
+                                            var results = idea.Activities.Select( a => new { template = MapType(a), item = a });
+
+                                            return Response.AsJson(new
+                                            {
+                                                Status = "success",
+                                                Items = results
+                                            });
+                                        };
+
             // save result of edit to database
             Post["/{id}/edit"] = parameters =>
             {
@@ -88,6 +106,19 @@ namespace Ideastrike.Nancy.Modules
                 return Response.AsRedirect("/idea/" + i.Id);
             };
 
+            Post["/{id}/delete"] = parameters =>
+            {
+                int id = parameters.id;
+                ideas.Delete(id);
+                ideas.Save();
+
+                // TODO: test
+                return Response.AsJson(new
+                {
+                    Status = "Error"
+                });
+            };
+
             // someone else votes for the idea
             Post["/{id}/vote/{userid}"] = parameters =>
             {
@@ -111,19 +142,14 @@ namespace Ideastrike.Nancy.Modules
                     NewVotes = votes
                 });
             };
+        }
 
-            Post["/{id}/delete"] = parameters =>
-            {
-                int id = parameters.id;
-                ideas.Delete(id);
-                ideas.Save();
+        private static string MapType(Activity activity)
+        {
+            if (activity is GitHubActivity)
+                return "github";
 
-                // TODO: test
-                return Response.AsJson(new
-                {
-                    Status = "Error"
-                });
-            };
+            return "comment";
         }
     }
 }
