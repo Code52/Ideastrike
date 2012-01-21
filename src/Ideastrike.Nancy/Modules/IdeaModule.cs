@@ -17,20 +17,44 @@ namespace Ideastrike.Nancy.Modules
         public IdeaModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings)
             : base("/idea")
         {
-            
+
 
             _ideas = ideas;
             _settings = settings;
             _users = users;
 
-            Get["/new"] = _ => View["Idea/New", new
-            {
-                Title = string.Format("New Idea - {0}", _settings.Title),
-                Ideas = _ideas.GetAll()
-            }];
+            Get["/new"] = _ =>
+                              {
+                                  if (Context.CurrentUser == null) return Response.AsRedirect("/login");
 
-            Get["/{id}/edit"] = parameters =>
+                                  var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+                                  if (user == null) return Response.AsRedirect("/login");
+
+                                  return View["Idea/New", new
+                                                       {
+                                                           Title = string.Format("New Idea - {0}", _settings.Title),
+                                                           Ideas = _ideas.GetAll(),
+                                                           IsLoggedIn = (Context == null || Context.CurrentUser == null ||
+                                                                            string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                                                            ? false
+                                                                            : true,
+                                                           UserName = (Context == null || Context.CurrentUser == null ||
+                                                                             string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                                                                ? ""
+                                                                                : Context.CurrentUser.UserName,
+                                                       }];
+                              };
+       
+
+        Get["/{id}/edit"] = parameters =>
             {
+                if (Context.CurrentUser == null) return Response.AsRedirect("/login");
+
+                var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+                if (user == null) return Response.AsRedirect("/login");
+
                 int id = parameters.id;
                 var idea = _ideas.Get(id);
 
@@ -41,19 +65,30 @@ namespace Ideastrike.Nancy.Modules
                 {
                     Title = string.Format("Edit Idea: '{0}' - {1}", idea.Title, _settings.Title),
                     PopularIdeas = _ideas.GetAll(),
-                    Idea = idea
+                    Idea = idea,
+                    IsLoggedIn = (Context == null || Context.CurrentUser == null ||
+                                     string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                     ? false
+                                     : true,
+                    UserName = (Context == null || Context.CurrentUser == null ||
+                                      string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                         ? ""
+                                         : Context.CurrentUser.UserName,
                 }];
             };
 
             Get["/{id}"] = parameters =>
                                {
+                                   if (Context.CurrentUser == null) return Response.AsRedirect("/login");
+
+                                   var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+                                   if (user == null) return Response.AsRedirect("/login");
+
                                    int id = parameters.id;
                                    var idea = _ideas.Get(id);
                                    if (idea == null)
                                        return View["404"];
-
-                                   var user = Context.CurrentUser == null ? null : _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
-
 
                                    var viewModel = new IdeaViewModel(idea) { UserHasVoted = false };
 
@@ -62,11 +97,16 @@ namespace Ideastrike.Nancy.Modules
                                                            Title =
                                                                string.Format("{0} - {1}", idea.Title, _settings.Title),
                                                            Idea = viewModel,
-                                                           UserId = Guid.Empty,
+                                                           UserId = user.Id,
+                                                           IsLoggedIn = (Context == null || Context.CurrentUser == null ||
+                                                                            string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                                                            ? false
+                                                                            : true,
+                                                           UserName = (Context == null || Context.CurrentUser == null ||
+                                                                             string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                                                                ? ""
+                                                                                : Context.CurrentUser.UserName,
                                                        };
-
-                                   if (user != null)
-                                       model.UserId = user.Id; // TODO: not hard-code these
 
                                    return View["Idea/Index", model];
                                };
@@ -74,7 +114,11 @@ namespace Ideastrike.Nancy.Modules
             // save result of edit to database
             Post["/{id}/edit"] = parameters =>
             {
-                this.RequiresAuthentication();
+                if (Context.CurrentUser == null) return Response.AsRedirect("/login");
+
+                var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+                if (user == null) return Response.AsRedirect("/login");
 
                 int id = parameters.id;
                 var idea = _ideas.Get(id);
@@ -92,9 +136,11 @@ namespace Ideastrike.Nancy.Modules
             // save result of create to database
             Post["/new"] = _ =>
                                {
+                                   if (Context.CurrentUser == null) return Response.AsRedirect("/login");
+
                                    var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
 
-                                   if(user == null) return Response.AsRedirect("/idea/"); //TODO: Problem looking up the user? Return an error
+                                   if (user == null) return Response.AsRedirect("/login");
 
                                    var i = new Idea
                                                {
@@ -110,9 +156,15 @@ namespace Ideastrike.Nancy.Modules
                                };
 
             // someone else votes for the idea
-            Post["/{id}/vote/{userid}"] = parameters =>
+            Post["/{id}/vote/"] = parameters =>
             {
-                int votes = ideas.Vote(parameters.id, parameters.userid, 1);
+                if (Context.CurrentUser == null) return Response.AsRedirect("/login");
+
+                var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+                if (user == null) return Response.AsRedirect("/login");
+
+                int votes = ideas.Vote(parameters.id, user.Id, 1);
 
                 return Response.AsJson(new
                                 {

@@ -9,10 +9,11 @@ namespace Ideastrike.Nancy.Modules
 {
     public enum SelectedTab
     {
-        Popular =0,
-        Hot =1,
-        New =2
+        Popular = 0,
+        Hot = 1,
+        New = 2
     }
+
     public class HomeModule : NancyModule
     {
         private readonly IIdeaRepository _ideas;
@@ -22,20 +23,36 @@ namespace Ideastrike.Nancy.Modules
         {
             _ideas = ideas;
             _settings = settings;
-            Get["/"] = _ => ListIdeas(_ideas.GetAll(), SelectedTab.Popular);
-            Get["/top"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Votes.Count), SelectedTab.Hot);
-            Get["/new"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Time), SelectedTab.New);
+            Get["/"] = _ => ListIdeas(_ideas.GetAll(), SelectedTab.Popular, "");
+            Get["/top"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Votes.Count), SelectedTab.Hot, "");
+            Get["/new"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Time), SelectedTab.New, "");
+            Get["/login"] = _ =>
+                                {
+                                    return ListIdeas(_ideas.GetAll(), SelectedTab.Popular,
+                                                     "You need to login to do that");
+                                };
         }
 
-        Response ListIdeas(IEnumerable<Idea> ideas, SelectedTab selected)
+        public Response ListIdeas(IEnumerable<Idea> ideas, SelectedTab selected, string ErrorMessage)
         {
-            return View["Home/Index", new
+            dynamic pageData = new
             {
                 Ideas = ideas,
                 Selected = selected,
                 Title = _settings.Title,
-                WelcomeMessage = _settings.WelcomeMessage
-            }];
+                WelcomeMessage = _settings.WelcomeMessage,
+                ErrorMessage = ErrorMessage,
+                IsLoggedIn = (Context == null || Context.CurrentUser == null ||
+                                  string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                     ? false
+                                     : true,
+                UserName = (Context == null || Context.CurrentUser == null ||
+                                  string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                     ? ""
+                                     : Context.CurrentUser.UserName,
+            };
+
+            return View["Home/Index", pageData];
         }
     }
 }

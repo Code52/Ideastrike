@@ -43,6 +43,7 @@ namespace Ideastrike.Nancy.Modules
                                     Time = DateTime.UtcNow,
                                     Text = Request.Form.comment
                                 };
+
                 _activities.Add(id, comment);
 
                 // why not return JSON here and leave it up to client to render inline?

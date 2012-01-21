@@ -10,8 +10,11 @@
             <h3 id="votecount">@idea.TotalVotes</h3>
             votes
         </div>
-        <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
-            vote</button>
+        @if (Model.IsLoggedIn)
+        { 
+            <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
+                vote</button>
+        }
         </form>
     </div>
     <div class="sidebox">
@@ -69,7 +72,7 @@ else
     <h4>
         Got something to add?</h4>
 </div>
-@if (Model.UserId != Guid.Empty)
+@if (Model.IsLoggedIn)
 {
     <div id="add-feature" class="hide-on-start add-feature">
         <form action="/idea/@idea.Id/feature" method="POST">
@@ -142,7 +145,7 @@ else
     <h4>
         No activity yet, add the first comment!</h4>
 }
-@if (Model.UserId != Guid.Empty)
+@if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-comment">
         <h4>

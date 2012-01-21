@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Nancy;
 using Nancy.Security;
 
 namespace Ideastrike.Nancy.Models
@@ -14,7 +15,7 @@ namespace Ideastrike.Nancy.Models
 
         public string Identity { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
 
         [NotMapped]
         public IEnumerable<string> Claims { get; set; } // User Admin levels claims - https://github.com/NancyFx/Nancy/blob/master/src/Nancy.Demo.Authentication/AuthenticationBootstrapper.cs

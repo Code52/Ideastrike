@@ -4,24 +4,39 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+@if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+{
+    <div class="fill">
+        <div class="alert-message error">
+            <a class="close" href="#">&times;</a>
+            <p>
+            <strong>@Model.ErrorMessage</strong>
+            </p>
+        </div>
+    </div>
+}
 <h1>@Model.Title</h1>
 @MarkdownHelper.Markdown(Model.WelcomeMessage)
-<h3>Submit a New Idea</h3>
+<h3>
+    Submit a New Idea</h3>
 <form action="/idea/new" method="POST">
 <div class="clearfix">
-    <label for="Title">Title</label>
+    <label for="Title">
+        Title</label>
     <div class="input">
         <input id="Title" name="Title" type="text" />
     </div>
 </div>
 <div class="clearfix">
-    <label for="Description">Description</label>
+    <label for="Description">
+        Description</label>
     <div class="input">
         <textarea id="Description" name="Description" rows="10"></textarea>
     </div>
 </div>
 <div class="actions">
-    <button type="submit" class="btn primary">Submit</button>
+    <button type="submit" class="btn primary">
+        Submit</button>
 </div>
 </form>
 <ul class="pills">
@@ -33,12 +48,9 @@
         {@:class="active"
         }
         ><a href="/top">Top</a></li>
-
     <li @if (Model.Selected == SelectedTab.New)
         {@:class="active"
-        }>
-        <a href="/new">New</a>
-    </li>
+        }><a href="/new">New</a> </li>
 </ul>
 <ul id="ideas">
     @foreach (var i in Model.Ideas)
@@ -50,29 +62,32 @@
                         <h3 id="votecount@(i.Id)">@i.Votes.Count</h3>
                         votes
                     </div>
-                    <button type="button" class="btn" onclick="vote(@i.Id)">vote</button>
+                            @if (Model.IsLoggedIn)
+                            {
+                                <button type="button" class="btn" onclick=" vote(@i.Id)">
+                                    vote</button>
+                            }
                 </form>
             </div>
-
-            <h3 class="ideaheader"><a href="/idea/@i.Id">@i.Title</a></h3>
+            <h3 class="ideaheader">
+                <a href="/idea/@i.Id">@i.Title</a></h3>
             <div class="ideadate">@FriendlyTimeHelper.Parse(i.Time)</div>
             <div class="ideadesc">@MarkdownHelper.Markdown(i.Description)</div>
-            
-            <div class="clearfix"></div>
+            <div class="clearfix">
+            </div>
         </li> 
     }
 </ul>
-
 @section PageScript {
     <script>
         function vote(id) {
             $.ajax({
                 type: "POST",
-                url: "/idea/" + id +"/vote/9",
+                url: "/idea/" + id + "/vote/",
                 context: document.body,
-                success: function(data) {
+                success: function (data) {
                     /* This is really nasty, surely there is a better way? */
-                    $("#votecount"+ id).replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
+                    $("#votecount" + id).replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
                 }
             });
         }

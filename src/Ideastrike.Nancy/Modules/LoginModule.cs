@@ -17,32 +17,70 @@ namespace Ideastrike.Nancy.Modules
         public LoginModule(IUserRepository userRepository)
         {
             _user = userRepository;
-            
+
             Post["/login/token"] = x =>
-            {
-                if (string.IsNullOrWhiteSpace(Request.Form.token)) return View["Login/Error", new { Title = "Login Error", Message = "Bad response from login provider - could not find login token." }]; 
+                                       {
+                                           if (string.IsNullOrWhiteSpace(Request.Form.token))
+                                               return
+                                                   View[
+                                                       "Login/Error",
+                                                       new
+                                                           {
+                                                               Title = "Login Error",
+                                                               Message =
+                                                           "Bad response from login provider - could not find login token."
+                                                           }];
 
-                var response = new WebClient().DownloadString(string.Format("https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}", apikey, Request.Form.token));
+                                           var response =
+                                               new WebClient().DownloadString(
+                                                   string.Format(
+                                                       "https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}",
+                                                       apikey, Request.Form.token));
 
-                if (string.IsNullOrWhiteSpace(response)) return View["Login/Error", new { Title = "Login Error", Message = "Bad response from login provider - could not find user." }]; 
+                                           if (string.IsNullOrWhiteSpace(response))
+                                               return
+                                                   View[
+                                                       "Login/Error",
+                                                       new
+                                                           {
+                                                               Title = "Login Error",
+                                                               Message =
+                                                           "Bad response from login provider - could not find user."
+                                                           }];
 
-                var j = JsonConvert.DeserializeObject<dynamic>(response);
+                                           var j = JsonConvert.DeserializeObject<dynamic>(response);
 
-                if (j.stat.ToString() != "ok") return View["Login/Error", new { Title = "Login Error", Message = "Bad response from login provider." }]; 
+                                           if (j.stat.ToString() != "ok")
+                                               return
+                                                   View[
+                                                       "Login/Error",
+                                                       new
+                                                           {
+                                                               Title = "Login Error",
+                                                               Message = "Bad response from login provider."
+                                                           }];
 
-                var userIdentity = j.profile.identifier.ToString();
+                                           var userIdentity = j.profile.identifier.ToString();
 
-                var user = _user.GetUserFromUserIdentity(userIdentity);
-                
-                if (user == null)
-                {
-                    var u = new User {Id = Guid.NewGuid(), Identity = userIdentity, UserName = "New User", IsActive = true};
-                    _user.Add(u);
-                    return ModuleExtensions.LoginAndRedirect(this, u.Id, DateTime.Now.AddDays(1), "/profile/create");
-                }
+                                           var user = _user.GetUserFromUserIdentity(userIdentity);
 
-                return ModuleExtensions.Login(this, user.Id, DateTime.Now.AddDays(1), "/");
-            };
+                                           if (user == null)
+                                           {
+                                               var u = new User
+                                                           {
+                                                               Id = Guid.NewGuid(),
+                                                               Identity = userIdentity,
+                                                               UserName = "New User",
+                                                               IsDeleted = true
+                                                           };
+                                               _user.Add(u);
+                                               return ModuleExtensions.LoginAndRedirect(this, u.Id,
+                                                                                        DateTime.Now.AddDays(1),
+                                                                                        "/profile/create");
+                                           }
+
+                                           return ModuleExtensions.Login(this, user.Id, DateTime.Now.AddDays(1), "/");
+                                       };
 
             Get["/logout/"] = parameters =>
                                   {

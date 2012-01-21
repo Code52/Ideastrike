@@ -14,10 +14,10 @@
             if (typeof window.janrain !== 'object') window.janrain = {};
             window.janrain.settings = {};
 
-            janrain.settings.tokenUrl = '@(string.Format(@"{0}", 
-                                    HttpContext.Current.Request.Url.PathAndQuery == "/" ?
-                                    HttpContext.Current.Request.Url.ToString() + "login/token"
-                                    : HttpContext.Current.Request.Url.ToString().Replace(HttpContext.Current.Request.Url.PathAndQuery, "/login/token")))';
+            janrain.settings.tokenUrl = '@(string.Format(@"{0}",
+                     HttpContext.Current.Request.Url.PathAndQuery == "/" ?
+                                                                             HttpContext.Current.Request.Url.ToString() + "login/token"
+                         : HttpContext.Current.Request.Url.ToString().Replace(HttpContext.Current.Request.Url.PathAndQuery, "/login/token")))';
 
             function isReady() { janrain.ready = true; };
             if (document.addEventListener) {
@@ -40,7 +40,7 @@
             s.parentNode.insertBefore(e, s);
         })();
     </script>
-  <title>@Model.Title</title>
+    <title>@Model.Title</title>
     <meta name="viewport" content="width=device-width" />
     @* TODO: Minimize, I usually use Squishit *@
     <link href="@Url.Content("~/Resources/bootstrap.min.css")" rel="stylesheet" />
@@ -62,7 +62,14 @@
                     <li><a href="/inbox">Inbox</a></li>
                 </ul>
                 <div class="pull-right">
-                        <a class="janrainEngage" href="#">Sign In</a>
+                @if(Model.IsLoggedIn)
+                {
+                    @:Welcome @Model.UserName [<a href="/logout">Log out</a>]
+                }
+                else
+                {
+                    <a class="janrainEngage" href="#">Sign In</a>
+                }
                 </div>
             </div>
         </div>
@@ -73,7 +80,7 @@
         </div>
         <footer>
             <p><a href="https://github.com/code52/ideastrike">Powered by Ideastrike</a></p>
-	    <p><a href="/admin/">Admin Panel</a></p>
+            <p><a href="/admin/">Admin Panel</a></p>
         </footer>
     </div>
     <!-- /container -->
@@ -81,6 +88,14 @@
     <script src="@Url.Content("~/Resources/jquery-1.7.min.js")"></script>
     <script src="@Url.Content("~/Resources/showdown.js")"> </script>
     <script src="@Url.Content("~/Resources/ideastrike.js")"> </script>
+    <script src="@Url.Content("~/Resources/bootstrap-alerts.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".close").click(function () {
+                $(".alert-message").hide();
+            });
+        });
+    </script>
     @RenderSection("PageScript", false)
 </body>
-</html>
+</html> 
