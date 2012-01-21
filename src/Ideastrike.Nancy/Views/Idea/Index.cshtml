@@ -34,15 +34,17 @@
 { 
     <div class="features">
         <h4>Features</h4>
-        <ul id="features">
+        <ul>
             @foreach (var a in idea.Features)
             {
                 <li>
                     <div class="row">
-                        <div class="span1"><img src="@Model.TestHash" /></div>
-                        <div class="span8 offset1 text">@a.Text</div>
-                        <div class="span8 offset1 author">shiftkey</div>
-                        <sub class="span8 offset1 time">@a.Time</sub>
+                        <div class="span8 text">@a.Text</div>
+                    </div>
+                    <div class="row">
+                        <div class="span1 gravatar"><img src="@Model.TestHash" /></div>
+                        <div class="span8 author">shiftkey</div>
+                        <sub class="span8 time">@a.Time</sub>
                         <div class="comment">
                             <!-- TODO: comment on a feature -->
                         </div>
@@ -58,18 +60,30 @@ else
         No feature requests yet, add the first one!</h4>
 }
 <form action="/idea/@idea.Id/feature" method="POST">
-<div>
-    <label for="feature">
-        feature request</label>
-    <!--  TODO: can we hook in some anti-forgery bits? -->
-    <input type="text" id="feature" name="feature" /><br />
-    <br />
-    <br />
-    <input type="hidden" name="userId" value="@Model.UserId"/>
-    <label for="submit">
-    </label>
-    <input type="submit" />
-</div>
+    <div class="add-feature">
+        <h4>Got something to add?</h4>
+        <div class="options">
+            <button type="button" disabled="disabled" class="btn">Edit</button>
+            <button type="button" class="btn">Preview</button>
+        </div>
+        <!-- TODO: i want this text to change dynamically 
+            text to rotate through:
+            - how about ...
+            - it would be cool if ...
+            - can it also do ...
+            - etc
+            -->
+        
+        <label for="feature" id="label-text">how about ...</label>
+        <!--  TODO: can we hook in some anti-forgery bits? -->
+        <textarea id="feature" name="feature"></textarea><br />
+        <br />
+        <br />
+        <input type="hidden" name="userId" value="@Model.UserId"/>
+        <label for="submit">
+        </label>
+        <input type="submit" />
+    </div>
 </form>
 <hr />
 @if (idea.Activities.Count > 0)

@@ -43,7 +43,7 @@ namespace Ideastrike.Nancy.Modules
                                    return View["Idea/Index",
                                        new
                                        {
-                                           TestHash = "me@brendanforster.com".ToGravatarUrl(),
+                                           TestHash = "me@brendanforster.com".ToGravatarUrl(40),
                                            Title = string.Format("{0} - {1}", idea.Title, _settings.Title),
                                            Idea = idea,
                                            UserId = 2, // TODO: not hard-code these

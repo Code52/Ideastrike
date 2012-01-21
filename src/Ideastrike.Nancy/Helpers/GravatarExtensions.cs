@@ -2,7 +2,7 @@
 {
     public static class GravatarExtensions
     {
-        public static string ToGravatarUrl(this string emailAddress)
+        public static string ToGravatarUrl(this string emailAddress, int? size = 80)
         {
             var x = new System.Security.Cryptography.MD5CryptoServiceProvider();
             var bs = System.Text.Encoding.UTF8.GetBytes(emailAddress);
@@ -12,7 +12,7 @@
             {
                 s.Append(b.ToString("x2").ToLower());
             }
-            return string.Format("http://www.gravatar.com/avatar/{0}", s);
+            return string.Format("http://www.gravatar.com/avatar/{0}?s={1}", s, size);
         }
     }
 }

@@ -1,4 +1,20 @@
-﻿.features li {
+﻿.features {
+    margin-bottom: 20px;
+}
+
+.features ul {
+    margin: 0;
+}
+
+.features .gravatar {
+    padding-left: 10px;
+}
+
+/*.features .author, .features .time {
+    padding-left: 30px;
+}*/
+
+.features li {
     list-style-type: none;
 }
 
@@ -8,10 +24,16 @@
 
 .features .author 
 {
-    margin-top: 10px;
+    font-size: 1.1em;
     font-weight: bold;
 }
 
 .features .text {
     font-size: 1.3em;
+}
+
+.add-feature .options {
+    margin-left: 150px;
+    margin-bottom: 5px;
+    
 }

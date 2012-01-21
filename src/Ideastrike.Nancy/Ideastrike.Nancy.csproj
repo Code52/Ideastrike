@@ -84,6 +84,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\ideastrike.css" />
     <Content Include="Resources\jquery-1.7.min.js" />
     <Content Include="Resources\media.css" />
     <Content Include="Resources\modernizr-2.0.min.js" />
