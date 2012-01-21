@@ -22,7 +22,7 @@ namespace IdeaStrike.Tests
             CreateMocks();
             ContainerBuilder builder = CreateContainerBuilder();
 
-            var ideaStrikeTestBootstrapper = new IdeaStrikeTestBootStrapper(builder);
+            var ideaStrikeTestBootstrapper = new IdeaStrikeTestBootStrapper(CreateContainerBuilder);
             ideaStrikeTestBootstrapper.Initialise();
             engine = ideaStrikeTestBootstrapper.GetEngine();
         }
