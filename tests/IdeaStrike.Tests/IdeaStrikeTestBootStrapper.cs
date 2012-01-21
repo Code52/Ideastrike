@@ -20,7 +20,6 @@ namespace IdeaStrike.Tests
 
         protected override void ConfigureApplicationContainer(ILifetimeScope existingContainer)
         {
-
             builder.Update(existingContainer.ComponentRegistry);
         }
     }

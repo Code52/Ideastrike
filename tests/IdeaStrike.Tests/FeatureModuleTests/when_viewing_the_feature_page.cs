@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Nancy;
 using Xunit;
+using Moq;
+using Ideastrike.Nancy.Models;
 
 namespace IdeaStrike.Tests.FeatureModuleTests
 {
@@ -15,10 +17,21 @@ namespace IdeaStrike.Tests.FeatureModuleTests
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 
-        [Fact]
-        public void it_should_set_the_status_code_to_ok()
+    }
+
+    public class when_adding_a_new_feature : IdeaStrikeSpecBase
+    {
+        
+        public when_adding_a_new_feature()
         {
-            Assert.Equal(HttpStatusCode.SeeOther, testResponse.StatusCode);
+            var testRequest = PostTestRequest("/idea/0/feature");
+            testResponse = engine.HandleRequest(testRequest).Response;
+        }
+
+        [Fact]
+        public void it_should_add_the_new_feature()
+        {
+            mockFeatureRepo.Verify(B => B.Add(0,It.IsAny<Feature>()));
         }
     }
 }

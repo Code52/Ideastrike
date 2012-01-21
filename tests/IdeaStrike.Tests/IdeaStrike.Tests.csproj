@@ -59,8 +59,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="xunit">
-      <HintPath>..\..\src\packages\xunit.1.9.0.1566\lib\xunit.dll</HintPath>
+    <Reference Include="xunit, Version=1.8.0.1549, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\src\packages\xunit.1.8.0.1549\lib\xunit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -68,7 +69,10 @@
     <Compile Include="CommentModuleTests\when_viewing_the_comments_page.cs" />
     <Compile Include="FeatureModuleTests\when_viewing_the_feature_page.cs" />
     <Compile Include="HomeModuleTests\when_viewing_the_home_page.cs" />
+    <Compile Include="IdeaModuleTests\when_creating_a_new_idea.cs" />
+    <Compile Include="IdeaModuleTests\when_deleting_a_idea.cs" />
     <Compile Include="IdeaModuleTests\when_viewing_the_idea_page.cs" />
+    <Compile Include="IdeaModuleTests\when_voting_for_an_item.cs" />
     <Compile Include="IdeaStrikeSpecBase.cs" />
     <Compile Include="IdeaStrikeTestBootStrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

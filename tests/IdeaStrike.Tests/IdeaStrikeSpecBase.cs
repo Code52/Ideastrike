@@ -18,14 +18,15 @@ namespace IdeaStrike.Tests
 {
     public class IdeaStrikeSpecBase
     {
-        public IActivityRepository mockActivityRepo = null;
-        public IFeatureRepository mockFeatureRepo = null;
-        public IIdeaRepository mockIdeasRepo = null;
-        public IdeastrikeContext mockIdeaStrikeContext = null;
-        public ISettingsRepository mockSettingsRepo = null;
-
-        protected INancyEngine engine;
+        public Mock<IActivityRepository> mockActivityRepo;
+        public Mock<IFeatureRepository> mockFeatureRepo;
+        public Mock<IIdeaRepository> mockIdeasRepo;
+        public Mock<IdeastrikeContext> mockIdeaStrikeContext;
+        public Mock<ISettingsRepository> mockSettingsRepo;
+        
         protected Response testResponse;
+        protected INancyEngine engine;
+
         public IdeaStrikeSpecBase()
         {
             CreateMocks();
@@ -38,21 +39,21 @@ namespace IdeaStrike.Tests
 
         private void CreateMocks()
         {
-            mockActivityRepo = new Mock<IActivityRepository>().Object;
-            mockFeatureRepo = new Mock<IFeatureRepository>().Object;
-            mockIdeasRepo = new Mock<IIdeaRepository>().Object;
-            mockSettingsRepo = new Mock<ISettingsRepository>().Object;
-            mockIdeaStrikeContext = new Mock<IdeastrikeContext>().Object;
+            mockActivityRepo = new Mock<IActivityRepository>();
+            mockFeatureRepo = new Mock<IFeatureRepository>();
+            mockIdeasRepo = new Mock<IIdeaRepository>();
+            mockSettingsRepo = new Mock<ISettingsRepository>();
+            mockIdeaStrikeContext = new Mock<IdeastrikeContext>();
         }
 
         private ContainerBuilder CreateContainerBuilder()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterInstance<ISettingsRepository>(mockSettingsRepo);
-            builder.RegisterInstance<IIdeaRepository>(mockIdeasRepo);
-            builder.RegisterInstance<IActivityRepository>(mockActivityRepo);
-            builder.RegisterInstance<IFeatureRepository>(mockFeatureRepo);
-            builder.RegisterInstance<IdeastrikeContext>(mockIdeaStrikeContext);
+            builder.RegisterInstance<ISettingsRepository>(mockSettingsRepo.Object);
+            builder.RegisterInstance<IIdeaRepository>(mockIdeasRepo.Object);
+            builder.RegisterInstance<IActivityRepository>(mockActivityRepo.Object);
+            builder.RegisterInstance<IFeatureRepository>(mockFeatureRepo.Object);
+            builder.RegisterInstance<IdeastrikeContext>(mockIdeaStrikeContext.Object);
             return builder;
         }
 
