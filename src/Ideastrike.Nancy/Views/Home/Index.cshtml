@@ -67,6 +67,7 @@
     <script>
         function vote(id) {
             $.ajax({
+                type: "POST",
                 url: "/idea/" + id +"/vote/9",
                 context: document.body,
                 success: function(data) {
