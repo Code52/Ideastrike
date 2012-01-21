@@ -145,14 +145,26 @@ else
 <form action="/comment/@idea.Id/add" method="POST">
 <div class="add-comment">
     <div class="options">
-        <button type="button" disabled="disabled" class="btn">
+        <button type="button" 
+                disabled="disabled" 
+                id="edit-new-comment"
+                class="btn edit" 
+                data-other="#preview-new-comment"
+                data-editor="#new-comment"
+                data-view="#new-comment-view">
             Edit</button>
-        <button type="button" class="btn">
+        <button type="button" 
+                id="preview-new-comment"
+                class="btn preview" 
+                data-other="#edit-new-comment"
+                data-editor="#new-comment"
+                data-view="#new-comment-view">
             Preview</button>
     </div>
     <label for="comment">
         leave a comment</label>
-    <textarea id="comment" name="comment"></textarea><br />
+    <textarea id="new-comment" name="comment"></textarea><br />
+    <div id="new-comment-view"></div>
     <input type="hidden" name="userId" value="@Model.UserId"/>
     <br />
     <label for="submit">
