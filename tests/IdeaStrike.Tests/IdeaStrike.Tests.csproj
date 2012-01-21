@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminModuleTests\when_viewing_the_admin_page.cs" />
+    <Compile Include="CommentModuleTests\when_adding_a_new_comment.cs" />
     <Compile Include="CommentModuleTests\when_viewing_the_comments_page.cs" />
     <Compile Include="FeatureModuleTests\when_viewing_the_feature_page.cs" />
     <Compile Include="HomeModuleTests\when_viewing_the_home_page.cs" />
