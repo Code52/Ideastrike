@@ -62,25 +62,18 @@ else
     <h3>
         No features suggested yet, be the first!</h3>
 }
-<form action="/idea/@idea.Id/feature" method="POST">
-<div class="add-feature">
+<div class="expander" data-element="#add-feature">
     <h4>
         Got something to add?</h4>
+</div>
+<div id="add-feature" class="hide-on-start add-feature">
+    <form action="/idea/@idea.Id/feature" method="POST">
     <div class="options">
-        <button type="button" 
-                disabled="disabled" 
-                id="edit-new-feature"
-                class="btn edit" 
-                data-other="#preview-new-feature"
-                data-editor="#new-feature"
-                data-view="#new-feature-view">
+        <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
+            data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
             Edit</button>
-        <button type="button" 
-                id="preview-new-feature"
-                class="btn preview"
-                data-other="#edit-new-feature"
-                data-editor="#new-feature" 
-                data-view="#new-feature-view">
+        <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
+            data-editor="#new-feature" data-view="#new-feature-view">
             Preview</button>
     </div>
     <!-- TODO: i want this text to change dynamically 
@@ -103,8 +96,8 @@ else
     <label for="submit">
     </label>
     <input type="submit" />
+    </form>
 </div>
-</form>
 <hr />
 @if (idea.Activities.Count > 0)
 { 
@@ -142,36 +135,31 @@ else
     <h4>
         No activity yet, add the first comment!</h4>
 }
-<form action="/comment/@idea.Id/add" method="POST">
-<div class="add-comment">
+<div class="expander" data-element="#add-comment">
+    <h4>Leave a comment</h4>
+</div>
+<div id="add-comment" class="hide-on-start add-comment">
+    <form action="/comment/@idea.Id/add" method="POST">
     <div class="options">
-        <button type="button" 
-                disabled="disabled" 
-                id="edit-new-comment"
-                class="btn edit" 
-                data-other="#preview-new-comment"
-                data-editor="#new-comment"
-                data-view="#new-comment-view">
+        <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
+            data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
             Edit</button>
-        <button type="button" 
-                id="preview-new-comment"
-                class="btn preview" 
-                data-other="#edit-new-comment"
-                data-editor="#new-comment"
-                data-view="#new-comment-view">
+        <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
+            data-editor="#new-comment" data-view="#new-comment-view">
             Preview</button>
     </div>
     <label for="comment">
         leave a comment</label>
     <textarea id="new-comment" name="comment"></textarea><br />
-    <div id="new-comment-view"></div>
+    <div id="new-comment-view">
+    </div>
     <input type="hidden" name="userId" value="@Model.UserId"/>
     <br />
     <label for="submit">
     </label>
     <input type="submit" />
+    </form>
 </div>
-</form>
 @section PageScript {
     <script>
         function vote() {
@@ -179,7 +167,6 @@ else
                 url: "/idea/@idea.Id/vote/9",
                 context: document.body,
                 success: function (data) {
-                    /* This is really nasty, surely there is a better way? */
                     $("#votecount").text(data.NewVotes);
                 }
             });
@@ -188,7 +175,21 @@ else
         $(document).ready(function () {
             $(".preview").click(previewText);
             $(".edit").click(editText);
+            $(".hide-on-start").hide();
+            $(".expander").click(toggleExpander)
+                          .css("cursor", "pointer");
         });
+
+        function toggleExpander() {
+            var elem = $(this);
+            var other = $(elem.data("element"));
+
+            if (other.is(":visible")) {
+                other.hide();
+            } else {
+                other.show();
+            }
+        }
 
         function previewText() {
             var elem = $(this);
@@ -204,7 +205,7 @@ else
             elem.attr("disabled", "disabled");
             other.removeAttr("disabled");
         }
-        
+
         function editText() {
             var elem = $(this);
             var other = $(elem.data("other"));
