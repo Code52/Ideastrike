@@ -1,23 +1,33 @@
 ﻿using System;
-using Ideastrike.Nancy.Models;
 using System.Linq;
+using Ideastrike.Nancy.Helpers;
+using Ideastrike.Nancy.Models;
+using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
 
 namespace Ideastrike.Nancy.Modules
 {
     public class IdeaModule : NancyModule
     {
-        public IdeaModule(IIdeaRepository ideas)
+        private readonly IIdeaRepository _ideas;
+        private readonly ISettingsRepository _settings;
+
+        public IdeaModule(IIdeaRepository ideas, ISettingsRepository settings)
             : base("/idea")
         {
-            Get["/new"] = _ => View["Idea/New", ideas.GetAll()];
+            _ideas = ideas;
+            _settings = settings;
+
+            Get["/new"] = _ => View["Idea/New", _ideas.GetAll()];
 
             // edit an existing idea
             Get["/{id}/edit"] = parameters =>
             {
-                // TODO: get result result in database 
                 int id = parameters.id;
-                Idea idea = ideas.Get(id);
+                var idea = _ideas.Get(id);
+
+                if (idea == null)
+                    return View["404"];
 
                 return View["Idea/Edit", idea];
             };
@@ -26,15 +36,19 @@ namespace Ideastrike.Nancy.Modules
             Get["/{id}"] = parameters =>
                                {
                                    int id = parameters.id;
-                                   Idea idea = ideas.Get(id);
-								   if (idea == null)
-                                       return View["Shared/404"];
+                                   var idea = _ideas.Get(id);
+                                   if (idea == null)
+                                       return View["404"];
 
-                                   return View["Idea/Index", new { 
-                                       Title = "Some Title",
-                                       Idea = idea, 
-                                       UserId = 2, // TODO: not hard-code these
-                                       UserHasVoted = false }];
+                                   return View["Idea/Index",
+                                       new
+                                       {
+                                           TestHash = "me@brendanforster.com".ToGravatarUrl(),
+                                           Title = string.Format("{0} - {1}", idea.Title, _settings.Title),
+                                           Idea = idea,
+                                           UserId = 2, // TODO: not hard-code these
+                                           UserHasVoted = false
+                                       }];
                                };
 
             // save result of edit to database
@@ -83,12 +97,12 @@ namespace Ideastrike.Nancy.Modules
                 return Response.AsJson(new
                 {
                     Status = "Error",
-                    
+
                 });
             };
 
             // should this be a POST instead of a GET?
-            
+
             Get["/{id}/delete"] = parameters =>
             {
                 int id = parameters.id;

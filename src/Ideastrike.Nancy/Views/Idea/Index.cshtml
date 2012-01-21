@@ -7,10 +7,10 @@
     <div class="sidebox">
         <form>
         <!-- Yes, I know this isn't going to be correct -->
-    <h3 id="votecount">@idea.Votes.Count</h3>
+        <h3 id="votecount">@idea.Votes.Count</h3>
         votes<br />
         <br />
-    <input type="button" value="vote" data-has-voted="@Model.UserHasVoted" onclick="vote()" />
+        <input type="button" value="vote" data-has-voted="@Model.UserHasVoted" onclick="vote()" />
         </form>
     </div>
     <div class="sidebox">
@@ -20,25 +20,35 @@
                data-text="Idea: @idea.Title - @idea.Description" 
                data-hashtags="ideastrike">Tweet this idea!</a>
         </div>
-        <div id="fb-root"></div><div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+        <div id="fb-root">
+        </div>
+        <div class="fb-like" data-send="false" data-layout="button_count" data-width="450"
+            data-show-faces="true">
+        </div>
     </div>
 </div>
-
 <h1>@idea.Title</h1>
 @idea.Description
-
 <hr />
 @if (idea.Features.Count > 0)
 { 
-    <h4>Features</h4>
+    <h4>
+        Features</h4>
     <ul id="features">
         @foreach (var a in idea.Features)
         {
-            <!-- TODO: Markdownify this text? -->
-                <sub>@a.Time</sub>
+            <!-- TODO: style these elements -->
+            <div class="gravatar">
+                <img src="@Model.TestHash" /></div>
+            <div class="feature-text">@a.Text</div>
+            <div class="feature-author">
+                shiftkey</div>
+            <sub>@a.Time</sub>
+            <div class="comment">
+                <!-- TODO: comment on a feature -->
+            </div>
         }
     </ul>
-    <!-- TODO: comment on a feature -->
 }
 else
 {
@@ -47,12 +57,15 @@ else
 }
 <form action="/idea/@idea.Id/feature" method="POST">
 <div>
-    <label for="feature">feature request</label>
+    <label for="feature">
+        feature request</label>
     <!--  TODO: can we hook in some anti-forgery bits? -->
-    <input type="text" id="feature" name="feature" /><br /><br />
+    <input type="text" id="feature" name="feature" /><br />
+    <br />
     <br />
     <input type="hidden" name="userId" value="@Model.UserId"/>
-    <label for="submit"></label>
+    <label for="submit">
+    </label>
     <input type="submit" />
 </div>
 </form>
@@ -64,29 +77,39 @@ else
     <ul id="comments">
         @foreach (var a in idea.Activities)
         {
-            <li>@a.Text<br /><sub>@a.Time</sub> </li>
+            <!-- TODO: style these elements -->
+            <div class="gravatar">
+                <img src="@Model.TestHash" /></div>
+            <div class="feature-text">@a.Text</div>
+            <div class="feature-author">
+                shiftkey</div>
+            <sub>@a.Time</sub>
+            <div class="comment">
+                <!-- TODO: reply to a comment -->
+            </div>
         }
     </ul>
-    <!-- TODO: reply to a comment -->
+    <div class="comment">
+        <!-- TODO: new comment -->
+    </div>
 }
 else
 {
-    <h4>No activity yet, add the first comment!</h4>
+    <h4>
+        No activity yet, add the first comment!</h4>
 }
 <form action="/comment/@idea.Id/add" method="POST">
-    <div>
-        <label for="comment">leave a comment</label>
-        <textarea id="comment" name="comment"></textarea><br />
-        <input type="hidden" name="userId" value="@Model.UserId"/>
-        <br />
-        <label for="submit"></label>
-        
-        <input type="submit" />
-    </div>
+<div>
+    <label for="comment">
+        leave a comment</label>
+    <textarea id="comment" name="comment"></textarea><br />
+    <input type="hidden" name="userId" value="@Model.UserId"/>
+    <br />
+    <label for="submit">
+    </label>
+    <input type="submit" />
+</div>
 </form>
-
-
-
 @section PageScript {
     <script>
         function vote() {
@@ -95,7 +118,7 @@ else
                 context: document.body,
                 success: function (data) {
                     /* This is really nasty, surely there is a better way? */
-                    $("#votecount").replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
+                    $("#votecount").text(data.NewVotes);
                 }
             });
         }
