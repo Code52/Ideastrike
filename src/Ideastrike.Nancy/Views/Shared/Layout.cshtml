@@ -3,52 +3,59 @@
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="en">
-<!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>@Model.Title</title>
-    <meta name="viewport" content="width=device-width" />
-    @* TODO: Minimize, I usually use Squishit *@
-    <link href="@Url.Content("~/Resources/bootstrap.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Resources/media.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Resources/style.css")" rel="stylesheet" />
-    @RenderSection("HeadContent", false)
-    <script src="@Url.Content("~/Resources/modernizr-2.0.min.js")"></script>
-    <script src="@Url.Content("~/Resources/respond.min.js")"></script>
+  <meta charset="utf-8" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <title>@Model.Title</title>
+  <meta name="viewport" content="width=device-width" />
+
+  @* TODO: Minimize, I usually use Squishit *@
+  <link href="@Url.Content("~/Resources/bootstrap.min.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/Resources/media.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/Resources/style.css")" rel="stylesheet" />
+
+  @RenderSection("HeadContent", false)
+ 
+  <script src="@Url.Content("~/Resources/modernizr-2.0.min.js")"></script>
+  <script src="@Url.Content("~/Resources/respond.min.js")"></script>
 </head>
 <body>
     <div class="topbar">
-        <div class="fill">
-            <div class="container">
-                <a class="brand" href="/"></a>
-                <ul class="nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">New Idea</a></li>
-                    <li><a href="/">Ideas</a></li>
-                </ul>
-                <form action="/login" class="pull-right">
-                <input class="input-small" type="text" placeholder="Username">
-                <input class="input-small" type="password" placeholder="Password">
-                <button class="btn" type="submit">Sign in</button>
-                </form>
-            </div>
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/"></a>
+          <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/">New Idea</a></li>
+            <li><a href="/">Ideas</a></li>
+          </ul>
+          <form action="/login" class="pull-right">
+            <input class="input-small" type="text" placeholder="Username">
+            <input class="input-small" type="password" placeholder="Password">
+            <button class="btn" type="submit">Sign in</button>
+          </form>
         </div>
+      </div>
     </div>
+    
     <div class="container">
         <div class="content">
             @RenderBody()
         </div>
+
         <footer>
             <p><a href="https://github.com/code52/ideastrike">Powered by Ideastrike</a></p>
-            <p><a href="/admin/">Admin Panel</a></p>
+	    <p><a href="/admin/">Admin Panel</a></p>
         </footer>
-    </div>
-    <!-- /container -->
+
+    </div> <!-- /container -->
+
     <!-- Script at the bottom for fast page loading -->
     <script src="@Url.Content("~/Resources/jquery-1.7.min.js")"></script>
+
     @RenderSection("PageScript", false)
 </body>
 </html>
