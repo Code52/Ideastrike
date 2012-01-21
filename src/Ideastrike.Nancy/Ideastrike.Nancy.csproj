@@ -116,6 +116,9 @@
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\Repositories\GenericRepository.cs" />
+    <Compile Include="Models\Repositories\IGenericRepository.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Repositories\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Repositories\FeatureRepository.cs" />

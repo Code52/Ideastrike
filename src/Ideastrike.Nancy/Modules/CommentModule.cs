@@ -2,6 +2,7 @@
 using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
+using Ideastrike.Nancy.Models.Repositories;
 
 namespace Ideastrike.Nancy.Modules
 {
