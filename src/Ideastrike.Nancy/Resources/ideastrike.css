@@ -8,28 +8,28 @@
     margin: 0;
 }
 
-.features .gravatar, .comments .gravatar
+.features .gravatar
 {
     padding-left: 10px;
 }
 
-.features li, .comments li
+.features li, #activity-feed li
 {
     list-style-type: none;
 }
 
-.features .time, .comments .time
+.features .time, #activity-feed.time
 {
     margin-top: 10px;
 }
 
-.features .author, .features .author
+.features .author, #activity-feed .author
 {
     font-size: 1.1em;
     font-weight: bold;
 }
 
-.features .text, .comments .text
+.features .text, #activity-feed .text
 {
     font-size: 1.3em;
     padding-bottom: 10px;

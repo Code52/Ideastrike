@@ -8,7 +8,7 @@ namespace Ideastrike.Nancy.Models.ViewModels
     {
         public CommentViewModel(Comment comment)
         {
-            FriendlyTime = FriendlyTimeHelper.Parse(comment.Time).ToHtmlString();
+            FriendlyTime = FriendlyTimeHelper.Parse(comment.Time).ToHtmlString(); // this is encoding when it shouldn't be
             Text = MarkdownHelper.Markdown(comment.Text).ToHtmlString();
 
             Author = "shiftkey";
