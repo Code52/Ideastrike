@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Nancy;
 using Xunit;
 using Moq;
@@ -12,7 +9,7 @@ namespace IdeaStrike.Tests.IdeaModuleTests
     {
         public when_creating_a_new_idea()
         {
-            var testRequest = PostTestRequest("/idea/");
+            var testRequest = PostTestRequest("/idea/new");
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 

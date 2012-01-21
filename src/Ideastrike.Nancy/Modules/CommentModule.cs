@@ -12,49 +12,40 @@ namespace Ideastrike.Nancy.Modules
         private readonly IActivityRepository _activities;
 
         public CommentModule(IIdeaRepository ideas, IActivityRepository activities)
-            : base("/idea")
+            : base("/comment")
         {
             _ideas = ideas;
             _activities = activities;
 
-            Post["/{idea}/comment"] = _ =>
+            Post["/{idea}/add"] = parameters =>
             {
-                int id = _.Idea;
+                int id = parameters.Idea;
+                int userId = Request.Form.userId; // addtional validation required
+
+                var text = Request.Form.comment;
+                if (string.IsNullOrEmpty(text)) // additional validation required
+                {
+                    return Response.AsJson(new { result = "Error" });
+                }
+
                 var comment = new Comment
                                 {
+                                    UserId = userId,
                                     Time = DateTime.UtcNow,
                                     Text = Request.Form.comment
                                 };
                 _activities.Add(id, comment);
 
+                // why not return JSON here and leave it up to client to render inline?
                 return Response.AsRedirect(string.Format("/idea/{0}#{1}", id, comment.Id));
             };
 
-            /*
-            Get["/{idea}/comment/{id}"] = parameters =>
-            {
-                using (var db = new IdeastrikeContext())
-                {
-                    int id = parameters.id;
-                    int idea = parameters.idea;
-                    var comment = db.Comments.FirstOrDefault(i => i.Id == id && i.IdeaId == idea);
-                    return string.Format("Comment Id:{0}", comment.Id);
-                }
-            };
+            // TODO: shouldn't these actually sit under the Comment root
+            // TODO: user should be able to edit their own comment
+            Post["/{id}/edit"] = parameters => Response.AsJson(new { result = "Error" });
 
-            Get["/{idea}/comment/{id}/delete"] = parameters =>
-            {
-                using (var db = new IdeastrikeContext())
-                {
-                    int id = parameters.id;
-                    int idea = parameters.idea;
-                    
-                    var comment = db.Comments.FirstOrDefault(i => i.Id == id && i.IdeaId == idea);
-                    db.Comments.Remove(comment);
-                    db.SaveChanges();
-                    return string.Format("Deleted Comment {0} for Idea {1}", id, idea);
-                }
-            };*/
+            // TODO: user should be able to remove their own comment
+            Post["/{id}/delete"] = parameters => Response.AsJson(new { result = "Error" });
         }
     }
 }
