@@ -29,7 +29,7 @@
     <div class="span4">
         <h3>Popular Ideas</h3>
         <ul>
-            @foreach (var i in Model)
+            @foreach (var i in Model.Ideas)
             {
                 <li>
                     <a href="/idea/@i.Id">@i.Title</a><br />

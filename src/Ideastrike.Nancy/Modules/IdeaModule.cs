@@ -19,7 +19,11 @@ namespace Ideastrike.Nancy.Modules
             _ideas = ideas;
             _settings = settings;
 
-            Get["/new"] = _ => View["Idea/New", _ideas.GetAll()];
+            Get["/new"] = _ => View["Idea/New", new
+            {
+                Title = string.Format("{0} - {1}", "New Idea", _settings.Title),
+                Ideas = _ideas.GetAll()
+            }];
 
             // edit an existing idea
             Get["/{id}/edit"] = parameters =>
