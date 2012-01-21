@@ -6,11 +6,12 @@
 <div class="pull-right">
     <div class="sidebox">
         <form>
-            <div class="voteinfo">
-                <h3 id="votecount">@idea.TotalVotes</h3>
-                votes
-            </div>
-            <button class="btn" type="button" onclick="vote()">vote</button>
+        <div class="voteinfo">
+            <h3 id="votecount">@idea.TotalVotes</h3>
+            votes
+        </div>
+        <button class="btn" type="button" onclick="vote()">
+            vote</button>
         </form>
     </div>
     <div class="sidebox">
@@ -46,7 +47,8 @@
                         <div class="span8 text">@a.Text</div>
                     </div>
                     <div class="row">
-                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
+                        <div class="span1 gravatar">
+                            <img src="@a.GravatarUrl" /></div>
                         <div class="span8 author">@a.Author</div>
                         <sub class="span8 time">@a.FriendlyTime</sub>
                         <div class="comment">
@@ -69,14 +71,6 @@ else
 </div>
 <div id="add-feature" class="hide-on-start add-feature">
     <form action="/idea/@idea.Id/feature" method="POST">
-    <div class="options">
-        <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
-            data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
-            Edit</button>
-        <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
-            data-editor="#new-feature" data-view="#new-feature-view">
-            Preview</button>
-    </div>
     <!-- TODO: i want this text to change dynamically 
             text to rotate through:
             - how about ...
@@ -84,26 +78,35 @@ else
             - can it also do ...
             - etc
             -->
-    <label for="feature" id="label-text">
-        how about ...</label>
     <!--  TODO: can we hook in some anti-forgery bits? -->
-    <textarea id="new-feature" name="feature"></textarea><br />
-    <div id="new-feature-view">
+    <label for="feature" id="label-text">how about ...</label>
+    <div class="input">
+        <div class="options">
+            <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
+                data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
+                Edit</button>
+            <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
+                data-editor="#new-feature" data-view="#new-feature-view">
+                Preview</button>
+        </div>
+        <textarea id="new-feature" name="feature"></textarea><br />
+        <div id="new-feature-view">
+        </div>
     </div>
-    <br />
-    <br />
     <br />
     <input type="hidden" name="userId" value="@Model.UserId"/>
     <label for="submit">
     </label>
-    <button class="btn primary" type="submit">Add Feature</button>
+    <button class="btn primary" type="submit">
+        Add Feature</button>
     </form>
 </div>
 <hr />
 @if (idea.Activities.Count > 0)
 { 
     <div class="comments">
-        <h4>Activity Feed</h4>
+        <h4>
+            Activity Feed</h4>
         <ul>
             @foreach (var a in idea.Activities)
             {
@@ -113,9 +116,10 @@ else
                         <div class="span8 text">@a.Text</div>
                     </div>
                     <div class="row">
-                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
+                        <div class="span1 gravatar">
+                            <img src="@a.GravatarUrl" /></div>
                         <div class="span8 author">@a.Author</div>
-                        <sub>@a.FriendlyTime</sub> 
+                        <sub>@a.FriendlyTime</sub>
                     </div>
                     <div class="comment">
                         <!-- TODO: reply to an activity -->
@@ -131,34 +135,40 @@ else
 }
 else
 {
-    <h4>No activity yet, add the first comment!</h4>
+    <h4>
+        No activity yet, add the first comment!</h4>
 }
 <div class="expander" data-element="#add-comment">
-    <h4>Leave a comment</h4>
+    <h4>
+        Leave a comment</h4>
 </div>
 <div id="add-comment" class="hide-on-start add-comment">
     <form action="/comment/@idea.Id/add" method="POST">
-    <div class="options">
-        <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
-            data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
-            Edit</button>
-        <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
-            data-editor="#new-comment" data-view="#new-comment-view">
-            Preview</button>
-    </div>
     <label for="comment">
         leave a comment</label>
-    <textarea id="new-comment" name="comment"></textarea><br />
-    <div id="new-comment-view">
+    <div class="input">
+        <div class="options">
+            <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
+                data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
+                Edit</button>
+            <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
+                data-editor="#new-comment" data-view="#new-comment-view">
+                Preview</button>
+        </div>
+        <textarea id="new-comment" name="comment"></textarea><br />
+        <div id="new-comment-view">
+        </div>
     </div>
     <input type="hidden" name="userId" value="@Model.UserId"/>
     <br />
     <label for="submit">
     </label>
-    <button class="btn primary" type="submit">Add Comment</button>
+    <button class="btn primary" type="submit">
+        Add Comment</button>
     </form>
 </div>
 @section PageScript {
+    <script src="/Resources/social.js"></script>
     <script>
         function vote() {
             $.ajax({
@@ -177,46 +187,5 @@ else
             $(".expander").click(toggleExpander)
                           .css("cursor", "pointer");
         });
-
-        function toggleExpander() {
-            var elem = $(this);
-            var other = $(elem.data("element"));
-
-            if (other.is(":visible")) {
-                other.hide();
-            } else {
-                other.show();
-            }
-        }
-
-        function previewText() {
-            var elem = $(this);
-            var other = $(elem.data("other"));
-            var editor = $(elem.data("editor"));
-            var view = $(elem.data("view"));
-
-            var converter = new Showdown.converter();
-            var formatted = converter.makeHtml(editor.val());
-            view.html(formatted);
-            editor.hide();
-            view.show();
-            elem.attr("disabled", "disabled");
-            other.removeAttr("disabled");
-        }
-
-        function editText() {
-            var elem = $(this);
-            var other = $(elem.data("other"));
-            var editor = $(elem.data("editor"));
-            var view = $(elem.data("view"));
-            // clear markdown
-            view.html('');
-            editor.show();
-            view.hide();
-            elem.attr("disabled", "disabled");
-            other.removeAttr("disabled");
-        }
     </script>
-    <script src="/Resources/social.js"></script>
-    <script src="/Resources/showdown.js"></script>
 }
