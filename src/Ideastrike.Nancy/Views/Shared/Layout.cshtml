@@ -1,4 +1,5 @@
-﻿@using Nancy
+﻿@using Nancy;
+@using Ideastrike.Nancy.Helpers;
 <!doctype html>
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
@@ -14,10 +15,7 @@
             if (typeof window.janrain !== 'object') window.janrain = {};
             window.janrain.settings = {};
 
-            janrain.settings.tokenUrl = '@(string.Format(@"{0}",
-                     HttpContext.Current.Request.Url.PathAndQuery == "/" ?
-                                                                             HttpContext.Current.Request.Url.ToString() + "login/token"
-                         : HttpContext.Current.Request.Url.ToString().Replace(HttpContext.Current.Request.Url.PathAndQuery, "/login/token")))';
+            janrain.settings.tokenUrl = '@(string.Format(@"{0}", UrlExtensions.ToPublicUrl(HttpContext.Current, new Uri("login/token", UriKind.Relative))))';
 
             function isReady() { janrain.ready = true; };
             if (document.addEventListener) {
