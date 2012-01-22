@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ideastrike.Nancy.Models.Repositories;
 
@@ -11,14 +12,36 @@ namespace Ideastrike.Nancy.Models
             var idea = Context.Ideas
                 .Include("Votes")
                 .Include("Activities")
+                .Include("Activities.User")
                 .Include("Features")
+                .Include("Features.User")
+                .Include("Author")
+                .Include("Status")
                 .FirstOrDefault(i => i.Id == id);
+
             return idea;
         }
 
-        public int Vote(int ideaId, int userId, int value)
+        public override IQueryable<Idea> GetAll()
         {
-            if (Context.Votes.Any(v => v.UserId == userId && v.IdeaId == ideaId))
+           return Context.Ideas.Include("Votes").Include("Author").Include("Status");
+        }
+
+
+        public override void Add(Idea idea)
+        {
+            var status = Context.Statuses.FirstOrDefault(s => s.Title == "New");
+
+            Context.Users.Attach(idea.Author);
+            Context.Statuses.Attach(status);
+
+            Context.Ideas.Add(idea);
+            Context.SaveChanges();
+        }
+
+        public int Vote(int ideaId, Guid userId, int value)
+        {
+            if (Context.Votes.Any(v => v.User.Id == userId && v.IdeaId == ideaId))
                 return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
 
             Context.Votes.Add(new Vote
@@ -32,9 +55,9 @@ namespace Ideastrike.Nancy.Models
             return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
         }
 
-        public int Unvote(int ideaId, int userId)
+        public int Unvote(int ideaId, Guid userId)
         {
-            if (!Context.Votes.Any(v => v.UserId == userId && v.IdeaId == ideaId))
+            if (!Context.Votes.Any(v => v.User.Id == userId && v.IdeaId == ideaId))
                 return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
 
             var votesToRemove = Context.Votes.Where(v => v.UserId == userId && v.IdeaId == ideaId).ToList();

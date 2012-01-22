@@ -10,8 +10,18 @@
             <h3 id="votecount">@idea.TotalVotes</h3>
             votes
         </div>
-        <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
-            vote</button>
+        @if (Model.IsLoggedIn)
+        { 
+            <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
+                        @if (idea.UserHasVoted)
+                        { 
+                            @:unvote
+                        }
+                        else
+                        { 
+                            @: vote
+                        }</button>
+        }
         </form>
     </div>
     <div class="sidebox">
@@ -65,43 +75,45 @@ else
     <h3>
         No features suggested yet, be the first!</h3>
 }
-<div class="expander" data-element="#add-feature">
-    <h4>
-        Got something to add?</h4>
-</div>
-<div id="add-feature" class="hide-on-start add-feature">
-    <form action="/idea/@idea.Id/feature" method="POST">
-    <!-- TODO: i want this text to change dynamically 
-            text to rotate through:
-            - how about ...
-            - it would be cool if ...
-            - can it also do ...
-            - etc
-            -->
-    <!--  TODO: can we hook in some anti-forgery bits? -->
-    <label for="feature" id="label-text">
-        how about ...</label>
-    <div class="input">
-        <div class="options">
-            <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
-                data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
-                Edit</button>
-            <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
-                data-editor="#new-feature" data-view="#new-feature-view">
-                Preview</button>
-        </div>
-        <textarea id="new-feature" name="feature"></textarea><br />
-        <div id="new-feature-view">
-        </div>
+@if (Model.IsLoggedIn)
+{
+    <div class="expander" data-element="#add-feature">
+        <h4>
+            Got something to add?</h4>
     </div>
-    <br />
-    <input type="hidden" name="userId" value="@Model.UserId"/>
-    <label for="submit">
-    </label>
-    <button class="btn primary" type="submit">
-        Add Feature</button>
-    </form>
-</div>
+    <div id="add-feature" class="hide-on-start add-feature">
+        <form action="/idea/@idea.Id/feature" method="POST">
+        <!-- TODO: i want this text to change dynamically 
+                text to rotate through:
+                - how about ...
+                - it would be cool if ...
+                - can it also do ...
+                - etc
+                -->
+        <!--  TODO: can we hook in some anti-forgery bits? -->
+        <label for="feature" id="label-text">
+            how about ...</label>
+        <div class="input">
+            <div class="options">
+                <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
+                    data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
+                    Edit</button>
+                <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
+                    data-editor="#new-feature" data-view="#new-feature-view">
+                    Preview</button>
+            </div>
+            <textarea id="new-feature" name="feature"></textarea><br />
+            <div id="new-feature-view">
+            </div>
+        </div>
+        <br />
+        <label for="submit">
+        </label>
+        <button class="btn primary" type="submit">
+            Add Feature</button>
+        </form>
+    </div>
+}
 <hr />
 @if (idea.Activities.Count > 0)
 { 
@@ -136,35 +148,40 @@ else
 }
 else
 {
-    <h4>No activity yet, add the first comment!</h4>
+    <h4>
+        No activity yet, add the first comment!</h4>
 }
-<div class="expander" data-element="#add-comment">
-    <h4>Leave a comment</h4>
-</div>
-<div id="add-comment" class="hide-on-start add-comment">
-    <form action="/comment/@idea.Id/add" method="POST">
-    <label for="comment">
-        leave a comment</label>
-    <div class="input">
-        <div class="options">
-            <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
-                data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
-                Edit</button>
-            <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
-                data-editor="#new-comment" data-view="#new-comment-view">
-                Preview</button>
-        </div>
-        <textarea id="new-comment" name="comment"></textarea><br />
-        <div id="new-comment-view">
-        </div>
+@if (Model.IsLoggedIn)
+{
+    <div class="expander" data-element="#add-comment">
+        <h4>
+            Leave a comment</h4>
     </div>
-    <input type="hidden" name="userId" value="@Model.UserId"/>
-    <br />
-    <label for="submit"></label>
-    <button class="btn primary" type="submit">
-        Add Comment</button>
-    </form>
-</div>
+    <div id="add-comment" class="hide-on-start add-comment">
+        <form action="/comment/@idea.Id/add" method="POST">
+        <label for="comment">
+            leave a comment</label>
+        <div class="input">
+            <div class="options">
+                <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
+                    data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
+                    Edit</button>
+                <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
+                    data-editor="#new-comment" data-view="#new-comment-view">
+                    Preview</button>
+            </div>
+            <textarea id="new-comment" name="comment"></textarea><br />
+            <div id="new-comment-view">
+            </div>
+        </div>
+        <br />
+        <label for="submit">
+        </label>
+        <button class="btn primary" type="submit">
+            Add Comment</button>
+        </form>
+    </div>
+}
 @section PageScript {
     <script src="/Resources/social.js"></script>
     <script>
@@ -179,7 +196,7 @@ else
             if (hasVoted == "false") {
                 $.ajax({
                     type: "POST",
-                    url: "/idea/@idea.Id/vote/9",
+                    url: "/idea/@idea.Id/vote",
                     context: document.body,
                     success: function (data) {
                         updateVoteCount(data);
@@ -190,7 +207,7 @@ else
             } else {
                 $.ajax({
                     type: "POST",
-                    url: "/idea/@idea.Id/unvote/9",
+                    url: "/idea/@idea.Id/unvote",
                     context: document.body,
                     success: function (data) {
                         updateVoteCount(data);
