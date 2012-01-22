@@ -4,7 +4,6 @@ using System.Linq;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
-using Nancy.ModelBinding;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -27,42 +26,6 @@ namespace Ideastrike.Nancy.Modules
                         vote_count = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0,
                         status = idea.Status == null ? null : idea.Status.Title
                     }));
-            };
-
-            Post["/ideas"] = _ => {
-                var model = this.Bind<EditIdeaModel>();
-                if (Context.CurrentUser == null)
-                    return HttpStatusCode.Unauthorized;
-                var status = statuses.FindBy(d=>d.Title == "New").FirstOrDefault();
-
-                var idea = new Idea {
-                    Title = model.title,
-                    Description = model.description,
-                    Time = DateTime.UtcNow,
-                    Author= (User)Context.CurrentUser,
-                    Status = status
-                };
-                ideas.Add(idea);
-
-                return HttpStatusCode.Created;  // TODO: Should return either the generated id or the json body
-            };
-
-            Put["/ideas/{id}"] = _ => {
-                var model = this.Bind<EditIdeaModel>();
-                if (Context.CurrentUser == null)
-                    return HttpStatusCode.Unauthorized;
-
-                int id = _.id;
-                var idea = ideas.Get(id);
-                if (idea == null)
-                    return HttpStatusCode.NotFound;
-                if (model.title != null)
-                    idea.Title = model.title;
-                if (model.description != null)
-                    idea.Description = model.description;
-                ideas.Edit(idea);
-
-                return HttpStatusCode.OK;
             };
 
             Get["/ideas/{id}"] = _ => {
@@ -106,12 +69,5 @@ namespace Ideastrike.Nancy.Modules
                     }));
             };
         }
-    }
-
-    public class EditIdeaModel
-    {
-        public string title { get; set; }
-
-        public string description { get; set; }
     }
 }
