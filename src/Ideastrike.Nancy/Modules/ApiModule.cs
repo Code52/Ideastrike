@@ -40,6 +40,21 @@ namespace Ideastrike.Nancy.Modules
                 return HttpStatusCode.Created;  // TODO: Should return either the generated id or the json body
             };
 
+            Put["/ideas/{id}"] = _ => {
+                var model = this.Bind<NewIdeaModel>();
+                int id = _.id;
+                var idea = ideas.Get(id);
+                if (idea == null)
+                    return HttpStatusCode.NotFound;
+                if (model.Title != null)
+                    idea.Title = model.Title;
+                if (model.Description != null)
+                    idea.Description = model.Description;
+                ideas.Edit(idea);
+
+                return HttpStatusCode.OK;
+            };
+
             Get["/ideas/{id}"] = _ => {
                 int id = _.id;
                 var o = db.Ideas.Where(idea => idea.Id == id).Select(idea =>

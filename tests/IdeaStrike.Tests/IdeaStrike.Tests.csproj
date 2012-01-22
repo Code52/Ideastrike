@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="AdminModuleTests\when_viewing_the_admin_page.cs" />
     <Compile Include="ApiModuleTests\when_posting_a_new_idea.cs" />
+    <Compile Include="ApiModuleTests\when_updating_an_idea.cs" />
     <Compile Include="CommentModuleTests\when_adding_a_new_comment.cs" />
     <Compile Include="CommentModuleTests\when_viewing_the_comments_page.cs" />
     <Compile Include="FeatureModuleTests\when_adding_a_new_feature.cs" />
