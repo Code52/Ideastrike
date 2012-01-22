@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{99D266
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeaStrike.Tests", "..\tests\IdeaStrike.Tests\IdeaStrike.Tests.AppHarbor.csproj", "{4E2697BD-B272-4FEE-B415-6E82363471D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeaStrike.Tests", "..\tests\IdeaStrike.Tests\IdeaStrike.Tests.csproj", "{4E2697BD-B272-4FEE-B415-6E82363471D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build_scripts", "build_scripts", "{71B25D84-9FFD-4016-BA1F-37D047C6D89E}"
 	ProjectSection(SolutionItems) = preProject
