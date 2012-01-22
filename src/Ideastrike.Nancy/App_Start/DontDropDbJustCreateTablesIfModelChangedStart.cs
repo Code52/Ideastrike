@@ -1,4 +1,6 @@
 using System.Data.Entity;
+using Devtalk.EF.CodeFirst;
+using Ideastrike.Nancy.Models;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Ideastrike.Nancy.App_Start.DontDropDbJustCreateTablesIfModelChangedStart), "Start")]
 
