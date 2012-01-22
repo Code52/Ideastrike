@@ -49,7 +49,7 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return Response.AsJson(new { Status = "error" });
 
-                var results = idea.Activities.Select(a => new { template = MapType(a), item = a });
+                var results = idea.Activities.Select(MapToViewModel);
 
                 return Response.AsJson(new
                 {
@@ -87,12 +87,18 @@ namespace Ideastrike.Nancy.Modules
             };
         }
 
-        private static string MapType(Activity activity)
+        private static object MapToViewModel(Activity activity)
         {
-            if (activity is GitHubActivity)
-                return "github";
+            var github = activity as GitHubActivity;
 
-            return "comment";
+            if (github != null)
+                return new { template = "github", item = new GitHubActivityViewModel(github) };
+
+            var comment = activity as Comment;
+            if (comment != null)
+                return new { template = "comment", item = new CommentViewModel(comment) };
+
+            return null;
         }
     }
 }

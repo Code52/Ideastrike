@@ -2,8 +2,6 @@
 
 namespace Ideastrike.Nancy.Models.ViewModels
 {
-    // TODO: user values should not be hard coded
-    
     public class CommentViewModel
     {
         public CommentViewModel(Comment comment)
@@ -11,8 +9,8 @@ namespace Ideastrike.Nancy.Models.ViewModels
             FriendlyTime = FriendlyTimeHelper.Parse(comment.Time).ToHtmlString(); // this is encoding when it shouldn't be
             Text = MarkdownHelper.Markdown(comment.Text).ToHtmlString();
 
-            Author = "shiftkey";
-            GravatarUrl = "me@brendanforster.com".ToGravatarUrl(40);
+            Author = comment.User.UserName;
+            GravatarUrl = (string.IsNullOrEmpty(comment.User.AvatarUrl)) ? comment.User.Email.ToGravatarUrl(40) : comment.User.AvatarUrl;
         }
 
         public string FriendlyTime { get; private set; }
