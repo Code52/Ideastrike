@@ -11,9 +11,7 @@ namespace IdeaStrike.Tests.ApiModuleTests
         private BrowserResponse response;
 
         public when_posting_a_new_idea() {
-            response = browser.Post("/api/ideas", with => {
-                with.JsonBody(new { title = "Test" });
-            });
+            response = browser.Post("/api/ideas", with => with.JsonBody(new { title = "Test" }));
         }
 
         [Fact]

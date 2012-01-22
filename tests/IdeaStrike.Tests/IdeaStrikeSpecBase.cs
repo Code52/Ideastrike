@@ -4,6 +4,7 @@ using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Moq;
 using Nancy;
+using Nancy.Security;
 using Nancy.Testing;
 
 namespace IdeaStrike.Tests
@@ -56,6 +57,20 @@ namespace IdeaStrike.Tests
             mockIdeaStrikeContext = new Mock<IdeastrikeContext>();
         }
 
+        public static IUserIdentity CreateMockUser(string name)
+        {
+            var user = new Mock<IUserIdentity>();
+            user.Setup(i => i.UserName).Returns(name);
+            return user.Object;
+        }
+
+        public static Response AuthenticateUser(NancyContext arg, string username)
+        {
+            arg.CurrentUser = CreateMockUser(username);
+            return null;
+        }
+
+
         public virtual void BeforeRequest()
         {
 
@@ -76,7 +91,7 @@ namespace IdeaStrike.Tests
             return CreateTestRequest("POST", route);
         }
 
-        protected void RunBefore(Func<NancyContext, Response> authenticateUser)
+        protected void RunFirst(Func<NancyContext, Response> authenticateUser)
         {
             context.BeforeRequest.AddItemToStartOfPipeline(authenticateUser);
         }

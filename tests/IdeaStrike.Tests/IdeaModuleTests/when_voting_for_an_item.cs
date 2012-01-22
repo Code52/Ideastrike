@@ -12,25 +12,20 @@ namespace IdeaStrike.Tests.IdeaModuleTests
 {
     public class when_voting_for_an_item : IdeaStrikeSpecBase
     {
-        private Guid _ideaGuid  = Guid.NewGuid();
+        Guid _ideaGuid = Guid.NewGuid();
+        const string UserName = "shiftkey";
 
         public when_voting_for_an_item()
         {
-            var users = new List<User> { new User { UserName = "shiftkey", Id= _ideaGuid } };
+            var users = new[] { new User { UserName = UserName, Id = _ideaGuid } };
             mockUsersRepo.Setup(u => u.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
                          .Returns(users.AsQueryable());
 
-            var testRequest = PostTestRequest("/idea/1/vote");
-            RunBefore(AuthenticateUser);
-            testResponse = engine.HandleRequest(testRequest).Response;
-        }
+            RunFirst(r => AuthenticateUser(r, UserName));
 
-        private static Response AuthenticateUser(NancyContext arg)
-        {
-            var user = new Mock<IUserIdentity>();
-            user.Setup(i => i.UserName).Returns("shiftkey");
-            arg.CurrentUser = user.Object;
-            return null;
+            var testRequest = PostTestRequest("/idea/1/vote");
+
+            testResponse = engine.HandleRequest(testRequest).Response;
         }
 
         [Fact]
