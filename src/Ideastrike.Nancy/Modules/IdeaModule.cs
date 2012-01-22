@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using Nancy.Helpers;
 using Nancy.Extensions;
 
+using Nancy.ViewEngines.Razor;
+
 namespace Ideastrike.Nancy.Modules
 {
     public class IdeaModule : NancyModule
@@ -41,15 +43,8 @@ namespace Ideastrike.Nancy.Modules
                 }
 
                 var viewModel = new IdeaViewModel(idea);
-
-                dynamic model = new
-                {
-                    Title = string.Format("{0} - {1}", idea.Title, _settings.Title),
-                    Idea = viewModel,
-                    IsLoggedIn = Context.IsLoggedIn(),
-                    UserName = Context.Username(),
-                };
-
+                var model = Context.Model(string.Format("{0} - {1}", idea.Title, _settings.Title));
+                model.Idea = viewModel;
                 return View["Idea/Index", model];
             };
         }
