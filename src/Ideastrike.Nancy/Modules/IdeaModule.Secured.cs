@@ -84,17 +84,24 @@ namespace Ideastrike.Nancy.Modules
                                 Description = Request.Form.Description,
                             };
 
-                var form = System.Web.HttpContext.Current.Request.Form;
-                //all the images uploaded by the jQuery uploader get uploaded and added to the db ahead of time, 
-                //therefore, we also inject a hidden field into the form for every image
-                //this way, when we post the actual idea, we have a way to reference back to the image that belongs to the 
-                //idea being posted
-                i.Images = form.Cast<string>()
-                    .Where(k => k.StartsWith("imageId"))
-                    .Select(k => _imageRepository.Get(Convert.ToInt32(form[k])))
-                    .ToList(); //is there a way to do this using Nancy?
-                if (i.Votes.Any(u => u.UserId == user.Id))
-                    i.UserHasVoted = true;
+                try
+                {
+                    var form = System.Web.HttpContext.Current.Request.Form;
+                    //all the images uploaded by the jQuery uploader get uploaded and added to the db ahead of time, 
+                    //therefore, we also inject a hidden field into the form for every image
+                    //this way, when we post the actual idea, we have a way to reference back to the image that belongs to the 
+                    //idea being posted
+                    i.Images = form.Cast<string>()
+                        .Where(k => k.StartsWith("imageId"))
+                        .Select(k => _imageRepository.Get(Convert.ToInt32(form[k])))
+                        .ToList(); //is there a way to do this using Nancy?
+                    if (i.Votes.Any(u => u.UserId == user.Id))
+                        i.UserHasVoted = true;
+                }
+                catch (Exception ex)
+                {
+                    
+                }
 
                 ideas.Add(i);
 

@@ -52,12 +52,12 @@
 </div>
 <hr />
 
-@if (Model.Images != null)
+@if (idea.Images.Count > 0)
 {
     <div>
         <h4>Images</h4>
         <p>
-            @foreach(var image in Model.Images)
+            @foreach(var image in idea.Images)
             {
                 <a class="fancybox" href='image/@(image.Id).jpg' rel="imagegroup"><img src="/idea/imagethumb/@image.Id/100" /></a>
             }

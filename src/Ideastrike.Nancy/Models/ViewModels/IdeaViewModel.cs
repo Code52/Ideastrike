@@ -18,7 +18,10 @@ namespace Ideastrike.Nancy.Models.ViewModels
 
             Features = idea.Features.Select(f => new FeatureViewModel(f)).ToList();
             Activities = idea.Activities.Select(f => new ActivityViewModel(f)).ToList();
+            Images = idea.Images.ToList();
         }
+
+        public IEnumerable<Image> Images { get; set; }
 
         public IEnumerable<FeatureViewModel> Features { get; set; }
         
