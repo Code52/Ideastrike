@@ -52,7 +52,7 @@
     <script src="@Url.Content("~/Resources/respond.min.js")"></script>
 </head>
 <body>
-    <div class="topbar">
+    <div class="topbar" data-dropdown="dropdown">
         <div class="fill">
             <div class="container">
                 <a class="brand" href="/"></a>
@@ -61,14 +61,22 @@
                     <li><a href="/idea/new">New Idea</a></li>
                     <li><a href="/inbox">Inbox</a></li>
                 </ul>
-                <div class="pull-right">
+                <div class="pull-right loggedin">
                 @if(Model.IsLoggedIn)
                 {
-                    @:Welcome @Model.UserName [<a href="/logout">Log out</a>]
+                    <ul class="nav secondary-nav">
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" style="min-width:160px;">@*<img src="@@Model.GravatarUrl" />*@ @Model.UserName </a>
+                          <ul class="dropdown-menu">
+                            <li><a href="/profile/edit">Profile</a></li>
+                            <li><a href="/logout">Log out</a></li>
+                          </ul>
+                        </li>
+                    </ul>
                 }
                 else
-                {
-                    <a class="janrainEngage" href="#">Sign In</a>
+                { 
+                    <ul class="nav secondary-nav"><li><a class="janrainEngage" href="#">Sign In</a></li></ul>
                 }
                 </div>
             </div>
@@ -89,6 +97,8 @@
     <script src="@Url.Content("~/Resources/showdown.js")"> </script>
     <script src="@Url.Content("~/Resources/ideastrike.js")"> </script>
     <script src="@Url.Content("~/Resources/bootstrap-alerts.js")"></script>
+    <script src="@Url.Content("~/Resources/bootstrap-dropdown.js")"></script>
+    
     <script type="text/javascript">
         $(document).ready(function () {
             $(".close").click(function () {
