@@ -3,6 +3,7 @@ using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
+using Ideastrike.Nancy.Modules;
 
 namespace Ideastrike.Nancy
 {

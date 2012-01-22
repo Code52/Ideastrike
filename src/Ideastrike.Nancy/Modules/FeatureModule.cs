@@ -12,7 +12,7 @@ namespace Ideastrike.Nancy.Modules
         private readonly IIdeaRepository _ideas;
         private readonly IFeatureRepository _features;
 
-        public FeatureModule(IIdeaRepository ideas, IFeatureRepository features)
+        public FeatureModule(IIdeaRepository ideas, IFeatureRepository features, IUserRepository users)
             : base("/idea")
         {
             _ideas = ideas;
@@ -26,7 +26,8 @@ namespace Ideastrike.Nancy.Modules
                 var feature = new Feature
                                 {
                                     Time = DateTime.UtcNow,
-                                    Text = Request.Form.feature
+                                    Text = Request.Form.feature,
+                                    User = Context.GetCurrentUser(users)
                                 };
                 _features.Add(id, feature);
 
