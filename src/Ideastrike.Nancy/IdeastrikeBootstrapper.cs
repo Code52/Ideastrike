@@ -36,9 +36,12 @@ namespace Ideastrike.Nancy
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
+            builder.RegisterType<ImageRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
             builder.Update(existingContainer.ComponentRegistry);
         }
-
 
         protected override void RequestStartup(ILifetimeScope container, IPipelines pipelines)
         {

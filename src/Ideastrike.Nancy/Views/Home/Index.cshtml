@@ -4,6 +4,11 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+
+@section HeadContent
+{
+    <link href="@Url.Content("~/Resources/jquery.fileupload-ui.css")" rel="stylesheet" />
+}
 @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
 {
     <div class="fill">
@@ -15,9 +20,10 @@
         </div>
     </div>
 }
+<div class="row">
+    <div class="span10">
 <h1>@Model.Title</h1>
 @MarkdownHelper.Markdown(Model.WelcomeMessage)
-
 <ul class="pills">
     <li @if (Model.Selected == SelectedTab.Popular)
         {@:class="active"
@@ -75,9 +81,6 @@
                 });
             });
         });
-    </script>
-    <script>
-
         $(document).ready(function () {
             $(".vote").click(function () {
                 var elem = $(this);
