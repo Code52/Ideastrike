@@ -159,7 +159,8 @@
         $('#fileupload').fileupload({
             url: '/idea/uploadimage',
             maxFileSize: 5000000,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxNumberOfFiles: 5
         });
     </script>
     <script src="@Url.Content("~/Resources/application.js")"></script>
