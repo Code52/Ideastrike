@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ideastrike.Nancy.Models.Activity">
+    <Position X="8.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\Activity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Idea" />
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Ideastrike.Nancy.Models.Comment">
+    <Position X="8.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\Comment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ideastrike.Nancy.Models.Feature">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <AssociationLine Name="User" Type="Ideastrike.Nancy.Models.User" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.25" Y="3.832" />
+        <Point X="1.568" Y="3.832" />
+        <Point X="1.568" Y="0.834" />
+        <Point X="4.035" Y="0.834" />
+        <Point X="4.035" Y="1.436" />
+        <Point X="5.25" Y="1.436" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAADAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAQA=</HashCode>
+      <FileName>Models\Feature.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Idea" />
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Ideastrike.Nancy.Models.Idea">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <AssociationLine Name="Votes" Type="Ideastrike.Nancy.Models.Vote" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.25" Y="3.5" />
+        <Point X="4.875" Y="3.5" />
+        <Point X="4.875" Y="2.228" />
+        <Point X="3.75" Y="2.228" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ACACAAAEAAAgAEAAgAABAAAAAAAAAAAAAAAAAIAAAQA=</HashCode>
+      <FileName>Models\Idea.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Votes" />
+      <Property Name="Activities" />
+      <Property Name="Features" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Ideastrike.Nancy.Models.Setting">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\Setting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ideastrike.Nancy.Models.Status">
+    <Position X="5.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Status.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ideastrike.Nancy.Models.User" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAQAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Ideastrike.Nancy.Models.Vote">
+    <Position X="2.25" Y="1.25" Width="1.5" />
+    <AssociationLine Name="User" Type="Ideastrike.Nancy.Models.User" FixedFromPoint="true">
+      <Path>
+        <Point X="3.75" Y="1.625" />
+        <Point X="5.25" Y="1.625" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAABAAAABAAAACAAAAAAAAgAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\Vote.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+      <Property Name="Idea" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

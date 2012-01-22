@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Dynamic;
 using System.Linq;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
+using Nancy.Security;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -11,12 +13,46 @@ namespace Ideastrike.Nancy.Modules
         public AdminModule(IdeastrikeContext dbContext, ISettingsRepository settings)
             : base("/admin")
         {
-            Get["/"] = _ => View["Admin/Index", settings];
+            this.RequiresAuthentication();
+
+            Get["/"] = _ => View["Admin/Index", new
+            {
+                Title = settings.Title,
+                Name = settings.Name,
+                WelcomeMessage = settings.WelcomeMessage,
+                HomePage = settings.HomePage,
+                GAnalyticsKey = settings.GAnalyticsKey,
+                IsLoggedIn = (Context == null || Context.CurrentUser == null ||
+                    string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                    ? false
+                    : true,
+                UserName = (Context == null || Context.CurrentUser == null ||
+                                  string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                     ? ""
+                                     : Context.CurrentUser.UserName,
+            }];
+
             Get["/moderation"] = _ => "";
             Get["/search"] = _ => "";
             Get["/forums"] = _ => "";
             Get["/forum/{forumId}"] = _ => "";
-            Get["/settings"] = _ => View["Admin/Settings", settings];
+            Get["/settings"] = _ => View["Admin/Settings", new
+            {
+                Title = settings.Title,
+                Name = settings.Name,
+                WelcomeMessage = settings.WelcomeMessage,
+                HomePage = settings.HomePage,
+                GAnalyticsKey = settings.GAnalyticsKey,
+                IsLoggedIn = (Context == null || Context.CurrentUser == null ||
+                    string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                    ? false
+                    : true,
+                UserName = (Context == null || Context.CurrentUser == null ||
+                                  string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
+                                     ? ""
+                                     : Context.CurrentUser.UserName,
+            }];
+
             Post["/settings"] = _ =>
                                     {
                                         settings.WelcomeMessage = Request.Form.welcomemessage;

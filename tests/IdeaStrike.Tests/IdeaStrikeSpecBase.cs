@@ -13,6 +13,7 @@ namespace IdeaStrike.Tests
         public Mock<IIdeaRepository> mockIdeasRepo;
         public Mock<IdeastrikeContext> mockIdeaStrikeContext;
         public Mock<ISettingsRepository> mockSettingsRepo;
+        public Mock<IUserRepository> mockUsersRepo;
         
         protected Response testResponse;
         protected INancyEngine engine;
@@ -33,6 +34,7 @@ namespace IdeaStrike.Tests
             mockFeatureRepo = new Mock<IFeatureRepository>();
             mockIdeasRepo = new Mock<IIdeaRepository>();
             mockSettingsRepo = new Mock<ISettingsRepository>();
+            mockUsersRepo = new Mock<IUserRepository>();
             mockIdeaStrikeContext = new Mock<IdeastrikeContext>();
         }
 
@@ -43,7 +45,9 @@ namespace IdeaStrike.Tests
             builder.RegisterInstance<IIdeaRepository>(mockIdeasRepo.Object);
             builder.RegisterInstance<IActivityRepository>(mockActivityRepo.Object);
             builder.RegisterInstance<IFeatureRepository>(mockFeatureRepo.Object);
+            builder.RegisterInstance<IUserRepository>(mockUsersRepo.Object);
             builder.RegisterInstance<IdeastrikeContext>(mockIdeaStrikeContext.Object);
+            
             return builder;
         }
 
