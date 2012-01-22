@@ -1,12 +1,10 @@
 ﻿using Nancy;
 using Xunit;
 
-
 namespace IdeaStrike.Tests.IdeaModuleTests
 {
     public class when_viewing_the_idea_page : IdeaStrikeSpecBase
     {
-
         public when_viewing_the_idea_page()
         {
             var testRequest = GetTestRequest("/idea/0/");

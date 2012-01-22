@@ -1,8 +1,11 @@
-using Nancy;
-using Autofac;
-using Ideastrike.Nancy.Models.Repositories;
+using System;
+using System.Collections.Generic;
 using Ideastrike.Nancy.Models;
+using Ideastrike.Nancy.Models.Repositories;
 using Moq;
+using Nancy;
+using Nancy.Security;
+using Nancy.Testing;
 
 namespace IdeaStrike.Tests
 {
@@ -14,18 +17,33 @@ namespace IdeaStrike.Tests
         public Mock<IdeastrikeContext> mockIdeaStrikeContext;
         public Mock<ISettingsRepository> mockSettingsRepo;
         public Mock<IUserRepository> mockUsersRepo;
-        
+        public Mock<IImageRepository> mockImageRepo;
+
         protected Response testResponse;
         protected INancyEngine engine;
+        protected Browser browser;
+        public IdeaStrikeTestBootStrapper context;
 
         public IdeaStrikeSpecBase()
         {
             CreateMocks();
-            ContainerBuilder builder = CreateContainerBuilder();
 
-            var ideaStrikeTestBootstrapper = new IdeaStrikeTestBootStrapper(CreateContainerBuilder);
-            ideaStrikeTestBootstrapper.Initialise();
-            engine = ideaStrikeTestBootstrapper.GetEngine();
+            var mocks = new Dictionary<Type, object>
+                            {
+                                { typeof (IActivityRepository), mockActivityRepo.Object },
+                                { typeof (IFeatureRepository), mockFeatureRepo.Object },
+                                { typeof (IIdeaRepository),mockIdeasRepo.Object },
+                                { typeof (ISettingsRepository),mockSettingsRepo.Object },
+                                { typeof (IUserRepository),mockUsersRepo.Object },
+                                { typeof (IImageRepository),mockImageRepo.Object },
+                                { typeof (IdeastrikeContext),mockIdeaStrikeContext.Object }
+                            };
+
+            context = new IdeaStrikeTestBootStrapper(mocks);
+            context.Initialise();
+
+            engine = context.GetEngine();
+            browser = new Browser(context);
         }
 
         private void CreateMocks()
@@ -35,20 +53,27 @@ namespace IdeaStrike.Tests
             mockIdeasRepo = new Mock<IIdeaRepository>();
             mockSettingsRepo = new Mock<ISettingsRepository>();
             mockUsersRepo = new Mock<IUserRepository>();
+            mockImageRepo = new Mock<IImageRepository>();
             mockIdeaStrikeContext = new Mock<IdeastrikeContext>();
         }
 
-        private ContainerBuilder CreateContainerBuilder()
+        public static IUserIdentity CreateMockUser(string name)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance<ISettingsRepository>(mockSettingsRepo.Object);
-            builder.RegisterInstance<IIdeaRepository>(mockIdeasRepo.Object);
-            builder.RegisterInstance<IActivityRepository>(mockActivityRepo.Object);
-            builder.RegisterInstance<IFeatureRepository>(mockFeatureRepo.Object);
-            builder.RegisterInstance<IUserRepository>(mockUsersRepo.Object);
-            builder.RegisterInstance<IdeastrikeContext>(mockIdeaStrikeContext.Object);
-            
-            return builder;
+            var user = new Mock<IUserIdentity>();
+            user.Setup(i => i.UserName).Returns(name);
+            return user.Object;
+        }
+
+        public static Response AuthenticateUser(NancyContext arg, string username)
+        {
+            arg.CurrentUser = CreateMockUser(username);
+            return null;
+        }
+
+
+        public virtual void BeforeRequest()
+        {
+
         }
 
         private static Request CreateTestRequest(string httpMethod, string route)
@@ -64,6 +89,11 @@ namespace IdeaStrike.Tests
         public static Request PostTestRequest(string route)
         {
             return CreateTestRequest("POST", route);
+        }
+
+        protected void RunFirst(Func<NancyContext, Response> authenticateUser)
+        {
+            context.BeforeRequest.AddItemToStartOfPipeline(authenticateUser);
         }
     }
 }

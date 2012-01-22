@@ -4,6 +4,11 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+
+@section HeadContent
+{
+    <link href="@Url.Content("~/Resources/jquery.fileupload-ui.css")" rel="stylesheet" />
+}
 @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
 {
     <div class="fill">
@@ -15,30 +20,10 @@
         </div>
     </div>
 }
+<div class="row">
+    <div class="span10">
 <h1>@Model.Title</h1>
 @MarkdownHelper.Markdown(Model.WelcomeMessage)
-<h3>
-    Submit a New Idea</h3>
-<form action="/idea/new" method="POST">
-<div class="clearfix">
-    <label for="Title">
-        Title</label>
-    <div class="input">
-        <input id="Title" name="Title" type="text" />
-    </div>
-</div>
-<div class="clearfix">
-    <label for="Description">
-        Description</label>
-    <div class="input">
-        <textarea id="Description" name="Description" rows="10"></textarea>
-    </div>
-</div>
-<div class="actions">
-    <button type="submit" class="btn primary">
-        Submit</button>
-</div>
-</form>
 <ul class="pills">
     <li @if (Model.Selected == SelectedTab.Popular)
         {@:class="active"
@@ -58,7 +43,7 @@
         <li>
             <div class="pull-left sidebox">
                 <form>
-                <div>
+                <div class="voteinfo">
                     <h3 class="votecount @i.Id">@i.Votes.Count</h3>
                     votes
                 </div>
@@ -76,12 +61,10 @@
                 }
                 </form>
             </div>
-            <h3 class="ideaheader">
-                <a href="/idea/@i.Id">@i.Title</a></h3>
+            <h3 class="ideaheader"><a href="/idea/@i.Id">@i.Title</a></h3>
             <div class="ideadate">@FriendlyTimeHelper.Parse(i.Time)</div>
-            <div class="ideadesc">@MarkdownHelper.Markdown(i.Description)</div>
-            <div class="clearfix">
-            </div>
+            <div class="ideadesc" style="margin-left:85px;">@MarkdownHelper.Markdown(i.Description)</div>
+            <div class="clearfix"> </div>
         </li> 
     }
 </ul>
@@ -98,9 +81,6 @@
                 });
             });
         });
-    </script>
-    <script>
-
         $(document).ready(function () {
             $(".vote").click(function () {
                 var elem = $(this);
