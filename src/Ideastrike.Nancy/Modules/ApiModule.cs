@@ -14,7 +14,7 @@ namespace Ideastrike.Nancy.Modules
     // make unannounced changes to the public surface.
     public class ApiModule : NancyModule
     {
-        public ApiModule(IdeastrikeContext db, IIdeaRepository ideas)
+        public ApiModule(IdeastrikeContext db, IIdeaRepository ideas, IUserRepository users, IStatusRepository statuses)
             : base("/api") {
             Get["/ideas"] = _ => {
                 return Response.AsJson(db.Ideas.Select(idea =>
@@ -24,16 +24,23 @@ namespace Ideastrike.Nancy.Modules
                         description = idea.Description,
                         time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), idea.Time),
                         author = new { id = idea.Author.Id, username = idea.Author.UserName },
-                        vote_count = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0
+                        vote_count = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0,
+                        status = idea.Status == null ? null : idea.Status.Title
                     }));
             };
 
             Post["/ideas"] = _ => {
                 var model = this.Bind<EditIdeaModel>();
+                if (Context.CurrentUser == null)
+                    return HttpStatusCode.Unauthorized;
+                var status = statuses.FindBy(d=>d.Title == "New").FirstOrDefault();
+
                 var idea = new Idea {
                     Title = model.title,
                     Description = model.description,
-                    Time = DateTime.UtcNow
+                    Time = DateTime.UtcNow,
+                    Author= (User)Context.CurrentUser,
+                    Status = status
                 };
                 ideas.Add(idea);
 
@@ -42,6 +49,9 @@ namespace Ideastrike.Nancy.Modules
 
             Put["/ideas/{id}"] = _ => {
                 var model = this.Bind<EditIdeaModel>();
+                if (Context.CurrentUser == null)
+                    return HttpStatusCode.Unauthorized;
+
                 int id = _.id;
                 var idea = ideas.Get(id);
                 if (idea == null)
