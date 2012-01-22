@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
@@ -83,25 +84,21 @@ namespace Ideastrike.Nancy.Modules
                                 Title = Request.Form.Title,
                                 Description = Request.Form.Description,
                             };
-                try
-                {
 
-                    var form = System.Web.HttpContext.Current.Request.Form;
-                    //all the images uploaded by the jQuery uploader get uploaded and added to the db ahead of time, 
-                    //therefore, we also inject a hidden field into the form for every image
-                    //this way, when we post the actual idea, we have a way to reference back to the image that belongs to the 
-                    //idea being posted
-                    i.Images = form.Cast<string>()
-                        .Where(k => k.StartsWith("imageId"))
-                        .Select(k => _imageRepository.Get(Convert.ToInt32(form[k])))
-                        .ToList(); //is there a way to do this using Nancy?
-                    if (i.Votes.Any(u => u.UserId == user.Id))
-                        i.UserHasVoted = true;
-                }
-                catch(Exception ex)
-                {
-                    // TODO: evil because the form may not be present
-                }
+                IEnumerable<string> keys = Context.Request.Form;
+
+                var parameters = keys.Where(c => c.StartsWith("imageId"));
+                var ids = parameters.Select(c => Context.Request.Form[c].ToString()).Cast<string>();
+                var images = ids.Select(id => _imageRepository.Get(Convert.ToInt32(id)));
+                i.Images = images.ToList();
+
+                //i.Images = form.Cast<string>()
+                //    .Where(k => k.StartsWith("imageId"))
+                //    .Select(k => _imageRepository.Get(Convert.ToInt32(form[k])))
+                //    .ToList(); //is there a way to do this using Nancy?
+                if (i.Votes.Any(u => u.UserId == user.Id))
+                    i.UserHasVoted = true;
+
 
                 ideas.Add(i);
 
