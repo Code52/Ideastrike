@@ -1,18 +1,15 @@
-using Ideastrike.Nancy.Models;
 using Moq;
 using Nancy;
 using Nancy.Security;
 using Xunit;
 
-namespace IdeaStrike.Tests.FeatureModuleTests
+namespace IdeaStrike.Tests.AdminModuleTests
 {
-    // TODO: test that unauthenticated user cannot access resource
-
-    public class when_adding_a_new_feature : IdeaStrikeSpecBase
+    public class when_an_authenticated_user_views_the_admin_page : IdeaStrikeSpecBase
     {
-        public when_adding_a_new_feature()
+        public when_an_authenticated_user_views_the_admin_page()
         {
-            var testRequest = PostTestRequest("/idea/0/feature");
+            var testRequest = GetTestRequest("/admin");
             RunBefore(AuthenticateUser);
             testResponse = engine.HandleRequest(testRequest).Response;
         }
@@ -26,9 +23,9 @@ namespace IdeaStrike.Tests.FeatureModuleTests
         }
 
         [Fact]
-        public void it_should_add_the_new_feature()
+        public void it_should_set_the_status_code_to_unauthorized_for_the_admin_page()
         {
-            mockFeatureRepo.Verify(B => B.Add(0,It.IsAny<Feature>()));
+            Assert.Equal(HttpStatusCode.OK, testResponse.StatusCode);
         }
     }
 }

@@ -1,3 +1,6 @@
+using Moq;
+using Nancy;
+using Nancy.Security;
 using Xunit;
 
 namespace IdeaStrike.Tests.IdeaModuleTests
@@ -7,7 +10,16 @@ namespace IdeaStrike.Tests.IdeaModuleTests
         public when_deleting_a_idea()
         {
             var testRequest = PostTestRequest("/idea/0/delete/");
+            RunBefore(AuthenticateUser);
             testResponse = engine.HandleRequest(testRequest).Response;
+        }
+
+        private static Response AuthenticateUser(NancyContext arg)
+        {
+            var user = new Mock<IUserIdentity>();
+            user.Setup(i => i.UserName).Returns("shiftkey");
+            arg.CurrentUser = user.Object;
+            return null;
         }
 
         [Fact]

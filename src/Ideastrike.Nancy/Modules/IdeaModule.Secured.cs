@@ -94,7 +94,8 @@ namespace Ideastrike.Nancy.Modules
                 if (user == null)
                     return Response.AsRedirect("/login");
 
-                int votes = ideas.Vote(parameters.id, user.Id, 1);
+                int ideaId = parameters.id;
+                int votes = ideas.Vote(ideaId, user.Id, 1);
 
                 return Response.AsJson(new
                                         {

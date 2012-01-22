@@ -93,8 +93,18 @@
     <Content Include="Resources\bootstrap-alerts.js" />
     <Content Include="Resources\ideastrike.css" />
     <Content Include="Resources\ideastrike.js" />
-    <Content Include="Resources\jquery-1.7.min.js" />
     <Content Include="Resources\jquery.contra.min.js" />
+    <Content Include="Resources\application.js" />
+    <Content Include="Resources\blank.gif" />
+    <Content Include="Resources\fancybox_loading.gif" />
+    <Content Include="Resources\fancybox_sprite.png" />
+    <Content Include="Resources\jquery-1.7.min.js" />
+    <Content Include="Resources\jquery.fancybox.css" />
+    <Content Include="Resources\jquery.fancybox.pack.js" />
+    <Content Include="Resources\jquery.fileupload-ui.css" />
+    <Content Include="Resources\jquery.fileupload-ui.js" />
+    <Content Include="Resources\jquery.fileupload.js" />
+    <Content Include="Resources\jquery.iframe-transport.js" />
     <Content Include="Resources\media.css" />
     <Content Include="Resources\modernizr-2.0.min.js" />
     <Content Include="Resources\bootstrap.min.css" />
@@ -127,6 +137,8 @@
     </Compile>
     <Compile Include="Helpers\GravatarExtensions.cs" />
     <Compile Include="Helpers\FriendlyTimeHelper.cs" />
+    <Compile Include="Helpers\ImageExtensions.cs" />
+    <Compile Include="Helpers\ImageFileStatus.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="Helpers\FormsAuthentication.cs" />
     <Compile Include="Helpers\FormsAuthenticationConfiguration.cs" />
@@ -139,6 +151,7 @@
     <Compile Include="Models\Repositories\GenericRepository.cs" />
     <Compile Include="Models\Repositories\IGenericRepository.cs" />
     <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
     <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
     <Compile Include="Models\ViewModels\IdeaViewModel.cs" />
@@ -153,6 +166,8 @@
     <Compile Include="Models\Repositories\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />
     <Compile Include="Models\Repositories\IIdeaRepository.cs" />
+    <Compile Include="Models\Repositories\IImageRepository.cs" />
+    <Compile Include="Models\Repositories\ImageRepository.cs" />
     <Compile Include="Models\Repositories\ISettingsRepository.cs" />
     <Compile Include="Models\Repositories\SettingsRepository.cs" />
     <Compile Include="Models\Setting.cs" />

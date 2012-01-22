@@ -16,6 +16,7 @@ namespace Ideastrike.Nancy.Models
                 .Include("Features")
                 .Include("Features.User")
                 .Include("Author")
+    			.Include("Images")
                 .Include("Status")
                 .FirstOrDefault(i => i.Id == id);
 
