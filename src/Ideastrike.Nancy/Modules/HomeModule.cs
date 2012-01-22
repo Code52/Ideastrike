@@ -40,18 +40,14 @@ namespace Ideastrike.Nancy.Modules
                 }
             }
 
-            dynamic pageData = new
-            {
-                Ideas = ideas,
-                Selected = selected,
-                Title = _settings.Title,
-                WelcomeMessage = _settings.WelcomeMessage,
-                ErrorMessage = ErrorMessage,
-                IsLoggedIn = Context.IsLoggedIn(),
-                UserName = Context.Username(),
-            };
+            var m = Context.Model(_settings.Title);
+            m.Name = _settings.Name;
+            m.WelcomeMessage = _settings.WelcomeMessage;
+            m.Ideas = ideas;
+            m.Selected = selected;
+            m.ErrorMessage = ErrorMessage;
 
-            return View["Home/Index", pageData];
+            return View["Home/Index", m];
         }
     }
 }

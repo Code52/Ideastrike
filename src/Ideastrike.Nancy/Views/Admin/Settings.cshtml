@@ -2,9 +2,12 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+
 <ul class="pills">
     <li><a href="/admin/">Admin Home</a></li>
     <li class="active"><a href="/admin/settings">Settings</a></li>
+    <li><a href="/admin/users">Users</a></li>
+    <li><a href="/admin/moderation">Moderation</a></li>
 </ul>
 
 <form action="/admin/settings" method="POST">
