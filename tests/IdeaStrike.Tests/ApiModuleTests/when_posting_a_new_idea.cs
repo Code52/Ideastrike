@@ -1,4 +1,5 @@
-﻿using Ideastrike.Nancy.Models;
+﻿using System;
+using Ideastrike.Nancy.Models;
 using Moq;
 using Nancy;
 using Nancy.Testing;
@@ -9,9 +10,14 @@ namespace IdeaStrike.Tests.ApiModuleTests
     public class when_posting_a_new_idea : IdeaStrikeSpecBase
     {
         private BrowserResponse response;
+        private User user = new User { Id = Guid.NewGuid() };
 
         public when_posting_a_new_idea() {
-            response = browser.Post("/api/ideas", with => with.JsonBody(new { title = "Test" }));
+            mockUsersRepo.Setup(d => d.GetUserFromIdentifier(user.Id)).Returns(user);
+            response = browser.Post("/api/ideas", with => {
+                with.JsonBody(new { title = "Test" });
+                with.LoggedInUser(user);
+            });
         }
 
         [Fact]

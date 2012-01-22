@@ -14,11 +14,16 @@ namespace IdeaStrike.Tests.ApiModuleTests
     {
         private BrowserResponse response;
         private Idea testIdea = new Idea { Title = "Title", Description = "Description" };
+        private User user = new User { Id = Guid.NewGuid() };
 
         public when_updating_an_idea()
         {
             mockIdeasRepo.Setup(d => d.Get(1)).Returns(testIdea);
-            response = browser.Put("/api/ideas/1", with => with.JsonBody(new { title = "New Title" }));
+            mockUsersRepo.Setup(d => d.GetUserFromIdentifier(user.Id)).Returns(user);
+            response = browser.Put("/api/ideas/1", with => {
+                with.JsonBody(new { title = "New Title" });
+                with.LoggedInUser(user);
+            });
         }
 
         [Fact]
