@@ -232,6 +232,7 @@
   <ItemGroup>
     <None Include="Models\ClassDiagram.cd" />
     <Content Include="Views\Admin\Moderation.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

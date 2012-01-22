@@ -6,6 +6,13 @@
 <ul class="pills">
     <li><a href="/admin/">Admin Home</a></li>
     <li><a href="/admin/settings">Settings</a></li>
-    <li><a href="/admin/users">Users</a></li>
-    <li class="active"><a href="/admin/moderation">Moderation</a></li>
+    <li class="active"><a href="/admin/users">Users</a></li>
+    <li><a href="/admin/moderation">Moderation</a></li>
+</ul>
+
+<ul>
+@foreach (var u in Model.Users)
+{ 
+    <li><a href="/admin/user/@u.Id">@u.UserName</a></li>
+}
 </ul>

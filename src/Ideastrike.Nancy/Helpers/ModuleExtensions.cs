@@ -5,6 +5,7 @@ using System.Web;
 using Ideastrike.Nancy.Models;
 using Nancy;
 using Nancy.Extensions;
+using System.Dynamic;
 
 namespace Ideastrike
 {
@@ -96,6 +97,15 @@ namespace Ideastrike
                 return null;
 
             return _users.FindBy(u => u.UserName == context.CurrentUser.UserName).FirstOrDefault();
+        }
+
+        public static dynamic Model(this NancyContext context, string title)
+        {
+            dynamic model = new ExpandoObject();
+            model.Title = title;
+            model.IsLoggedIn = context.IsLoggedIn();
+            model.UserName = context.Username();
+            return model;
         }
     }
 }

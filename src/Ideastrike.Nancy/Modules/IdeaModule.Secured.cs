@@ -25,13 +25,12 @@ namespace Ideastrike.Nancy.Modules
 
             this.RequiresAuthentication();
 
-            Get["/new"] = _ => View["Idea/New", new
-                                                {
-                                                    Title = string.Format("New Idea - {0}", _settings.Title),
-                                                    Ideas = _ideas.GetAll(),
-                                                    IsLoggedIn = Context.IsLoggedIn(),
-                                                    UserName = Context.Username(),
-                                                }];
+            Get["/new"] = _ =>
+            {
+                var m = Context.Model(string.Format("New Idea - {0}", _settings.Title));
+                m.Ideas = _ideas.GetAll();
+                return View["Idea/New", m];
+            };
 
             Get["/{id}/edit"] = parameters =>
             {
@@ -41,14 +40,11 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return View["404"];
 
-                return View["Idea/Edit", new
-                                        {
-                                            Title = string.Format("Edit Idea: '{0}' - {1}", idea.Title, _settings.Title),
-                                            PopularIdeas = _ideas.GetAll(),
-                                            Idea = idea,
-                                            IsLoggedIn = Context.IsLoggedIn(),
-                                            UserName = Context.Username(),
-                                        }];
+                var m = Context.Model(string.Format("Edit Idea: '{0}' - {1}", idea.Title, _settings.Title));
+                m.PopularIdeas = _ideas.GetAll();
+                m.Idea = idea;
+
+                return View["Idea/Edit", m];
             };
 
 
