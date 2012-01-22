@@ -44,15 +44,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\src\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\src\packages\Nancy.Testing.0.9.0\lib\net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPlus">
+      <HintPath>..\..\src\packages\Nancy.Testing.0.9.0\lib\net40\HtmlAgilityPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\src\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy">
+    <Reference Include="Nancy, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\src\packages\Nancy.0.9.0\lib\net40\Nancy.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Bootstrappers.Autofac, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\src\packages\Nancy.Bootstrappers.Autofac.0.9.0\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Testing">
+      <HintPath>..\..\src\packages\Nancy.Testing.0.9.0\lib\net40\Nancy.Testing.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -68,6 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminModuleTests\when_viewing_the_admin_page.cs" />
+    <Compile Include="ApiModuleTests\when_posting_a_new_idea.cs" />
+    <Compile Include="ApiModuleTests\when_updating_an_idea.cs" />
     <Compile Include="CommentModuleTests\when_adding_a_new_comment.cs" />
     <Compile Include="CommentModuleTests\when_viewing_the_comments_page.cs" />
     <Compile Include="FeatureModuleTests\when_adding_a_new_feature.cs" />
