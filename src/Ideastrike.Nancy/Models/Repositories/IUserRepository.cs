@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
-using Ideastrike.Nancy.Models;
-using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Security;
 
 namespace Ideastrike.Nancy.Models

@@ -50,8 +50,7 @@
                         <div class="span8 text">@a.Text</div>
                     </div>
                     <div class="row">
-                        <div class="span1 gravatar">
-                            <img src="@a.GravatarUrl" /></div>
+                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
                         <div class="span8 author">@a.Author</div>
                         <sub class="span8 time">@a.FriendlyTime</sub>
                         <div class="comment">
@@ -100,7 +99,6 @@ else
             </div>
         </div>
         <br />
-        <input type="hidden" name="userId" value="@Model.UserId"/>
         <label for="submit">
         </label>
         <button class="btn primary" type="submit">
@@ -168,7 +166,6 @@ else
             <div id="new-comment-view">
             </div>
         </div>
-        <input type="hidden" name="userId" value="@Model.UserId"/>
         <br />
         <label for="submit">
         </label>
@@ -202,7 +199,7 @@ else
             } else {
                 $.ajax({
                     type: "POST",
-                    url: "/idea/@idea.Id/unvote/9",
+                    url: "/idea/@idea.Id/unvote",
                     context: document.body,
                     success: function (data) {
                         updateVoteCount(data);

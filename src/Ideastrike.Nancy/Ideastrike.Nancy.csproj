@@ -163,6 +163,7 @@
     <Compile Include="Modules\CommentModule.cs" />
     <Compile Include="Modules\FeatureModule.cs" />
     <Compile Include="Modules\IdeaModule.Secured.cs" />
+    <Compile Include="Modules\SelectedTab.cs" />
     <Compile Include="Modules\UserModule.cs" />
     <Compile Include="Modules\LoginModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />

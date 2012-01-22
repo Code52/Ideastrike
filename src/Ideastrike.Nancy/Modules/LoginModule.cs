@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Web;
 using Ideastrike.Nancy.Models;
 using Nancy;
 using System.Net;
@@ -19,73 +17,66 @@ namespace Ideastrike.Nancy.Modules
             _user = userRepository;
 
             Post["/login/token"] = x =>
-                                       {
-                                           if (string.IsNullOrWhiteSpace(Request.Form.token))
-                                               return
-                                                   View[
-                                                       "Login/Error",
-                                                       new
-                                                           {
-                                                               Title = "Login Error",
-                                                               Message =
-                                                           "Bad response from login provider - could not find login token."
-                                                           }];
+            {
+                if (string.IsNullOrWhiteSpace(Request.Form.token))
+                    return
+                        View["Login/Error",
+                            new
+                                {
+                                    Title = "Login Error",
+                                    Message = "Bad response from login provider - could not find login token."
+                                }];
 
-                                           var response =
-                                               new WebClient().DownloadString(
-                                                   string.Format(
-                                                       "https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}",
-                                                       apikey, Request.Form.token));
+                var response = new WebClient().DownloadString(string.Format("https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}",apikey, Request.Form.token));
 
-                                           if (string.IsNullOrWhiteSpace(response))
-                                               return
-                                                   View[
-                                                       "Login/Error",
-                                                       new
-                                                           {
-                                                               Title = "Login Error",
-                                                               Message =
-                                                           "Bad response from login provider - could not find user."
-                                                           }];
+                if (string.IsNullOrWhiteSpace(response))
+                    return
+                        View["Login/Error",
+                            new
+                                {
+                                    Title = "Login Error",
+                                    Message = "Bad response from login provider - could not find user."
+                                }];
 
-                                           var j = JsonConvert.DeserializeObject<dynamic>(response);
+                var j = JsonConvert.DeserializeObject<dynamic>(response);
 
-                                           if (j.stat.ToString() != "ok")
-                                               return
-                                                   View[
-                                                       "Login/Error",
-                                                       new
-                                                           {
-                                                               Title = "Login Error",
-                                                               Message = "Bad response from login provider."
-                                                           }];
+                if (j.stat.ToString() != "ok")
+                    return
+                        View["Login/Error",
+                            new
+                                {
+                                    Title = "Login Error",
+                                    Message = "Bad response from login provider."
+                                }];
 
-                                           var userIdentity = j.profile.identifier.ToString();
+                var userIdentity = j.profile.identifier.ToString();
+                var username = j.profile.preferredUsername.ToString();
+                string email = string.Empty;
+                if (j.profile.email != null)
+                    email = j.profile.email.ToString();
+                var user = _user.GetUserFromUserIdentity(userIdentity);
 
-                                           var user = _user.GetUserFromUserIdentity(userIdentity);
+                if (user == null)
+                {
+                    var u = new User
+                                {
+                                    Id = Guid.NewGuid(),
+                                    Identity = userIdentity,
+                                    UserName = (!string.IsNullOrEmpty(username)) ? username : "New User",
+                                    Email = (!string.IsNullOrEmpty(email)) ? email : "none@void.com",
+                                    IsDeleted = true
+                                };
+                    if (j.profile.photo != null)
+                        u.AvatarUrl = j.profile.photo.ToString();
 
-                                           if (user == null)
-                                           {
-                                               var u = new User
-                                                           {
-                                                               Id = Guid.NewGuid(),
-                                                               Identity = userIdentity,
-                                                               UserName = "New User",
-                                                               IsDeleted = true
-                                                           };
-                                               _user.Add(u);
-                                               return ModuleExtensions.LoginAndRedirect(this, u.Id,
-                                                                                        DateTime.Now.AddDays(1),
-                                                                                        "/profile/create");
-                                           }
+                    _user.Add(u);
+                    return this.LoginAndRedirect(u.Id, DateTime.Now.AddDays(1), "/profile/create");
+                }
 
-                                           return ModuleExtensions.Login(this, user.Id, DateTime.Now.AddDays(1), "/");
-                                       };
+                return ModuleExtensions.Login(this, user.Id, DateTime.Now.AddDays(1), "/");
+            };
 
-            Get["/logout/"] = parameters =>
-                                  {
-                                      return ModuleExtensions.LogoutAndRedirect(this, "/");
-                                  };
+            Get["/logout/"] = parameters => this.LogoutAndRedirect("/");
         }
     }
 }

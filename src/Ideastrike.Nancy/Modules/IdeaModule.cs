@@ -18,25 +18,24 @@ namespace Ideastrike.Nancy.Modules
             _users = users;
 
             Get["/{id}"] = parameters =>
-                               {
-                                   int id = parameters.id;
-                                   var idea = _ideas.Get(id);
-                                   if (idea == null)
-                                       return View["404"];
+            {
+                int id = parameters.id;
+                var idea = _ideas.Get(id);
+                if (idea == null)
+                    return View["404"];
 
-                                   var viewModel = new IdeaViewModel(idea) { UserHasVoted = false };
+                var viewModel = new IdeaViewModel(idea) { UserHasVoted = false };
 
-                                   dynamic model = new
-                                   {
-                                       Title = string.Format("{0} - {1}", idea.Title, _settings.Title),
-                                       Idea = viewModel,
-                                       //UserId = user.Id,
-                                       IsLoggedIn = Context.IsLoggedIn(),
-                                       UserName = Context.Username(),
-                                   };
+                dynamic model = new
+                {
+                    Title = string.Format("{0} - {1}", idea.Title, _settings.Title),
+                    Idea = viewModel,
+                    IsLoggedIn = Context.IsLoggedIn(),
+                    UserName = Context.Username(),
+                };
 
-                                   return View["Idea/Index", model];
-                               };
+                return View["Idea/Index", model];
+            };
         }
     }
 }
