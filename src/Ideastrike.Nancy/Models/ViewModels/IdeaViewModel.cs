@@ -12,19 +12,28 @@ namespace Ideastrike.Nancy.Models.ViewModels
         {
             Id = idea.Id;
             Title = idea.Title;
+            Time = idea.Time;
             Description = MarkdownHelper.Markdown(idea.Description);
             UserHasVoted = idea.UserHasVoted;
             TotalVotes = idea.Votes.Count;
-
+            Author = idea.Author;
+            GravatarUrl = (string.IsNullOrEmpty(Author.AvatarUrl)) ? Author.Email.ToGravatarUrl(40) : Author.AvatarUrl;
             Features = idea.Features.Select(f => new FeatureViewModel(f)).ToList();
             Activities = idea.Activities.Select(f => new ActivityViewModel(f)).ToList();
+
+            Images = idea.Images.ToList();
         }
+
+        public IEnumerable<Image> Images { get; set; }
 
         public IEnumerable<FeatureViewModel> Features { get; set; }
         
         [Obsolete("Make a secondary call to fetch these and render dynamically")]
         public IEnumerable<ActivityViewModel> Activities { get; set; }
 
+        public string GravatarUrl { get; private set; }
+        public DateTime Time { get; private set; }
+        public User Author { get; private set; }
         public bool UserHasVoted { get; set; }
         public int TotalVotes { get; private set; }
         public string Title { get; private set; }

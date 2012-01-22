@@ -5,6 +5,13 @@ using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models.ViewModels;
 using Nancy;
+using Nancy.ViewEngines;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Nancy.Helpers;
+using Nancy.Extensions;
 
 namespace Ideastrike.Nancy.Modules
 {
