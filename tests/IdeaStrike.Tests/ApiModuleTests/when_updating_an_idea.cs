@@ -18,7 +18,7 @@ namespace IdeaStrike.Tests.ApiModuleTests
         public when_updating_an_idea() {
             mockIdeasRepo.Setup(d => d.Get(1)).Returns(testIdea);
             response = browser.Put("/api/ideas/1", with => {
-                with.JsonBody(new { Title = "New Title" });
+                with.JsonBody(new { title = "New Title" });
             });
         }
 

@@ -12,7 +12,7 @@ namespace IdeaStrike.Tests.ApiModuleTests
 
         public when_posting_a_new_idea() {
             response = browser.Post("/api/ideas", with => {
-                with.JsonBody(new { Title = "Test" });
+                with.JsonBody(new { title = "Test" });
             });
         }
 

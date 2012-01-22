@@ -19,20 +19,20 @@ namespace Ideastrike.Nancy.Modules
             Get["/ideas"] = _ => {
                 return Response.AsJson(db.Ideas.Select(idea =>
                     new {
-                        Id = idea.Id,
-                        Title = idea.Title,
-                        Description = idea.Description,
-                        Time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), idea.Time),
-                        Author = new { Id = idea.Author.Id, Username = idea.Author.Username },
-                        VoteCount = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0
+                        id = idea.Id,
+                        title = idea.Title,
+                        description = idea.Description,
+                        time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), idea.Time),
+                        author = new { id = idea.Author.Id, username = idea.Author.Username },
+                        vote_count = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0
                     }));
             };
 
             Post["/ideas"] = _ => {
-                var model = this.Bind<NewIdeaModel>();
+                var model = this.Bind<EditIdeaModel>();
                 var idea = new Idea {
-                    Title= model.Title,
-                    Description= model.Description,
+                    Title= model.title,
+                    Description= model.description,
                     Time = DateTime.UtcNow
                 };
                 ideas.Add(idea);
@@ -41,15 +41,15 @@ namespace Ideastrike.Nancy.Modules
             };
 
             Put["/ideas/{id}"] = _ => {
-                var model = this.Bind<NewIdeaModel>();
+                var model = this.Bind<EditIdeaModel>();
                 int id = _.id;
                 var idea = ideas.Get(id);
                 if (idea == null)
                     return HttpStatusCode.NotFound;
-                if (model.Title != null)
-                    idea.Title = model.Title;
-                if (model.Description != null)
-                    idea.Description = model.Description;
+                if (model.title != null)
+                    idea.Title = model.title;
+                if (model.description != null)
+                    idea.Description = model.description;
                 ideas.Edit(idea);
 
                 return HttpStatusCode.OK;
@@ -59,14 +59,14 @@ namespace Ideastrike.Nancy.Modules
                 int id = _.id;
                 var o = db.Ideas.Where(idea => idea.Id == id).Select(idea =>
                     new {
-                        Id = idea.Id,
-                        Title = idea.Title,
-                        Description = idea.Description,
-                        Time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), idea.Time),
-                        Author = new { Id = idea.Author.Id, Username = idea.Author.Username },
-                        VoteCount = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0,
-                        Features = idea.Features.Select(feature => new { Id = feature.Id, Text = feature.Text, Time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), feature.Time) }),
-                        Votes = idea.Votes.Select(vote => new { User = new { Id = vote.UserId, Username = vote.User.Username }, Value = vote.Value })
+                        id = idea.Id,
+                        title = idea.Title,
+                        description = idea.Description,
+                        time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), idea.Time),
+                        author = new { id = idea.Author.Id, username = idea.Author.Username },
+                        vote_count = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0,
+                        features = idea.Features.Select(feature => new { id = feature.Id, text = feature.Text, time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), feature.Time) }),
+                        votes = idea.Votes.Select(vote => new { user = new { id = vote.UserId, username = vote.User.Username }, value = vote.Value })
                     }).FirstOrDefault();
                 if (o == null)
                     return HttpStatusCode.NotFound;
@@ -79,9 +79,9 @@ namespace Ideastrike.Nancy.Modules
                     return HttpStatusCode.NotFound;
                 return Response.AsJson(db.Features.Where(d => d.IdeaId == id).Select(feature =>
                     new {
-                        Id = feature.Id,
-                        Text = feature.Text,
-                        Time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), feature.Time),
+                        id = feature.Id,
+                        text = feature.Text,
+                        time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), feature.Time),
                     }));
             };
 
@@ -91,16 +91,16 @@ namespace Ideastrike.Nancy.Modules
                     return HttpStatusCode.NotFound;
                 return Response.AsJson(db.Votes.Where(d => d.IdeaId == id).Select(vote =>
                     new {
-                        Value = vote.Value,
-                        User = new { Id = vote.UserId, Username = vote.User.Username }
+                        value = vote.Value,
+                        user = new { id = vote.UserId, username = vote.User.Username }
                     }));
             };
         }
     }
 
-    public class NewIdeaModel
+    public class EditIdeaModel
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
     }
 }
