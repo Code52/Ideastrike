@@ -1,6 +1,6 @@
 namespace Ideastrike.Nancy.Models
 {
-    public class GitHubActivity :Activity
+    public class GitHubActivity : Activity
     {
         
     }
