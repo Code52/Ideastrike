@@ -1,9 +1,10 @@
 using System;
 using System.Data.Objects.SqlClient;
 using System.Linq;
-using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
+using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
+using Nancy.ModelBinding;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -13,7 +14,7 @@ namespace Ideastrike.Nancy.Modules
     // make unannounced changes to the public surface.
     public class ApiModule : NancyModule
     {
-        public ApiModule(IdeastrikeContext db)
+        public ApiModule(IdeastrikeContext db, IIdeaRepository ideas)
             : base("/api") {
             Get["/ideas"] = _ => {
                 return Response.AsJson(db.Ideas.Select(idea =>
@@ -25,6 +26,18 @@ namespace Ideastrike.Nancy.Modules
                         Author = new { Id = idea.Author.Id, Username = idea.Author.Username },
                         VoteCount = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0
                     }));
+            };
+
+            Post["/ideas"] = _ => {
+                var model = this.Bind<NewIdeaModel>();
+                var idea = new Idea {
+                    Title= model.Title,
+                    Description= model.Description,
+                    Time = DateTime.UtcNow
+                };
+                ideas.Add(idea);
+
+                return HttpStatusCode.Created;  // TODO: Should return either the generated id or the json body
             };
 
             Get["/ideas/{id}"] = _ => {
@@ -67,7 +80,12 @@ namespace Ideastrike.Nancy.Modules
                         User = new { Id = vote.UserId, Username = vote.User.Username }
                     }));
             };
-
         }
+    }
+
+    public class NewIdeaModel
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }
