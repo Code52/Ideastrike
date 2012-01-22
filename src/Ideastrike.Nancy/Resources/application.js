@@ -18,15 +18,7 @@ $(function () {
     // Initialize the jQuery File Upload widget:
  
     if (window.location.hostname === 'blueimp.github.com') {
-        // Demo settings:
-        $('#fileupload').prop(
-            'action',
-            '//jquery-file-upload.appspot.com'
-        );
-        $('#fileupload').fileupload('option', {
-            maxFileSize: 5000000,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-        });
+        
     } else {
         // Load existing files:
         $.getJSON($('#fileupload').prop('action'), function (files) {

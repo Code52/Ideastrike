@@ -157,7 +157,9 @@
     <script src="@Url.Content("~/Resources/jquery.fileupload-ui.js")"></script>
     <script type="text/javascript">
         $('#fileupload').fileupload({
-            url: '/idea/uploadimage'
+            url: '/idea/uploadimage',
+            maxFileSize: 5000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
         });
     </script>
     <script src="@Url.Content("~/Resources/application.js")"></script>

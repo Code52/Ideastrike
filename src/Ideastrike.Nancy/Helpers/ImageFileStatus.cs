@@ -29,7 +29,7 @@ namespace Ideastrike.Nancy.Helpers
             size = fileLength;
             progress = "1.0";
             url = "/idea/image/" + imageId;
-            thumbnail_url = "/idea/imagethumb/" + imageId;
+            thumbnail_url = "/idea/imagethumb/" + imageId + "/100";
             delete_url = "/idea/deleteimage/" + imageId;
             delete_type = "DELETE";
             this.imageId = imageId.ToString();

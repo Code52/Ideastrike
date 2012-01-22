@@ -8,10 +8,10 @@ namespace Ideastrike.Nancy.Helpers
 {
     public static class ImageExtensions
     {
-        public static Image ToThumbnail(this Image image, int desiredWidth)
+        public static Image ToThumbnail(this Image image, int desiredHeight)
         {
-            var targetHeight = (desiredWidth * image.Height) / image.Width;
-            return image.GetThumbnailImage(desiredWidth, targetHeight, () => false, IntPtr.Zero);
+            var targetWidth = (desiredHeight * image.Width) / image.Height;
+            return image.GetThumbnailImage(targetWidth, desiredHeight, () => false, IntPtr.Zero);
         }
     }
 }

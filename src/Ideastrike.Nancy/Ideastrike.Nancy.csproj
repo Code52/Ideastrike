@@ -85,7 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\application.js" />
+    <Content Include="Resources\blank.gif" />
+    <Content Include="Resources\fancybox_loading.gif" />
+    <Content Include="Resources\fancybox_sprite.png" />
     <Content Include="Resources\jquery-1.7.min.js" />
+    <Content Include="Resources\jquery.fancybox.css" />
+    <Content Include="Resources\jquery.fancybox.pack.js" />
     <Content Include="Resources\jquery.fileupload-ui.css" />
     <Content Include="Resources\jquery.fileupload-ui.js" />
     <Content Include="Resources\jquery.fileupload.js" />

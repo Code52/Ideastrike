@@ -36,6 +36,7 @@ namespace Ideastrike.Nancy.Models
             return db.Ideas
                 .Include("Activities")
                 .Include("Votes")
+                .Include("Images")
                 .FirstOrDefault(i => i.Id == id);
         }
 

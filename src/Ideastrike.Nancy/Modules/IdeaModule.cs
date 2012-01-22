@@ -86,20 +86,35 @@ namespace Ideastrike.Nancy.Modules
                                        };
             Get["/image/{id}"] = parameters =>
                                      {
-                                         var image = (Image)imageRepository.Get(parameters.id);
+                                         var id = (string)parameters.id;
+                                         if(id.Contains("."))
+                                         {
+                                             id = id.Substring(0, id.IndexOf(".")); //string .jpg in case it was send in
+                                         }
+                                         var image = (Image)imageRepository.Get(int.Parse(id));
                                          return Response.FromStream(new MemoryStream(image.ImageBits), "image/jpeg");
                                      };
 
-            Get["/imagethumb/{id}"] = parameters =>
+            Get[@"/imagethumb/{id}/{width}"] = parameters =>
                                           {
-                                              var image = (Image)imageRepository.Get(parameters.id);
-                                              var drawingImage = System.Drawing.Image.FromStream(new MemoryStream(image.ImageBits));
-                                              var thumb = drawingImage.ToThumbnail(250);
-
-                                              var memStream = new MemoryStream();
-                                              thumb.Save(memStream, ImageFormat.Jpeg);
                                               
-                                              return Response.FromStream(memStream, "image/jpeg");
+                                              var image = (Image)imageRepository.Get(parameters.id);
+                                              using(var memoryStream = new MemoryStream(image.ImageBits))
+                                              {
+                                                  var drawingImage = System.Drawing.Image.FromStream(memoryStream);
+                                                  var thumb = drawingImage.ToThumbnail((int)parameters.width);
+                                                  using(var thumbnailStream = new MemoryStream())
+                                                  {
+                                                      thumb.Save(thumbnailStream, ImageFormat.Jpeg);
+                                                      return Response.FromStream(new MemoryStream(thumbnailStream.GetBuffer()), "image/jpeg"); //massive WTF? If I just use thumnailStream, it doesn't work...
+                                                  }
+                                              }
+                                              
+                                              
+
+                                              
+                                              
+                                              
                                           };
 
             Delete["/deleteimage/{id}"] = parameters =>

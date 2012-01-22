@@ -1,7 +1,15 @@
-﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿@using Nancy
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+
+@section HeadContent
+{
+    <link href="@Url.Content("~/Resources/jquery.fancybox.css")" rel="stylesheet" />
+
+}
+
 <div class="pull-right votebox">
     <form>
     <!-- Yes, I know this isn't going to be correct -->
@@ -14,6 +22,21 @@
 <h1>@Model.Title</h1>
 @Model.Description
 <hr />
+
+@if (Model.Images != null)
+{
+    <div>
+        <h4>Images</h4>
+        <p>
+            @foreach(var image in Model.Images)
+            {
+                <a class="fancybox" href='image/@(image.Id).jpg' rel="imagegroup"><img src="/idea/imagethumb/@image.Id/100" /></a>
+            }
+        </p>
+    </div>
+    <div style="clear: both;"></div>
+}
+
 @if (Model.Features != null)
 { 
     <h4>Features</h4>
@@ -84,4 +107,13 @@ else
             });
         }
     </script>
+    
+            <script src="@Url.Content("~/Resources/jquery.fancybox.pack.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.fancybox').fancybox();
+        })
+    </script>
+
 }
