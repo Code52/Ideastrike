@@ -22,14 +22,8 @@ namespace Ideastrike.Nancy.Modules
                 WelcomeMessage = settings.WelcomeMessage,
                 HomePage = settings.HomePage,
                 GAnalyticsKey = settings.GAnalyticsKey,
-                IsLoggedIn = (Context == null || Context.CurrentUser == null ||
-                    string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
-                    ? false
-                    : true,
-                UserName = (Context == null || Context.CurrentUser == null ||
-                                  string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
-                                     ? ""
-                                     : Context.CurrentUser.UserName,
+                IsLoggedIn = Context.IsLoggedIn(),
+                UserName = Context.Username(),
             }];
 
             Get["/moderation"] = _ => "";
@@ -43,14 +37,8 @@ namespace Ideastrike.Nancy.Modules
                 WelcomeMessage = settings.WelcomeMessage,
                 HomePage = settings.HomePage,
                 GAnalyticsKey = settings.GAnalyticsKey,
-                IsLoggedIn = (Context == null || Context.CurrentUser == null ||
-                    string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
-                    ? false
-                    : true,
-                UserName = (Context == null || Context.CurrentUser == null ||
-                                  string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
-                                     ? ""
-                                     : Context.CurrentUser.UserName,
+                IsLoggedIn = Context.IsLoggedIn(),
+                UserName = Context.Username(),
             }];
 
             Post["/settings"] = _ =>

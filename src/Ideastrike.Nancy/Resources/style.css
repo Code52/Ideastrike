@@ -16,9 +16,21 @@
                -webkit-box-shadow:0 1px 10px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
                -moz-box-shadow:0 1px 10px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
                box-shadow:0 1px 10px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);}
+.topbar .fill .dropdown-menu  
+{
+                background-color:#660000;
+               background-repeat:repeat-x;
+               background-image:-khtml-gradient(linear, left top, left bottom, from(#660000), to(#400000));
+               background-image:-moz-linear-gradient(top, #660000, #400000);
+               background-image:-ms-linear-gradient(top, #660000, #400000);
+               background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #660000), color-stop(100%, #400000));
+               background-image:-webkit-linear-gradient(top, #660000, #400000);
+               background-image:-o-linear-gradient(top, #660000, #400000);
+               background-image:linear-gradient(top, #660000, #400000);
+               filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#660000', endColorstr='#400000', GradientType=0);}
 textarea {width: 350px;height: 200px;}
 label { margin-right: 15px;}
-#comments, #ideas { list-style-type: none;margin: 0px;padding: 0px;}
+#comments, #ideas { list-style-type: none;margin: 0px;padding: 0px; margin-left:-10px;}
 #comments li {margin-left: 0px; margin-bottom: 25px;}
 
 /* Override some defaults */
@@ -40,6 +52,7 @@ width: 820px; /* downsize our container to make the content feel a bit tighter a
 background-color: #fff;
 padding: 20px;
 margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+margin-top:15px;
 -webkit-border-radius: 0 0 6px 6px;
 -moz-border-radius: 0 0 6px 6px;
 border-radius: 0 0 6px 6px;
@@ -88,4 +101,12 @@ border: 0;
 .sidebox form button { width: 65px;height: 25px;}
 .ideaheader { padding-top: 16px;line-height: 1em;}
 .ideadate { font-size: 0.8em;text-transform: uppercase;}
-.ideadesc { color: black;}
+.ideadesc {  color: black;}
+.hoverheader:hover{ color : #660000;}
+.author { font-weight:bolder;}
+.gravatar {margin-left:25px;}
+.gravatar img {width:40px; height:40px;}
+.gravatarsmall img {width:15px; height:15px;}
+.activity { margin-right:75px;}
+.loggedin { color: White; }
+.loggedin img {width:15px; height:15px;}

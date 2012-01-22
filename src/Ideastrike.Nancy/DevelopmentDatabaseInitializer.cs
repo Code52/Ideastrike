@@ -27,7 +27,7 @@ namespace Ideastrike.Nancy
             context.Ideas.Add(new Idea
                                   {
                                       Time = DateTime.UtcNow,
-                                      Author = new User { Id = Guid.NewGuid(), UserName = "aeoth" },
+                                      Author = new User { Id = Guid.NewGuid(), UserName = "aeoth", Email = "paul@theleagueofpaul.com" },
                                       Title = "So Meta",
                                       Description = "Put an idea in your idea so you can idea when you idea",
                                       Status = status
@@ -36,7 +36,7 @@ namespace Ideastrike.Nancy
             context.Ideas.Add(new Idea
             {
                 Time = DateTime.UtcNow,
-                Author = new User { Id = Guid.NewGuid(), UserName = "shiftkey" },
+                Author = new User { Id = Guid.NewGuid(), UserName = "shiftkey", Email = "me@brendanforster.com" },
                 Title = "Lorem Ipsum",
                 Description = "This is also another idea",
                 Status = status

@@ -1,9 +1,10 @@
-﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿@using Ideastrike.Nancy.Helpers
+@using Ideastrike.Nancy.Modules
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
 @{ var idea = Model.Idea; }
-<div class="pull-right">
+<div class="pull-right" style="margin-top:15px;">
     <div class="sidebox">
         <form>
         <div class="voteinfo">
@@ -24,7 +25,7 @@
         }
         </form>
     </div>
-    <div class="sidebox">
+    <div class="sidebox" style="margin-left:10px;">
         <div>
             <!-- TODO: get URL for this page rather than description -->
             <a href="https://twitter.com/share" 
@@ -39,16 +40,22 @@
         </div>
     </div>
 </div>
-<h1>@idea.Title</h1>
-<div class="description">
+<h1 style="margin-bottom:0px;">@idea.Title</h1>
+<div class="ideadesc">
     @idea.Description
 </div>
+
+<div class="ideadesc gravatarsmall"><img src="@idea.GravatarUrl" /> <a href="">@idea.Author.UserName</a> <span class="ideadate">@FriendlyTimeHelper.Parse(idea.Time)</span>
+@if (idea.Author.UserName == Model.UserName)
+{ 
+    <a href="/idea/@idea.Id/edit">Edit</a>
+}</div>
+
 <hr />
 @if (idea.Features.Count > 0)
 { 
     <div class="features">
-        <h3>
-            Features</h3>
+        <h3>Features</h3>
         <ul>
             @foreach (var a in idea.Features)
             {
@@ -57,8 +64,7 @@
                         <div class="span8 text">@a.Text</div>
                     </div>
                     <div class="row">
-                        <div class="span1 gravatar">
-                            <img src="@a.GravatarUrl" /></div>
+                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
                         <div class="span8 author">@a.Author</div>
                         <sub class="span8 time">@a.FriendlyTime</sub>
                         <div class="comment">
@@ -72,14 +78,12 @@
 }
 else
 {
-    <h3>
-        No features suggested yet, be the first!</h3>
+    <h3>No features suggested yet, be the first!</h3>
 }
 @if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-feature">
-        <h4>
-            Got something to add?</h4>
+        <h4 class="hoverheader">Got something to add?</h4>
     </div>
     <div id="add-feature" class="hide-on-start add-feature">
         <form action="/idea/@idea.Id/feature" method="POST">
@@ -103,6 +107,7 @@ else
                     Preview</button>
             </div>
             <textarea id="new-feature" name="feature"></textarea><br />
+            <span class="help-block">You can use <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>!</span>
             <div id="new-feature-view">
             </div>
         </div>
@@ -118,22 +123,22 @@ else
 @if (idea.Activities.Count > 0)
 { 
     <div class="comments">
-        <h4>
-            Activity Feed</h4>
+        <h3>Activity Feed</h3>
         <ul>
             @foreach (var a in idea.Activities)
             {
-                <li>
+                <li style="margin-bottom:25px;" class="span11">
                     <!-- TODO: this is not suitable for all the formatt we want to support -->
-                    <div class="row">
-                        <div class="span8 text">@a.Text</div>
+                    <div class="pull-right gravatar"><img src="@a.GravatarUrl" />
+                    @if (idea.Author.UserName == a.Author)
+                    { 
+                        <div class="ideadate">author</div>
+                    }
                     </div>
-                    <div class="row">
-                        <div class="span1 gravatar">
-                            <img src="@a.GravatarUrl" /></div>
-                        <div class="span8 author">@a.Author</div>
-                        <sub>@a.FriendlyTime</sub>
-                    </div>
+                    <div class="activity">@a.Text</div>
+                    <div><a href=""><span class="author">@a.Author</span></a> <span class="ideadate">@a.FriendlyTime</span></div>
+                    
+                    <div class="clearfix"> </div>
                     <div class="comment">
                         <!-- TODO: reply to an activity -->
                     </div>
@@ -148,19 +153,16 @@ else
 }
 else
 {
-    <h4>
-        No activity yet, add the first comment!</h4>
+    <h4>No activity yet, add the first comment!</h4>
 }
 @if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-comment">
-        <h4>
-            Leave a comment</h4>
+        <h4 class="hoverheader">Leave a comment</h4>
     </div>
     <div id="add-comment" class="hide-on-start add-comment">
         <form action="/comment/@idea.Id/add" method="POST">
-        <label for="comment">
-            leave a comment</label>
+        <label for="comment">leave a comment</label>
         <div class="input">
             <div class="options">
                 <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
@@ -171,6 +173,7 @@ else
                     Preview</button>
             </div>
             <textarea id="new-comment" name="comment"></textarea><br />
+            <span class="help-block">You can use <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>!</span>
             <div id="new-comment-view">
             </div>
         </div>
