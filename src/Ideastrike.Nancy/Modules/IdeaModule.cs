@@ -1,4 +1,5 @@
-﻿using Ideastrike.Nancy.Models;
+﻿using System.Linq;
+using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models.ViewModels;
 using Nancy;
@@ -24,7 +25,15 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return View["404"];
 
-                var viewModel = new IdeaViewModel(idea) { UserHasVoted = false };
+                User user = Context.GetCurrentUser(_users);
+                if(user != null)
+                {
+                    if (idea.Votes.Any(u => u.UserId == user.Id))
+                        idea.UserHasVoted = true;
+                    
+                }
+
+                var viewModel = new IdeaViewModel(idea);
 
                 dynamic model = new
                 {

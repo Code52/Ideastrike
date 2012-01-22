@@ -28,5 +28,8 @@ namespace Ideastrike.Nancy.Models
         public virtual User Author { get; set; }
 
         public virtual Status Status { get; set; }
+
+        [NotMapped]
+        public bool UserHasVoted { get; set; }
     }
 }

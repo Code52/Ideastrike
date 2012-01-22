@@ -9,11 +9,13 @@ namespace Ideastrike.Nancy.Modules
     public class HomeModule : NancyModule
     {
         private readonly IIdeaRepository _ideas;
+        private readonly IUserRepository _users;
         private readonly ISettingsRepository _settings;
 
-        public HomeModule(IIdeaRepository ideas, ISettingsRepository settings)
+        public HomeModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings)
         {
             _ideas = ideas;
+            _users = users;
             _settings = settings;
             Get["/"] = _ => ListIdeas(_ideas.GetAll(), SelectedTab.Popular, "");
             Get["/top"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Votes.Count), SelectedTab.Hot, "");
@@ -27,6 +29,17 @@ namespace Ideastrike.Nancy.Modules
 
         public Response ListIdeas(IEnumerable<Idea> ideas, SelectedTab selected, string ErrorMessage)
         {
+            foreach(var i in ideas)
+            {
+                User user = Context.GetCurrentUser(_users);
+                if (user != null)
+                {
+                    if (i.Votes.Any(u => u.UserId == user.Id))
+                        i.UserHasVoted = true;
+
+                }
+            }
+
             dynamic pageData = new
             {
                 Ideas = ideas,

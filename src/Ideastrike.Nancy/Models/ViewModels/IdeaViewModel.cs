@@ -13,7 +13,7 @@ namespace Ideastrike.Nancy.Models.ViewModels
             Id = idea.Id;
             Title = idea.Title;
             Description = MarkdownHelper.Markdown(idea.Description);
-
+            UserHasVoted = idea.UserHasVoted;
             TotalVotes = idea.Votes.Count;
 
             Features = idea.Features.Select(f => new FeatureViewModel(f)).ToList();

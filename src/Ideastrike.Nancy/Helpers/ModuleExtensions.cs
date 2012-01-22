@@ -92,6 +92,9 @@ namespace Ideastrike
 
         public static User GetCurrentUser(this NancyContext context, IUserRepository _users)
         {
+            if (context == null || context.CurrentUser == null || string.IsNullOrWhiteSpace(context.CurrentUser.UserName))
+                return null;
+
             return _users.FindBy(u => u.UserName == context.CurrentUser.UserName).FirstOrDefault();
         }
     }

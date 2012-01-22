@@ -18,9 +18,16 @@ namespace Ideastrike.Nancy.Models
                 .Include("Author")
                 .Include("Status")
                 .FirstOrDefault(i => i.Id == id);
+
             return idea;
         }
-        
+
+        public override IQueryable<Idea> GetAll()
+        {
+           return Context.Ideas.Include("Votes").Include("Author").Include("Status");
+        }
+
+
         public override void Add(Idea idea)
         {
             var status = Context.Statuses.FirstOrDefault(s => s.Title == "New");

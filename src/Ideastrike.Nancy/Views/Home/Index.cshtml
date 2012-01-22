@@ -10,7 +10,7 @@
         <div class="alert-message error">
             <a class="close" href="#">&times;</a>
             <p>
-            <strong>@Model.ErrorMessage</strong>
+                <strong>@Model.ErrorMessage</strong>
             </p>
         </div>
     </div>
@@ -58,15 +58,22 @@
         <li>
             <div class="pull-left sidebox">
                 <form>
-                    <div class="voteinfo">
-                        <h3>@i.Votes.Count</h3>
-                        votes
-                    </div>
-                            @if (Model.IsLoggedIn)
-                            {
-                                <button type="button" class="btn" onclick=" vote(@i.Id)">
-                                    vote</button>
-                            }
+                <div>
+                    <h3 class="votecount @i.Id">@i.Votes.Count</h3>
+                    votes
+                </div>
+                @if (Model.IsLoggedIn)
+                {
+                    <button type="button" class="btn vote" data-id="@i.Id" data-voted="@i.UserHasVoted" >
+                        @if (i.UserHasVoted)
+                        { 
+                            @:unvote
+                        }
+                        else
+                        { 
+                            @: vote
+                        }</button>
+                }
                 </form>
             </div>
             <h3 class="ideaheader">
@@ -92,22 +99,38 @@
             });
         });
     </script>
-
     <script>
-        function vote(id, el) {
-            $.ajax({
-                type: "POST",
-                url: "/idea/" + id + "/vote/",  // TODO: Insert the users real userid here
-                success: function (data) {
-                    el.html(data.NewVotes);
-                }
-            });
-        }
 
-        $(function () {
-            $('#ideas button').click(function (e) {
-                var $el = $(e.target);
-                vote($el.data('voteid'), $el.parent().find('h3'));
+        $(document).ready(function () {
+            $(".vote").click(function () {
+                var elem = $(this);
+                var hasVoted = elem.data("voted").toLowerCase();
+
+                if (hasVoted == "false") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/idea/" + elem.data("id") + "/vote",
+                        context: document.body,
+                        success: function (data) {
+                            $(".votecount." + elem.data("id")).text(data.NewVotes);
+                            console.log(data.NewVotes);
+                            elem.data("voted", "true");
+                            elem.text("unvote");
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/idea/" + elem.data("id") + "/unvote",
+                        context: document.body,
+                        success: function (data) {
+                            $(".votecount." + elem.data("id")).text(data.NewVotes);
+                            elem.data("voted", "false");
+                            console.log(data.NewVotes);
+                            elem.text("vote");
+                        }
+                    });
+                }
             });
         });
     </script>

@@ -13,7 +13,14 @@
         @if (Model.IsLoggedIn)
         { 
             <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
-                vote</button>
+                        @if (idea.UserHasVoted)
+                        { 
+                            @:unvote
+                        }
+                        else
+                        { 
+                            @: vote
+                        }</button>
         }
         </form>
     </div>
@@ -50,7 +57,8 @@
                         <div class="span8 text">@a.Text</div>
                     </div>
                     <div class="row">
-                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
+                        <div class="span1 gravatar">
+                            <img src="@a.GravatarUrl" /></div>
                         <div class="span8 author">@a.Author</div>
                         <sub class="span8 time">@a.FriendlyTime</sub>
                         <div class="comment">
@@ -67,12 +75,12 @@ else
     <h3>
         No features suggested yet, be the first!</h3>
 }
-<div class="expander" data-element="#add-feature">
-    <h4>
-        Got something to add?</h4>
-</div>
 @if (Model.IsLoggedIn)
 {
+    <div class="expander" data-element="#add-feature">
+        <h4>
+            Got something to add?</h4>
+    </div>
     <div id="add-feature" class="hide-on-start add-feature">
         <form action="/idea/@idea.Id/feature" method="POST">
         <!-- TODO: i want this text to change dynamically 
