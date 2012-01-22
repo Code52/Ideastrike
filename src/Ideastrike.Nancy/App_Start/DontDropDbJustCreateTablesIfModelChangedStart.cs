@@ -11,7 +11,7 @@ namespace Ideastrike.Nancy.App_Start
 #if DEBUG
             Database.SetInitializer(new DevelopmentDatabaseInitializer()); 
 #else
-            Database.SetInitializer(new DatabaseInitializer());
+            Database.SetInitializer(new DontDropDbJustCreateTablesIfModelChanged<IdeastrikeContext>());
 #endif
         }
     }

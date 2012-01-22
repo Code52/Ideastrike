@@ -126,7 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\DontDropDbJustCreateTablesIfModelChangedStart.cs" />
-    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="DevelopmentDatabaseInitializer.cs" />
     <Compile Include="Helpers\GravatarExtensions.cs" />
     <Compile Include="Helpers\FriendlyTimeHelper.cs" />
