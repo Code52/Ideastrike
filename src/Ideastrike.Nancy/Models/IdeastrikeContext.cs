@@ -8,13 +8,6 @@ namespace Ideastrike.Nancy.Models
         public IdeastrikeContext()
         {
             Configuration.ProxyCreationEnabled = false;
-
-            var apphb = ConfigurationManager.AppSettings["SQLSERVER_CONNECTION_STRING"];
-
-            if (string.IsNullOrWhiteSpace(apphb))
-            {
-                Database.Connection.ConnectionString = apphb;
-            }
         }
 
         public DbSet<Idea> Ideas { get; set; }
