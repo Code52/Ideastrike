@@ -9,11 +9,11 @@ namespace Ideastrike.Nancy.Models
         {
             Configuration.ProxyCreationEnabled = false;
 
-            var apphb = ConfigurationManager.ConnectionStrings["SQLSERVER_CONNECTION_STRING"];
+            var apphb = ConfigurationManager.AppSettings["SQLSERVER_CONNECTION_STRING"];
 
-            if (apphb != null)
+            if (string.IsNullOrWhiteSpace(apphb))
             {
-                Database.Connection.ConnectionString = apphb.ConnectionString;
+                Database.Connection.ConnectionString = apphb;
             }
         }
 
