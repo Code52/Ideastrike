@@ -84,7 +84,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\application.js" />
     <Content Include="Resources\jquery-1.7.min.js" />
+    <Content Include="Resources\jquery.fileupload-ui.css" />
+    <Content Include="Resources\jquery.fileupload-ui.js" />
+    <Content Include="Resources\jquery.fileupload.js" />
+    <Content Include="Resources\jquery.iframe-transport.js" />
     <Content Include="Resources\media.css" />
     <Content Include="Resources\modernizr-2.0.min.js" />
     <Content Include="Resources\bootstrap.min.css" />
@@ -113,9 +118,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ImageExtensions.cs" />
+    <Compile Include="Helpers\ImageFileStatus.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Repositories\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Repositories\FeatureRepository.cs" />
@@ -127,6 +135,8 @@
     <Compile Include="Models\Repositories\IdeaRepository.cs" />
     <Compile Include="Models\IdeastrikeContext.cs" />
     <Compile Include="Models\Repositories\IIdeaRepository.cs" />
+    <Compile Include="Models\Repositories\IImageRepository.cs" />
+    <Compile Include="Models\Repositories\ImageRepository.cs" />
     <Compile Include="Models\Repositories\ISettingsRepository.cs" />
     <Compile Include="Models\Repositories\SettingsRepository.cs" />
     <Compile Include="Models\Setting.cs" />

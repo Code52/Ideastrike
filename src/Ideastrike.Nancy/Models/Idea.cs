@@ -24,5 +24,6 @@ namespace Ideastrike.Nancy.Models
 		public ICollection<Vote> Votes { get; set; }
         public ICollection<Activity> Activities { get; set; }
         public ICollection<Feature> Features { get; set; }
+        public ICollection<Image> Images { get; set; } 
     }
 }

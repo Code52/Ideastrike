@@ -30,6 +30,10 @@ namespace Ideastrike.Nancy
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
+            builder.RegisterType<ImageRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
             builder.Update(existingContainer.ComponentRegistry);
         }
     }
