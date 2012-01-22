@@ -10,7 +10,7 @@ namespace Ideastrike.Nancy.Modules
 {
     // The code in the API is very explicit in terms of the property names and shape of the output json
     // It does not go via the repositories, and does not simply dump models out as json
-    // The justification for this is that the API is a public resource and internal refactoring should not 
+    // The justification for this is that the API is a public resource and internal refactoring should not
     // make unannounced changes to the public surface.
     public class ApiModule : NancyModule
     {
@@ -23,7 +23,7 @@ namespace Ideastrike.Nancy.Modules
                         title = idea.Title,
                         description = idea.Description,
                         time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), idea.Time),
-						Author = new { idea.Author.Id, idea.Author.UserName },
+                        author = new { id = idea.Author.Id, username = idea.Author.UserName },
                         vote_count = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0
                     }));
             };
@@ -31,8 +31,8 @@ namespace Ideastrike.Nancy.Modules
             Post["/ideas"] = _ => {
                 var model = this.Bind<EditIdeaModel>();
                 var idea = new Idea {
-                    Title= model.title,
-                    Description= model.description,
+                    Title = model.title,
+                    Description = model.description,
                     Time = DateTime.UtcNow
                 };
                 ideas.Add(idea);
@@ -77,7 +77,7 @@ namespace Ideastrike.Nancy.Modules
                 int id = _.id;
                 if (!db.Ideas.Any(idea => idea.Id == id))
                     return HttpStatusCode.NotFound;
-				return Response.AsJson(db.Features.Where(d => d.Idea.Id == id).Select(feature =>
+                return Response.AsJson(db.Features.Where(d => d.Idea.Id == id).Select(feature =>
                     new {
                         id = feature.Id,
                         text = feature.Text,
@@ -101,6 +101,7 @@ namespace Ideastrike.Nancy.Modules
     public class EditIdeaModel
     {
         public string title { get; set; }
+
         public string description { get; set; }
     }
 }
