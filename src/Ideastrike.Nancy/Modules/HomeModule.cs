@@ -1,19 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
 
 namespace Ideastrike.Nancy.Modules
 {
-    public enum SelectedTab
-    {
-        Popular = 0,
-        Hot = 1,
-        New = 2
-    }
-
     public class HomeModule : NancyModule
     {
         private readonly IIdeaRepository _ideas;
@@ -42,14 +34,8 @@ namespace Ideastrike.Nancy.Modules
                 Title = _settings.Title,
                 WelcomeMessage = _settings.WelcomeMessage,
                 ErrorMessage = ErrorMessage,
-                IsLoggedIn = (Context == null || Context.CurrentUser == null ||
-                                  string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
-                                     ? false
-                                     : true,
-                UserName = (Context == null || Context.CurrentUser == null ||
-                                  string.IsNullOrWhiteSpace(Context.CurrentUser.UserName))
-                                     ? ""
-                                     : Context.CurrentUser.UserName,
+                IsLoggedIn = Context.IsLoggedIn(),
+                UserName = Context.Username(),
             };
 
             return View["Home/Index", pageData];

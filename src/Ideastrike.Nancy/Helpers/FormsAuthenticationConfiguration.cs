@@ -49,27 +49,27 @@ namespace Ideastrike
         {
             get
             {
-                if (string.IsNullOrEmpty(this.RedirectUrl))
+                if (string.IsNullOrEmpty(RedirectUrl))
                 {
                     return false;
                 }
 
-                if (this.UserMapper == null)
+                if (UserMapper == null)
                 {
                     return false;
                 }
 
-                if (this.CryptographyConfiguration == null)
+                if (CryptographyConfiguration == null)
                 {
                     return false;
                 }
 
-                if (this.CryptographyConfiguration.EncryptionProvider == null)
+                if (CryptographyConfiguration.EncryptionProvider == null)
                 {
                     return false;
                 }
 
-                if (this.CryptographyConfiguration.HmacProvider == null)
+                if (CryptographyConfiguration.HmacProvider == null)
                 {
                     return false;
                 }

@@ -174,7 +174,7 @@ namespace Ideastrike
             {
                 if (context.Response.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    context.Response = context.GetRedirect("/");
+                    context.Response = context.GetRedirect(configuration.RedirectUrl);
                 }
             };
         }
