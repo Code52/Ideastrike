@@ -1,0 +1,30 @@
+﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+<h3>@Model.UserName Profile</h3>
+
+@Model.Email<br/>
+@Model.Github<br/>
+
+@if (Model.Ideas.Count > 0)
+{
+    foreach (var i in Model.Ideas)
+    {
+        <div class="span8 text">@i.Title</div><br/>
+    }
+}
+@if (Model.Features.Count > 0)
+{
+    foreach (var i in Model.Features)
+    {
+        <div class="span8 text">@i.Title</div><br/>
+    }
+}
+@if (Model.Votes.Count > 0)
+{
+    foreach (var i in Model.Votes)
+    {
+        <div class="span8 text">@i.Idea.Title</div><br/>
+    }
+}

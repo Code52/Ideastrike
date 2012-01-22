@@ -4,26 +4,24 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+
+@section HeadContent
+{
+    <link href="@Url.Content("~/Resources/jquery.fileupload-ui.css")" rel="stylesheet" />
+}
+@if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+{
+    <div class="fill">
+        <div class="alert-message error">
+            <a class="close" href="#">&times;</a>
+            <p>
+                <strong>@Model.ErrorMessage</strong>
+            </p>
+        </div>
+    </div>
+}
 <h1>@Model.Title</h1>
 @MarkdownHelper.Markdown(Model.WelcomeMessage)
-<h3>Submit a New Idea</h3>
-<form action="/idea/new" method="POST">
-<div class="clearfix">
-    <label for="Title">Title</label>
-    <div class="input">
-        <input id="Title" name="Title" type="text" />
-    </div>
-</div>
-<div class="clearfix">
-    <label for="Description">Description</label>
-    <div class="input">
-        <textarea id="Description" name="Description" rows="10"></textarea>
-    </div>
-</div>
-<div class="actions">
-    <button type="submit" class="btn primary">Submit</button>
-</div>
-</form>
 <ul class="pills">
     <li @if (Model.Selected == SelectedTab.Popular)
         {@:class="active"
@@ -33,12 +31,9 @@
         {@:class="active"
         }
         ><a href="/top">Top</a></li>
-
     <li @if (Model.Selected == SelectedTab.New)
         {@:class="active"
-        }>
-        <a href="/new">New</a>
-    </li>
+        }><a href="/new">New</a> </li>
 </ul>
 <ul id="ideas">
     @foreach (var i in Model.Ideas)
@@ -46,23 +41,31 @@
         <li>
             <div class="pull-left sidebox">
                 <form>
-                    <div class="voteinfo">
-                        <h3>@i.Votes.Count</h3>
-                        votes
-                    </div>
-                    <button type="button" class="btn" data-voteid="@i.Id">vote</button>
+                <div class="voteinfo">
+                    <h3 class="votecount @i.Id">@i.Votes.Count</h3>
+                    votes
+                </div>
+                @if (Model.IsLoggedIn)
+                {
+                    <button type="button" class="btn vote" data-id="@i.Id" data-voted="@i.UserHasVoted" >
+                        @if (i.UserHasVoted)
+                        { 
+                            @:unvote
+                        }
+                        else
+                        { 
+                            @: vote
+                        }</button>
+                }
                 </form>
             </div>
-
             <h3 class="ideaheader"><a href="/idea/@i.Id">@i.Title</a></h3>
             <div class="ideadate">@FriendlyTimeHelper.Parse(i.Time)</div>
-            <div class="ideadesc">@MarkdownHelper.Markdown(i.Description)</div>
-            
-            <div class="clearfix"></div>
+            <div class="ideadesc" style="margin-left:85px;">@MarkdownHelper.Markdown(i.Description)</div>
+            <div class="clearfix"> </div>
         </li> 
     }
 </ul>
-
 @section PageScript {
     <script src="@Url.Content("~/Resources/jquery.contra.min.js")"></script>
     <script>
@@ -76,23 +79,36 @@
                 });
             });
         });
-    </script>
+        $(document).ready(function () {
+            $(".vote").click(function () {
+                var elem = $(this);
+                var hasVoted = elem.data("voted").toLowerCase();
 
-    <script>
-        function vote(id, el) {
-            $.ajax({
-                type: "POST",
-                url: "/idea/" + id + "/vote/1",  // TODO: Insert the users real userid here
-                success: function (data) {
-                    el.html(data.NewVotes);
+                if (hasVoted == "false") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/idea/" + elem.data("id") + "/vote",
+                        context: document.body,
+                        success: function (data) {
+                            $(".votecount." + elem.data("id")).text(data.NewVotes);
+                            console.log(data.NewVotes);
+                            elem.data("voted", "true");
+                            elem.text("unvote");
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/idea/" + elem.data("id") + "/unvote",
+                        context: document.body,
+                        success: function (data) {
+                            $(".votecount." + elem.data("id")).text(data.NewVotes);
+                            elem.data("voted", "false");
+                            console.log(data.NewVotes);
+                            elem.text("vote");
+                        }
+                    });
                 }
-            });
-        }
-
-        $(function () {
-            $('#ideas button').click(function (e) {
-                var $el = $(e.target);
-                vote($el.data('voteid'), $el.parent().find('h3'));
             });
         });
     </script>

@@ -12,6 +12,9 @@ namespace Ideastrike.Nancy.Models
             if (idea == null)
                 return false;
 
+            Context.Users.Attach(activity.User);
+            Context.Ideas.Attach(idea);
+
             idea.Activities.Add(activity);
             Context.SaveChanges();
             return true;

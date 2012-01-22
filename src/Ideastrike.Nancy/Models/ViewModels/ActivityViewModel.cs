@@ -14,8 +14,8 @@ namespace Ideastrike.Nancy.Models.ViewModels
             {
                 Text = MarkdownHelper.Markdown(comment.Text);
                 // TODO: not hard code these
-                Author = "shiftkey";
-                GravatarUrl = "me@brendanforster.com".ToGravatarUrl(40);
+                Author = activity.User.UserName;
+                GravatarUrl = (string.IsNullOrEmpty(activity.User.AvatarUrl)) ? activity.User.Email.ToGravatarUrl(40) : activity.User.AvatarUrl;
             }
         }
 
