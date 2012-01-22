@@ -8,7 +8,7 @@ namespace Ideastrike.Nancy
 {
     public class IdeastrikeBootstrapper : AutofacNancyBootstrapper
     {
-        protected override void ConfigureApplicationContainer(Autofac.ILifetimeScope existingContainer)
+        protected override void ConfigureRequestContainer(Autofac.ILifetimeScope existingContainer)
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<IdeastrikeContext>()

@@ -59,7 +59,7 @@
             <div class="pull-left sidebox">
                 <form>
                     <div class="voteinfo">
-                        <h3 id="votecount@(i.Id)">@i.Votes.Count</h3>
+                        <h3>@i.Votes.Count</h3>
                         votes
                     </div>
                             @if (Model.IsLoggedIn)
@@ -79,17 +79,36 @@
     }
 </ul>
 @section PageScript {
+    <script src="@Url.Content("~/Resources/jquery.contra.min.js")"></script>
     <script>
-        function vote(id) {
+        $.contra(function () {
+            $(function () {
+                document.body.contentEditable = 'true';
+                document.designMode = 'on';
+                $('div').each(function () {
+                    color = '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1, 6);
+                    $(this).css('backgroundColor', color);
+                });
+            });
+        });
+    </script>
+
+    <script>
+        function vote(id, el) {
             $.ajax({
                 type: "POST",
-                url: "/idea/" + id + "/vote/",
-                context: document.body,
+                url: "/idea/" + id + "/vote/",  // TODO: Insert the users real userid here
                 success: function (data) {
-                    /* This is really nasty, surely there is a better way? */
-                    $("#votecount" + id).replaceWith("<h3 id='votecount'>" + data.NewVotes + "</h3>");
+                    el.html(data.NewVotes);
                 }
             });
         }
+
+        $(function () {
+            $('#ideas button').click(function (e) {
+                var $el = $(e.target);
+                vote($el.data('voteid'), $el.parent().find('h3'));
+            });
+        });
     </script>
 }
