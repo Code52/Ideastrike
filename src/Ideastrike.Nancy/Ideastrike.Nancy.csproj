@@ -156,6 +156,7 @@
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="Helpers\FormsAuthentication.cs" />
     <Compile Include="Helpers\FormsAuthenticationConfiguration.cs" />
+    <Compile Include="Helpers\UrlExtensions.cs" />
     <Compile Include="Models\Repositories\IUserRepository.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
