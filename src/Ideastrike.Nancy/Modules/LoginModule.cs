@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
 using System.Net;
@@ -62,15 +63,16 @@ namespace Ideastrike.Nancy.Modules
                                 {
                                     Id = Guid.NewGuid(),
                                     Identity = userIdentity,
-                                    UserName = (!string.IsNullOrEmpty(username)) ? username : "New User",
+                                    UserName = (!string.IsNullOrEmpty(username)) ? username : "New User " + _user.GetAll().Count(),
                                     Email = (!string.IsNullOrEmpty(email)) ? email : "none@void.com",
-                                    IsDeleted = true
+                                    Github = (!string.IsNullOrEmpty(username)) ? username : "",
+                                    IsActive = true,
                                 };
                     if (j.profile.photo != null)
                         u.AvatarUrl = j.profile.photo.ToString();
 
                     _user.Add(u);
-                    return this.LoginAndRedirect(u.Id, DateTime.Now.AddDays(1), "/profile/create");
+                    return this.LoginAndRedirect(u.Id, DateTime.Now.AddDays(1), "/profile/edit");
                 }
 
                 return ModuleExtensions.Login(this, user.Id, DateTime.Now.AddDays(1), "/");
