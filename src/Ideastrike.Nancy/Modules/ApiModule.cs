@@ -34,7 +34,7 @@ namespace Ideastrike.Nancy.Modules
                         Author = new { Id = idea.Author.Id, Username = idea.Author.Username },
                         VoteCount = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0,
                         Features = idea.Features.Select(feature => new { Id = feature.Id, Text = feature.Text, Time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), feature.Time) }),
-                        Votes = idea.Votes.Select(vote => new { User = new { Id = vote.UserId, Username = "{placeholder}" }, Value = vote.Value })
+                        Votes = idea.Votes.Select(vote => new { User = new { Id = vote.UserId, Username = vote.User.Username }, Value = vote.Value })
                     }).FirstOrDefault();
                 if (o == null)
                     return HttpStatusCode.NotFound;
@@ -52,6 +52,18 @@ namespace Ideastrike.Nancy.Modules
                         Time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), feature.Time),
                     }));
             };
+
+            Get["/ideas/{id}/votes"] = _ => {
+                int id = _.id;
+                if (!db.Ideas.Any(idea => idea.Id == id))
+                    return HttpStatusCode.NotFound;
+                return Response.AsJson(db.Votes.Where(d => d.IdeaId == id).Select(vote =>
+                    new {
+                        Value = vote.Value,
+                        User = new { Id = vote.UserId, Username = vote.User.Username }
+                    }));
+            };
+
         }
     }
 }
