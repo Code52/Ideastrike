@@ -7,6 +7,10 @@ using Nancy;
 
 namespace Ideastrike.Nancy.Modules
 {
+    // The code in the API is very explicit in terms of the property names and shape of the output json
+    // It does not go via the repositories, and does not simply dump models out as json
+    // The justification for this is that the API is a public resource and internal refactoring should not 
+    // make unannounced changes to the public surface.
     public class ApiModule : NancyModule
     {
         public ApiModule(IdeastrikeContext db)
