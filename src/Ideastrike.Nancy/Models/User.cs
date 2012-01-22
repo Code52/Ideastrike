@@ -11,15 +11,17 @@ namespace Ideastrike.Nancy.Models
         [Key]
         public Guid Id { get; set; }
 
-        public string Email { get; set; }
         public string UserName { get; set; }
-
+        public string Email { get; set; }
         public string Identity { get; set; }
-
-        public bool IsDeleted { get; set; }
         public string AvatarUrl { get; set; }
+        public string Github { get; set; }
+
+        public bool IsActive { get; set; }
 
         [NotMapped]
         public IEnumerable<string> Claims { get; set; } // User Admin levels claims - https://github.com/NancyFx/Nancy/blob/master/src/Nancy.Demo.Authentication/AuthenticationBootstrapper.cs
+
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }
