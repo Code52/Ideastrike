@@ -11,5 +11,7 @@ namespace Ideastrike.Nancy.Models
 
         [Key, Column(Order = 1)]
         public int IdeaId { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

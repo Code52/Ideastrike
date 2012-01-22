@@ -1,8 +1,10 @@
-using Nancy;
+using System.Collections.Generic;
 using Autofac;
-using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models;
+using Ideastrike.Nancy.Models.Repositories;
 using Moq;
+using Nancy;
+using Nancy.Testing;
 
 namespace IdeaStrike.Tests
 {
@@ -16,6 +18,7 @@ namespace IdeaStrike.Tests
         
         protected Response testResponse;
         protected INancyEngine engine;
+        protected Browser browser;
 
         public IdeaStrikeSpecBase()
         {
@@ -25,6 +28,7 @@ namespace IdeaStrike.Tests
             var ideaStrikeTestBootstrapper = new IdeaStrikeTestBootStrapper(CreateContainerBuilder);
             ideaStrikeTestBootstrapper.Initialise();
             engine = ideaStrikeTestBootstrapper.GetEngine();
+            browser = new Browser(ideaStrikeTestBootstrapper);
         }
 
         private void CreateMocks()
