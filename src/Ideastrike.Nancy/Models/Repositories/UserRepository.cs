@@ -29,8 +29,8 @@ namespace Ideastrike.Nancy.Models
             return FindBy(u => u.Identity == identity).FirstOrDefault();
         }
 
-        private DbContext _entities;
-        public DbContext Context
+        private IdeastrikeContext _entities;
+        public IdeastrikeContext Context
         {
 
             get { return _entities; }
@@ -65,7 +65,8 @@ namespace Ideastrike.Nancy.Models
         public virtual void Delete(Guid id)
         {
             var entity = Get(id);
-            _entities.Set<User>().Remove(entity);
+            entity.IsActive = false;
+            entity.Identity = "Deleted User - " + entity.Identity;
             _entities.SaveChanges();
         }
 
@@ -78,6 +79,16 @@ namespace Ideastrike.Nancy.Models
         public virtual void Save()
         {
             _entities.SaveChanges();
+        }
+
+        public ICollection<Vote> GetVotes(Guid id)
+        {
+            var user = Context.Users
+                           .Include("Votes")
+                           .Include("Votes.Idea")
+                           .FirstOrDefault(u => u.Id == id);
+
+            return user.Votes;
         }
     }
 }

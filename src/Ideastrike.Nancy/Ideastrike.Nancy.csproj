@@ -95,6 +95,7 @@
     <Content Include="Resources\ideastrike.js" />
     <Content Include="Resources\jquery-1.7.min.js" />
     <Content Include="Resources\jquery.contra.min.js" />
+    <Content Include="Resources\jquery.validate.min.js" />
     <Content Include="Resources\media.css" />
     <Content Include="Resources\modernizr-2.0.min.js" />
     <Content Include="Resources\bootstrap.min.css" />
@@ -215,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\ClassDiagram.cd" />
+    <Content Include="Views\Profile\Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

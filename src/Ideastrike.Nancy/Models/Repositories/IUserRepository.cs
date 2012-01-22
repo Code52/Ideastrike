@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Nancy.Security;
@@ -27,5 +28,7 @@ namespace Ideastrike.Nancy.Models
         void Delete(Guid id);
         void Edit(User entity);
         void Save();
+
+        ICollection<Vote> GetVotes(Guid id);
     }
 }
