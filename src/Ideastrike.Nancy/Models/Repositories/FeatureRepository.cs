@@ -15,6 +15,7 @@ namespace Ideastrike.Nancy.Models.Repositories
             if (idea.Features == null)
                 idea.Features = new Collection<Feature>();
 
+            Context.Users.Attach(feature.User);
             idea.Features.Add(feature);
             Context.SaveChanges();
             return true;
