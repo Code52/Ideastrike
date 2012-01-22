@@ -1,20 +1,34 @@
 ﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+@using Nancy
+@using Ideastrike.Nancy.Helpers
+@using Ideastrike.Nancy.Modules
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
+
 @{ var idea = Model.Idea; }
-<div class="pull-right">
+<div class="pull-right" style="margin-top:15px;">
     <div class="sidebox">
         <form>
         <div class="voteinfo">
             <h3 id="votecount">@idea.TotalVotes</h3>
             votes
         </div>
-        <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
-            vote</button>
+        @if (Model.IsLoggedIn)
+        { 
+            <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
+                        @if (idea.UserHasVoted)
+                        { 
+                            @:unvote
+                        }
+                        else
+                        { 
+                            @: vote
+                        }</button>
+        }
         </form>
     </div>
-    <div class="sidebox">
+    <div class="sidebox" style="margin-left:10px;">
         <div>
             <!-- TODO: get URL for this page rather than description -->
             <a href="https://twitter.com/share" 
@@ -29,16 +43,37 @@
         </div>
     </div>
 </div>
-<h1>@idea.Title</h1>
-<div class="description">
+<h1 style="margin-bottom:0px;">@idea.Title</h1>
+<div class="ideadesc">
     @idea.Description
 </div>
+
+<div class="ideadesc gravatarsmall"><img src="@idea.GravatarUrl" /> <a href="">@idea.Author.UserName</a> <span class="ideadate">@FriendlyTimeHelper.Parse(idea.Time)</span>
+@if (idea.Author.UserName == Model.UserName)
+{ 
+    <a href="/idea/@idea.Id/edit">Edit</a>
+}</div>
+
 <hr />
+
+@if (idea.Images != null)
+{
+    <div>
+        <h4>Images</h4>
+        <p>
+            @foreach(var image in idea.Images)
+            {
+                <a class="fancybox" href='image/@(image.Id).jpg' rel="imagegroup"><img src="/idea/imagethumb/@image.Id/100" /></a>
+            }
+        </p>
+    </div>
+    <div style="clear: both;"></div>
+}
+
 @if (idea.Features.Count > 0)
 { 
     <div class="features">
-        <h3>
-            Features</h3>
+        <h3>Features</h3>
         <ul>
             @foreach (var a in idea.Features)
             {
@@ -47,8 +82,7 @@
                         <div class="span8 text">@a.Text</div>
                     </div>
                     <div class="row">
-                        <div class="span1 gravatar">
-                            <img src="@a.GravatarUrl" /></div>
+                        <div class="span1 gravatar"><img src="@a.GravatarUrl" /></div>
                         <div class="span8 author">@a.Author</div>
                         <sub class="span8 time">@a.FriendlyTime</sub>
                         <div class="comment">
@@ -62,83 +96,116 @@
 }
 else
 {
-    <h3>
-        No features suggested yet, be the first!</h3>
+    <h3>No features suggested yet, be the first!</h3>
 }
-<div class="expander" data-element="#add-feature">
-    <h4>
-        Got something to add?</h4>
-</div>
-<div id="add-feature" class="hide-on-start add-feature">
-    <form action="/idea/@idea.Id/feature" method="POST">
-    <!-- TODO: i want this text to change dynamically 
-            text to rotate through:
-            - how about ...
-            - it would be cool if ...
-            - can it also do ...
-            - etc
-            -->
-    <!--  TODO: can we hook in some anti-forgery bits? -->
-    <label for="feature" id="label-text">
-        how about ...</label>
-    <div class="input">
-        <div class="options">
-            <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
-                data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
-                Edit</button>
-            <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
-                data-editor="#new-feature" data-view="#new-feature-view">
-                Preview</button>
-        </div>
-        <textarea id="new-feature" name="feature"></textarea><br />
-        <div id="new-feature-view">
-        </div>
+@if (Model.IsLoggedIn)
+{
+    <div class="expander" data-element="#add-feature">
+        <h4 class="hoverheader">Got something to add?</h4>
     </div>
-    <br />
-    <input type="hidden" name="userId" value="@Model.UserId"/>
-    <label for="submit">
-    </label>
-    <button class="btn primary" type="submit">
-        Add Feature</button>
-    </form>
-</div>
+    <div id="add-feature" class="hide-on-start add-feature">
+        <form action="/idea/@idea.Id/feature" method="POST">
+        <!-- TODO: i want this text to change dynamically 
+                text to rotate through:
+                - how about ...
+                - it would be cool if ...
+                - can it also do ...
+                - etc
+                -->
+        <!--  TODO: can we hook in some anti-forgery bits? -->
+        <label for="feature" id="label-text">
+            how about ...</label>
+        <div class="input">
+            <div class="options">
+                <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
+                    data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
+                    Edit</button>
+                <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
+                    data-editor="#new-feature" data-view="#new-feature-view">
+                    Preview</button>
+            </div>
+            <textarea id="new-feature" name="feature"></textarea><br />
+            <span class="help-block">You can use <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>!</span>
+            <div id="new-feature-view">
+            </div>
+        </div>
+        <br />
+        <label for="submit">
+        </label>
+        <button class="btn primary" type="submit">
+            Add Feature</button>
+        </form>
+    </div>
+}
 <hr />
-
-<h4>Activity Feed</h4>
-<div id="activity-feed">
-    <ol></ol>
-</div>
-
-<div class="expander" data-element="#add-comment">
-    <h4>Leave a comment</h4>
-</div>
-<div id="add-comment" class="hide-on-start add-comment">
-    <form action="/comment/@idea.Id/add" method="POST">
-    <label for="comment">
-        leave a comment</label>
-    <div class="input">
-        <div class="options">
-            <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
-                data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
-                Edit</button>
-            <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
-                data-editor="#new-comment" data-view="#new-comment-view">
-                Preview</button>
-        </div>
-        <textarea id="new-comment" name="comment"></textarea><br />
-        <div id="new-comment-view">
-        </div>
+@if (idea.Activities.Count > 0)
+{ 
+    <div class="comments">
+        <h3>Activity Feed</h3>
+        <ul>
+            @foreach (var a in idea.Activities)
+            {
+                <li style="margin-bottom:25px;" class="span11">
+                    <!-- TODO: this is not suitable for all the formatt we want to support -->
+                    <div class="pull-right gravatar"><img src="@a.GravatarUrl" />
+                    @if (idea.Author.UserName == a.Author)
+                    { 
+                        <div class="ideadate">author</div>
+                    }
+                    </div>
+                    <div class="activity">@a.Text</div>
+                    <div><a href=""><span class="author">@a.Author</span></a> <span class="ideadate">@a.FriendlyTime</span></div>
+                    
+                    <div class="clearfix"> </div>
+                    <div class="comment">
+                        <!-- TODO: reply to an activity -->
+                    </div>
+                </li>
+            }
+        </ul>
     </div>
-    <input type="hidden" name="userId" value="@Model.UserId"/>
-    <br />
-    <label for="submit"></label>
-    <button class="btn primary" type="submit">
-        Add Comment</button>
-    </form>
-</div>
+    <div class="comment">
+        <!-- TODO: new comment -->
+    </div>
+
+}
+else
+{
+    <h4>No activity yet, add the first comment!</h4>
+}
+@if (Model.IsLoggedIn)
+{
+    <div class="expander" data-element="#add-comment">
+        <h4 class="hoverheader">Leave a comment</h4>
+    </div>
+    <div id="add-comment" class="hide-on-start add-comment">
+        <form action="/comment/@idea.Id/add" method="POST">
+        <label for="comment">leave a comment</label>
+        <div class="input">
+            <div class="options">
+                <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
+                    data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
+                    Edit</button>
+                <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
+                    data-editor="#new-comment" data-view="#new-comment-view">
+                    Preview</button>
+            </div>
+            <textarea id="new-comment" name="comment"></textarea><br />
+            <span class="help-block">You can use <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>!</span>
+            <div id="new-comment-view">
+            </div>
+        </div>
+        <br />
+        <label for="submit">
+        </label>
+        <button class="btn primary" type="submit">
+            Add Comment</button>
+        </form>
+    </div>
+}
 @section PageScript {
     <script src="/Resources/social.js"></script>
-    <script>
+    <script type="text/javascript">
         function updateVoteCount(data) {
             $("#votecount").text(data.NewVotes);
         }
@@ -150,7 +217,7 @@ else
             if (hasVoted == "false") {
                 $.ajax({
                     type: "POST",
-                    url: "/idea/@idea.Id/vote/9",
+                    url: "/idea/@idea.Id/vote",
                     context: document.body,
                     success: function (data) {
                         updateVoteCount(data);
@@ -161,11 +228,11 @@ else
             } else {
                 $.ajax({
                     type: "POST",
-                    url: "/idea/@idea.Id/unvote/9",
+                    url: "/idea/@idea.Id/unvote",
                     context: document.body,
                     success: function (data) {
                         updateVoteCount(data);
-                        elem.data("user-voted", "false");
+                        elem.data("voted", "false");
                         elem.text("vote");
                     }
                 });
@@ -180,9 +247,10 @@ else
             $(".expander").click(toggleExpander)
                 .css("cursor", "pointer");
             loadFeed($("#activity-feed ol"), @idea.Id);
+
+            $('.fancybox').fancybox();
         });
-        
-        var comment_template = '<li><div class="row"><div class="span8 text">{{ Text }}</div></div><div class="row"><div class="span1 gravatar"><img src="{{GravatarUrl}}" /></div><div class="span8 author">{{Author}}</div><sub>{{FriendlyTime}}</sub></div></li>';
+var comment_template = '<li><div class="row"><div class="span8 text">{{ Text }}</div></div><div class="row"><div class="span1 gravatar"><img src="{{GravatarUrl}}" /></div><div class="span8 author">{{Author}}</div><sub>{{FriendlyTime}}</sub></div></li>';
         // datetime="2012-01-20T23:59:28-08:00" title="2012-01-20 23:59:28" need to be added
         var github_template = '<li class="commit commit-group-item js-navigation-item js-details-container"><img class="gravatar" height="36" src="{{GravatarUrl}}" width="36"><p class="commit-title "><a href="{{CommitUrl}}" class="message">{{Text}}</a></p><div class="commit-meta"><div class="commit-links"><span style="display:none" id="clippy_1820" class="clippy-text">{{Sha}}</span><a href="{{hyperlink}}" class="gobutton " data-key="c"><span class="sha">ed5704e73a</span></a><a href="{{hyperlink}}" class="browse-button" title="Browse the code at this point in the history" rel="nofollow">Browse code</a></div><div class="authorship"><span class="author-name"><a href="{{AuthorUrl}}">{{AuthorName}}</a></span>&nbsp;authored&nbsp;<time class="js-relative-date">{{FriendlyTime}}</time></div></div></li>';
 

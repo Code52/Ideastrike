@@ -4,12 +4,14 @@ using Xunit;
 
 namespace IdeaStrike.Tests.FeatureModuleTests
 {
+    // TODO: test that unauthenticated user cannot access resource
+
     public class when_adding_a_new_feature : IdeaStrikeSpecBase
     {
-        
         public when_adding_a_new_feature()
         {
             var testRequest = PostTestRequest("/idea/0/feature");
+            RunFirst(r => AuthenticateUser(r, "shiftkey"));
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 
