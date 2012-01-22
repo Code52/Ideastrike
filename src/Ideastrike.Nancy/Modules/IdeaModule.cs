@@ -3,6 +3,13 @@ using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Models.ViewModels;
 using Nancy;
+using Nancy.ViewEngines;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Nancy.Helpers;
+using Nancy.Extensions;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -26,11 +33,11 @@ namespace Ideastrike.Nancy.Modules
                     return View["404"];
 
                 User user = Context.GetCurrentUser(_users);
-                if(user != null)
+                if (user != null)
                 {
                     if (idea.Votes.Any(u => u.UserId == user.Id))
                         idea.UserHasVoted = true;
-                    
+
                 }
 
                 var viewModel = new IdeaViewModel(idea);
