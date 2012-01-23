@@ -201,21 +201,8 @@ else
 
 <script id="github_template" type="text/x-jquery-tmpl"> 
     <li class="commit commit-group-item js-navigation-item js-details-container span11">
-	    <!-- <img class="gravatar" height="36" src="{{GravatarUrl}}" width="36">
-	    <p class="commit-title "><a href="{{CommitUrl}}" class="message">{{Text}}</a></p>
-	    <div class="commit-meta">
-		    <div class="commit-links">
-			    <span style="display:none" id="clippy_1820" class="clippy-text">{{Sha}}</span>
-			    <a href="{{hyperlink}}" class="gobutton " data-key="c"><span class="sha">ed5704e73a</span></a>
-			    <a href="{{hyperlink}}" class="browse-button" title="Browse the code at this point in the history" rel="nofollow">Browse code</a>
-		    </div>
-		    <div class="authorship">
-			    <span class="author-name"><a href="{{AuthorUrl}}">{{AuthorName}}</a></span>&nbsp;authored&nbsp;<time class="js-relative-date">{{FriendlyTime}}</time>
-		    </div>
-	    </div>-->
-
-        <div>
-            <a href="{{hyperlink}}">ed5704e73a</a>
+        <div style="font-family:monospace;">
+            <a href="{{CommitUrl}}">{{ShaShortened}}</a>
             <img class="gravatar" height="15" width="15" src="{{GravatarUrl}}" />
         </div>
         <div class="commit-title pull-left"><a href="{{CommitUrl}}" class="message">{{{Text}}}</a></div>

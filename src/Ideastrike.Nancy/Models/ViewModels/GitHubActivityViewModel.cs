@@ -15,14 +15,15 @@ namespace Ideastrike.Nancy.Models.ViewModels
             ShaShortened = github.Sha.Substring(0, 8);
             GravatarUrl = github.GravatarUrl;
             FriendlyTime = FriendlyTimeHelper.Parse(github.Time).ToHtmlString();
+            CommitUrl = github.CommitUrl;
         }
 
+        public string CommitUrl { get; set; }
         public string Text { get; set; }
         public string AuthorName { get; set; }
         public string AuthorUrl { get; set; }
         public string Sha { get; set; }
         public string ShaShortened { get; set; }
-        public string CommitUrl { get; set; }
         public string GravatarUrl { get; set; }
         public string FriendlyTime { get; set; }
     }

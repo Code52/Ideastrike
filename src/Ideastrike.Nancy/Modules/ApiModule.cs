@@ -4,6 +4,9 @@ using System.Linq;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
+using Newtonsoft.Json;
+using System.IO;
+using Ideastrike.Nancy.Helpers;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -67,6 +70,35 @@ namespace Ideastrike.Nancy.Modules
                         value = vote.Value,
                         user = new { id = vote.UserId, username = vote.User.UserName }
                     }));
+            };
+
+            Post["/activity"] = _ =>
+            {
+                string content;
+                using (var reader = new StreamReader(Context.Request.Body))
+                {
+                    content = reader.ReadToEnd();
+                }
+                var idea = ideas.Get(1);
+                var j = JsonConvert.DeserializeObject<dynamic>(content);
+                foreach (var c in j.commits)
+                {
+                    string date = c.timestamp;
+                    var activity = new GitHubActivity
+                    {
+                        Time = DateTime.Parse(date),
+                        Message = c.message,
+                        CommitUrl = c.url,
+                        AuthorName = c.author.name,
+                        GravatarUrl = GravatarExtensions.ToGravatarUrl(c.author.email.ToString(), 40),
+                        Sha = c.id
+                    };
+
+                    idea.Activities.Add(activity);
+                }
+
+                ideas.Save();
+                return HttpStatusCode.Accepted;
             };
         }
     }
