@@ -12,9 +12,10 @@ namespace IdeaStrike.Tests.AdminModuleTests
         }
 
         [Fact]
-        public void it_should_set_the_status_code_to_unauthorized_for_the_admin_page()
+        public void it_should_redirect_to_the_login_page()
         {
-            Assert.Equal(HttpStatusCode.Unauthorized, testResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.SeeOther, testResponse.StatusCode);
+            Assert.Equal("/login", testResponse.Headers["Location"]);
         }
     }
 }
