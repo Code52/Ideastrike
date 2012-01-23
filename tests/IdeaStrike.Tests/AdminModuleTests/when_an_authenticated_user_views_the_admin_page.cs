@@ -7,9 +7,9 @@ namespace IdeaStrike.Tests.AdminModuleTests
     {
         public when_an_authenticated_user_views_the_admin_page()
         {
-            var testRequest = GetTestRequest("/admin");
-            RunFirst(r => AuthenticateUser(r, "shiftkey"));
-            testResponse = engine.HandleRequest(testRequest).Response;
+            testResponse = browser.Get("/admin", with => {
+                with.LoggedInUser(CreateMockUser("shiftkey"));
+            });
         }
 
         [Fact]
