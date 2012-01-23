@@ -17,7 +17,6 @@ namespace Ideastrike.Nancy.Models
                 .Include("Features.User")
                 .Include("Author")
     			.Include("Images")
-                .Include("Status")
                 .FirstOrDefault(i => i.Id == id);
 
             return idea;
@@ -25,16 +24,14 @@ namespace Ideastrike.Nancy.Models
 
         public override IQueryable<Idea> GetAll()
         {
-           return Context.Ideas.Include("Votes").Include("Author").Include("Status");
+            return Context.Ideas
+                .Include("Votes")
+                .Include("Author");
         }
-
 
         public override void Add(Idea idea)
         {
-            var status = Context.Statuses.FirstOrDefault(s => s.Title == "New");
-
             Context.Users.Attach(idea.Author);
-            Context.Statuses.Attach(status);
 
             Context.Ideas.Add(idea);
             Context.SaveChanges();

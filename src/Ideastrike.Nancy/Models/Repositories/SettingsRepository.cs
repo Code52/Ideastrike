@@ -92,6 +92,38 @@ namespace Ideastrike.Nancy.Models.Repositories
             }
         }
 
+        private string _ideaStatusChoices;
+        public string IdeaStatusChoices
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_ideaStatusChoices))
+                    _ideaStatusChoices = Get("IdeaStatusChoices");
+                return _ideaStatusChoices;
+            }
+            set
+            {
+                Set("IdeaStatusChoices", value);
+                _ideaStatusChoices = value;
+            }
+        }
+
+        private string _ideaStatusDefault;
+        public string IdeaStatusDefault
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_ideaStatusDefault))
+                    _ideaStatusDefault = Get("IdeaStatusDefault");
+                return _ideaStatusDefault;
+            }
+            set
+            {
+                Set("IdeaStatusDefault", value);
+                _ideaStatusDefault = value;
+            }
+        }
+
         public void Add(string key, string value)
         {
             db.Settings.Add(new Setting { Key = key, Value = value });

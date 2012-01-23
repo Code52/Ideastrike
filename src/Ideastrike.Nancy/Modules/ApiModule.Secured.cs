@@ -10,7 +10,7 @@ namespace Ideastrike.Nancy.Modules
 {
     public class ApiSecuredModule : NancyModule
     {
-        public ApiSecuredModule(IIdeaRepository ideas, IStatusRepository statuses) : base("/api") {
+        public ApiSecuredModule(IIdeaRepository ideas, ISettingsRepository settings) : base("/api") {
             this.Before.AddItemToEndOfPipeline(ctx => {
                 if (ctx.CurrentUser == null)
                     return HttpStatusCode.Unauthorized;
@@ -19,14 +19,13 @@ namespace Ideastrike.Nancy.Modules
 
             Post["/ideas"] = _ => {
                 var model = this.Bind<EditIdeaModel>();
-                var status = statuses.FindBy(d => d.Title == "New").FirstOrDefault();
 
                 var idea = new Idea {
                     Title = model.title,
                     Description = model.description,
                     Time = DateTime.UtcNow,
                     Author = (User)Context.CurrentUser,
-                    Status = status
+                    Status = settings.IdeaStatusDefault
                 };
                 ideas.Add(idea);
 
