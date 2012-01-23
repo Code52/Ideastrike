@@ -39,6 +39,12 @@ namespace Ideastrike.Nancy.Models.Repositories
             return query;
         }
 
+        public IQueryable<T> Include(string include)
+        {
+            IQueryable<T> query = _entities.Set<T>().Include(include);
+            return query;
+        }
+
         public virtual void Add(T entity)
         {
             _entities.Set<T>().Add(entity);

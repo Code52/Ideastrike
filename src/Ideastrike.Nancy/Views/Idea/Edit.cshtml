@@ -5,20 +5,16 @@
 @{ var idea = Model.Idea; }
 <div class="row">
     <div class="span10">
-        <h2>
-            Edit an idea</h2>
-        <br />
+        <h2>Edit an idea</h2>
         <form action="/idea/@idea.Id/edit" method="POST">
         <div class="clearfix">
-            <label for="Title">
-                Title</label>
+            <label for="Title">Title</label>
             <div class="input">
                 <input id="Title" name="Title" type="text" value="@idea.Title" />
             </div>
         </div>
         <div class="clearfix">
-            <label for="Status">
-                Status</label>
+            <label for="Status">Status</label>
             <div class="input">
                 <select id="Status" name="Status">
                 @foreach (string statusChoice in Model.StatusChoices)
@@ -28,14 +24,13 @@
                     {
                         sel = "selected";
                     }
-                        <option @sel>@statusChoice</option>
+                    <option @sel>@statusChoice</option>
                 }
                 </select>
             </div>
         </div>
         <div class="clearfix">
-            <label for="Description">
-                Description</label>
+            <label for="Description">Description</label>
             <div class="input">
                 <div class="options">
                     <button type="button"
@@ -55,20 +50,53 @@
                         Preview</button>
                 </div>
                 <textarea id="new-idea" name="Description" rows="10">@idea.Description</textarea>
-                <div id="new-idea-view">
+                <div id="new-idea-view"></div>
+            </div>
+        </div>
+        <label for="Images">Images</label>
+        <div class="input">
+            <div class="container">
+                <div id="fileupload" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="span11 fileupload-buttonbar">
+                            <div class="progressbar fileupload-progressbar fade">
+                                <div style="width: 0%;"></div>
+                            </div>
+                            <span class="btn success fileinput-button"><span>Add image</span>
+                                <input type="file" name="files[]" multiple="multiple" />
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row span1" style="position: relative; z-index: 1100;">
+                        <div class="span11">
+                            <table class="zebra-striped">
+                                <tbody class="files"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div id="gallery-loader"></div>
+        <div id="gallery-modal" class="modal hide fade">
+            <div class="modal-header">
+                <a href="#" class="close">&times;</a>
+                <h3 class="title"></h3>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <a class="btn primary next">Next</a> <a class="btn info prev">Previous</a> <a class="btn success download" target="_blank">Download</a>
+            </div>
+        </div>
         <div class="actions">
-            <button type="submit" class="btn primary">
-                Submit</button>
+            <button type="submit" class="btn primary">Submit</button>
         </div>
         </form>
     </div>
-    <!-- TODO: partial view? -->
+    
     <div class="span4">
-        <h3>
-            Popular Ideas</h3>
+        <h3>Popular Ideas</h3>
         <ul>
             @foreach (var i in Model.PopularIdeas)
             {
@@ -81,10 +109,38 @@
 </div>
 
 @section PageScript {
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".preview").click(previewText);
+        $(".edit").click(editText);
+    });
+
+    var fileUploadErrors = {
+        maxFileSize: 'File is too big',
+        minFileSize: 'File is too small',
+        acceptFileTypes: 'Filetype not allowed',
+        maxNumberOfFiles: 'Max number of files exceeded',
+        uploadedBytes: 'Uploaded bytes exceed file size',
+        emptyResult: 'Empty file upload result'
+    };
+    </script>
+    @Html.Partial("Shared/Templates/upload.html")
+    @Html.Partial("Shared/Templates/download.html")
+    <script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
+    <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-modal.min.js"></script>
+    <script src="http://blueimp.github.com/Bootstrap-Image-Gallery/bootstrap-image-gallery.min.js"></script>
+    <script src="@Url.Content("~/Resources/jquery.iframe-transport.js")"></script>
+    <script src="@Url.Content("~/Resources/jquery.fileupload.js")"></script>
+    <script src="@Url.Content("~/Resources/jquery.fileupload-ui.js")"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $(".preview").click(previewText);
-            $(".edit").click(editText);
+        $('#fileupload').fileupload({
+            url: '/idea/uploadimage',
+            maxFileSize: 5000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxNumberOfFiles: 5
         });
     </script>
+    <script src="@Url.Content("~/Resources/application.js")"></script>
 }

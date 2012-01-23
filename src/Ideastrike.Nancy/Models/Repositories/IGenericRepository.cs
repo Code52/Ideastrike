@@ -8,6 +8,7 @@ namespace Ideastrike.Nancy.Models.Repositories
     {
         IQueryable<T> GetAll();
         IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
+        IQueryable<T> Include(string includes);
         T Get(int id);
         void Add(T entity);
         void Delete(int id);

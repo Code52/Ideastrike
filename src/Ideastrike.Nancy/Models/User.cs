@@ -6,7 +6,7 @@ using Nancy.Security;
 
 namespace Ideastrike.Nancy.Models
 {
-    public class User: IUserIdentity
+    public class User : IUserIdentity
     {
         [Key]
         public Guid Id { get; set; }

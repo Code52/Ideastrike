@@ -56,7 +56,7 @@
 
 <hr />
 
-@if (idea.Images != null)
+@if (idea.Images != null && idea.Images.Count >0)
 {
     <div>
         <h4>Images</h4>
@@ -96,12 +96,12 @@
 }
 else
 {
-    <h3>No features suggested yet, be the first!</h3>
+    <strong>No features suggested yet, be the first!</strong>
 }
 @if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-feature">
-        <h4 class="hoverheader">Got something to add?</h4>
+        <h5 class="hoverheader">Got something to add?</h5>
     </div>
     <div id="add-feature" class="hide-on-start add-feature">
         <form action="/idea/@idea.Id/feature" method="POST">
@@ -142,27 +142,9 @@ else
 { 
     <div class="comments">
         <h3>Activity Feed</h3>
-        <ul>
-            @foreach (var a in idea.Activities)
-            {
-                <li style="margin-bottom:25px;" class="span11">
-                    <!-- TODO: this is not suitable for all the formatt we want to support -->
-                    <div class="pull-right gravatar"><img src="@a.GravatarUrl" />
-                    @if (idea.Author.UserName == a.Author)
-                    { 
-                        <div class="ideadate">author</div>
-                    }
-                    </div>
-                    <div class="activity">@a.Text</div>
-                    <div><a href=""><span class="author">@a.Author</span></a> <span class="ideadate">@a.FriendlyTime</span></div>
-                    
-                    <div class="clearfix"> </div>
-                    <div class="comment">
-                        <!-- TODO: reply to an activity -->
-                    </div>
-                </li>
-            }
-        </ul>
+        <div id="activity-feed">
+            <ol></ol>
+        </div>
     </div>
     <div class="comment">
         <!-- TODO: new comment -->
@@ -171,12 +153,12 @@ else
 }
 else
 {
-    <h4>No activity yet, add the first comment!</h4>
+    <strong>No activity yet, add the first comment!</strong>
 }
 @if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-comment">
-        <h4 class="hoverheader">Leave a comment</h4>
+        <h5 class="hoverheader">Leave a comment</h5>
     </div>
     <div id="add-comment" class="hide-on-start add-comment">
         <form action="/comment/@idea.Id/add" method="POST">
@@ -184,11 +166,9 @@ else
         <div class="input">
             <div class="options">
                 <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
-                    data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">
-                    Edit</button>
+                    data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">Edit</button>
                 <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
-                    data-editor="#new-comment" data-view="#new-comment-view">
-                    Preview</button>
+                    data-editor="#new-comment" data-view="#new-comment-view">Preview</button>
             </div>
             <textarea id="new-comment" name="comment"></textarea><br />
             <span class="help-block">You can use <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>!</span>
@@ -196,15 +176,15 @@ else
             </div>
         </div>
         <br />
-        <label for="submit">
-        </label>
-        <button class="btn primary" type="submit">
-            Add Comment</button>
+        <label for="submit"></label>
+        <button class="btn primary" type="submit">Add Comment</button>
         </form>
     </div>
 }
 @section PageScript {
-    
+    @Html.Partial("Shared/Templates/github.html")
+    @Html.Partial("Shared/Templates/comment.html")
+    <script src="/Resources/social.js"></script>
     <script type="text/javascript">
         function updateVoteCount(data) {
             $("#votecount").text(data.NewVotes);
@@ -246,8 +226,35 @@ else
             $(".hide-on-start").hide();
             $(".expander").click(toggleExpander)
                 .css("cursor", "pointer");
+            loadFeed($("#activity-feed ol"), @idea.Id);
 
             $('.fancybox').fancybox();
         });
+
+        function loadFeed(elem, id) {
+               $.ajax({
+                    type: "GET",
+                    url: "/idea/" + id + "/activity",
+                    context: document.body,
+                    success: function (data) {
+                        debugger;
+                        var count = data.Items.length;
+                        var converter = new Showdown.converter();
+    
+                        for(var i = 0; i < count; i++) {
+                            var node = data.Items[i];
+                            var template = document.getElementById('comment_template').innerHTML;
+                            if (node.template == "github") {
+                                template = document.getElementById('github_template').innerHTML;
+                            }
+
+                            node.item.Text= converter.makeHtml(node.item.Text);
+                            
+                            var output = Mustache.render(template, node.item);
+                            $(elem).append(output);
+                        }
+                    }
+                });
+        }
     </script>
 }

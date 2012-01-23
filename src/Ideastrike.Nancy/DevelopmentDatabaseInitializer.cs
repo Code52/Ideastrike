@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using Ideastrike.Nancy.Models;
+using Newtonsoft.Json;
 
 namespace Ideastrike.Nancy
 {
@@ -9,15 +12,15 @@ namespace Ideastrike.Nancy
         protected override void Seed(IdeastrikeContext context)
         {
 
-            context.Settings.Add(new Setting {Key = "Title", Value = "Yet Another Ideastrike"});
-            context.Settings.Add(new Setting {Key = "Name", Value = "Ideastrike"});
-            context.Settings.Add(new Setting {Key = "WelcomeMessage", Value = "You've been.... Ideastruck"});
-            context.Settings.Add(new Setting {Key = "HomePage", Value = "http://www.code52.org"});
-            context.Settings.Add(new Setting {Key = "GAnalyticsKey", Value = ""});
+            context.Settings.Add(new Setting { Key = "Title", Value = "Yet Another Ideastrike" });
+            context.Settings.Add(new Setting { Key = "Name", Value = "Ideastrike" });
+            context.Settings.Add(new Setting { Key = "WelcomeMessage", Value = "You've been.... Ideastruck" });
+            context.Settings.Add(new Setting { Key = "HomePage", Value = "http://www.code52.org" });
+            context.Settings.Add(new Setting { Key = "GAnalyticsKey", Value = "" });
 
             string ideaStatusDefault = "New";
-            context.Settings.Add(new Setting {Key = "IdeaStatusChoices", Value = "New,Active,Completed,Declined"});
-            context.Settings.Add(new Setting {Key = "IdeaStatusDefault", Value = ideaStatusDefault });
+            context.Settings.Add(new Setting { Key = "IdeaStatusChoices", Value = "New,Active,Completed,Declined" });
+            context.Settings.Add(new Setting { Key = "IdeaStatusDefault", Value = ideaStatusDefault });
 
             context.SaveChanges();
 
@@ -43,6 +46,5 @@ namespace Ideastrike.Nancy
 
             context.SaveChanges();
         }
-
     }
 }
