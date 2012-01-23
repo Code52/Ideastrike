@@ -12,20 +12,14 @@ namespace IdeaStrike.Tests.CommentModuleTests
 
     public class when_adding_a_new_comment : IdeaStrikeSpecBase
     {
-        private static string _userName = "shiftkey";
 
         public when_adding_a_new_comment()
         {
-            var users = new[] { new User { UserName = _userName } };
-            mockUsersRepo.Setup(u => u.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
-                         .Returns(users.AsQueryable());
-
-            RunFirst(r => AuthenticateUser(r, _userName));
-
-            var testRequest = PostTestRequest("/comment/0/add");
-            testRequest.Form.userId = 1;
-            testRequest.Form.comment = "words";
-            testResponse = engine.HandleRequest(testRequest).Response;
+            testResponse = browser.Post("/comment/0/add", with => {
+                with.FormValue("userId", "1");
+                with.FormValue("comment", "words");
+                with.LoggedInUser(CreateMockUser("shiftkey"));
+            });
         }
 
         [Fact]

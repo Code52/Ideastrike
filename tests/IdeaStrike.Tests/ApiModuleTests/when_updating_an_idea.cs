@@ -12,24 +12,21 @@ namespace IdeaStrike.Tests.ApiModuleTests
 {
     public class when_updating_an_idea : IdeaStrikeSpecBase
     {
-        private BrowserResponse response;
         private Idea testIdea = new Idea { Title = "Title", Description = "Description" };
-        private User user = new User { Id = Guid.NewGuid() };
 
         public when_updating_an_idea()
         {
             mockIdeasRepo.Setup(d => d.Get(1)).Returns(testIdea);
-            mockUsersRepo.Setup(d => d.GetUserFromIdentifier(user.Id)).Returns(user);
-            response = browser.Put("/api/ideas/1", with => {
+            testResponse = browser.Put("/api/ideas/1", with => {
                 with.JsonBody(new { title = "New Title" });
-                with.LoggedInUser(user);
+                with.LoggedInUser(CreateMockUser("csainty"));
             });
         }
 
         [Fact]
         public void it_should_return_created()
         {
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, testResponse.StatusCode);
         }
 
         [Fact]

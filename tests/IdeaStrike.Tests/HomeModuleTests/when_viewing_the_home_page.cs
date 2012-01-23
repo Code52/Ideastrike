@@ -1,5 +1,6 @@
 ﻿using Nancy;
 using Xunit;
+using Nancy.Testing;
 
 namespace IdeaStrike.Tests.HomeModuleTests
 {
@@ -7,8 +8,7 @@ namespace IdeaStrike.Tests.HomeModuleTests
     {
         public when_viewing_the_home_page()
         {
-            var testRequest = GetTestRequest("/");
-            testResponse = engine.HandleRequest(testRequest).Response;
+            testResponse = browser.Get("/");
         }
 
         [Fact]
