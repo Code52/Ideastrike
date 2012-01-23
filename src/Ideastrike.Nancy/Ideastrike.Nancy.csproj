@@ -130,10 +130,15 @@
     <Content Include="Resources\logo_small.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\mustache.js" />
     <Content Include="Resources\respond.min.js" />
     <Content Include="Resources\showdown.js" />
     <Content Include="Resources\social.js" />
     <Content Include="Resources\style.css" />
+    <Content Include="Views\Shared\Templates\comment.html" />
+    <Content Include="Views\Shared\Templates\github.html" />
+    <Content Include="Views\Shared\Templates\download.html" />
+    <Content Include="Views\Shared\Templates\upload.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -166,7 +171,9 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
+    <Compile Include="Models\ViewModels\CommentViewModel.cs" />
     <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
+    <Compile Include="Models\ViewModels\GitHubActivityViewModel.cs" />
     <Compile Include="Models\ViewModels\IdeaViewModel.cs" />
     <Compile Include="Models\Repositories\ActivityRepository.cs" />
     <Compile Include="Models\Comment.cs" />

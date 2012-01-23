@@ -42,6 +42,21 @@ namespace Ideastrike.Nancy.Modules
                 return View["Idea/Index", model];
             };
 
+            Get["/{id}/activity"] = parameters =>
+            {
+                int id = parameters.id;
+                var idea = _ideas.Get(id);
+                if (idea == null)
+                    return Response.AsJson(new { Status = "error" });
+
+                var results = idea.Activities.Select(MapToViewModel);
+
+                return Response.AsJson(new
+                {
+                    Status = "success",
+                    Items = results
+                });
+            };
 
             Get["/image/{id}"] = parameters =>
             {
@@ -70,6 +85,20 @@ namespace Ideastrike.Nancy.Modules
                     }
                 }
             };
+        }
+
+        private static object MapToViewModel(Activity activity)
+        {
+            var github = activity as GitHubActivity;
+
+            if (github != null)
+                return new { template = "github", item = new GitHubActivityViewModel(github) };
+
+            var comment = activity as Comment;
+            if (comment != null)
+                return new { template = "comment", item = new CommentViewModel(comment) };
+
+            return null;
         }
     }
 }

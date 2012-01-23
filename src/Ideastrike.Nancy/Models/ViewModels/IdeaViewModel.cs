@@ -12,7 +12,7 @@ namespace Ideastrike.Nancy.Models.ViewModels
         {
             Id = idea.Id;
             Title = idea.Title;
-            Status = idea.Status;
+			Status = idea.Status;
             Time = idea.Time;
             Description = MarkdownHelper.Markdown(idea.Description);
             UserHasVoted = idea.UserHasVoted;
@@ -38,7 +38,7 @@ namespace Ideastrike.Nancy.Models.ViewModels
         public bool UserHasVoted { get; set; }
         public int TotalVotes { get; private set; }
         public string Title { get; private set; }
-        public string Status { get; private set; }
+		public string Status { get; private set; }
         public int Id { get; private set; }
         public IHtmlString Description { get; private set; }
     }

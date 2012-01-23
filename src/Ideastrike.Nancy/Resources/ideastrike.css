@@ -33,3 +33,71 @@
 .options {
     margin-bottom: 5px;   
 }
+.authorship, .commit-title { margin-left:110px; }
+
+.commit-group-item .gravatar
+{
+    background: white;
+    padding:2px;
+    border: 1px solid #cacaca;
+    margin-left:5px;margin-right:5px;margin-bottom:-5px;
+}
+.commit-title
+{
+    font-family: Monospace;
+    margin-top:-20px;
+}
+.commit-group-item .commit-title a
+{
+    color: #333;
+}
+
+.commit .commit-title, .commit .commit-title a
+{
+    color: #4E575B;
+}
+
+.commit-group-item .commit-links
+{
+    position: absolute;
+    top: 7px;
+    right: 8px;
+}
+
+.commit-group-item .authorship
+{
+    font-size: 12px;
+    color: #888;
+}
+
+.commit-group-item .authorship .author-name
+{
+    color: #444;
+}
+
+.commit-group-item:nth-child(2n+1)
+{
+    background: white;
+}
+.commit-group-item:nth-child(2n)
+{
+    background: #fcfcfc;
+}
+.commit-group-item:first-child
+{
+   border: 1px solid #E2EAEE;
+}
+.commit-group-item
+{
+    position: relative;
+    padding: 8px 8px 8px 8px;
+    border: 1px solid #E2EAEE;
+     border-top: none;
+
+}
+#activity-feed ol
+{
+    list-style-type: none;
+    margin: 0 0 15px 0;
+
+}
