@@ -15,7 +15,7 @@ namespace Ideastrike.Nancy.Helpers
                 case "Active":
                     return new MvcHtmlString("success");
                 case "Declined":
-                    return new MvcHtmlString("declined");
+                    return new MvcHtmlString("important");
                 case "Completed":
                     return new MvcHtmlString("notice");
                 default:
