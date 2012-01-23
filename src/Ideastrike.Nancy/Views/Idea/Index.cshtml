@@ -56,7 +56,7 @@
 
 <hr />
 
-@if (idea.Images != null)
+@if (idea.Images != null && idea.Images.Count >0)
 {
     <div>
         <h4>Images</h4>
@@ -96,12 +96,12 @@
 }
 else
 {
-    <h3>No features suggested yet, be the first!</h3>
+    <strong>No features suggested yet, be the first!</strong>
 }
 @if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-feature">
-        <h4 class="hoverheader">Got something to add?</h4>
+        <h5 class="hoverheader">Got something to add?</h5>
     </div>
     <div id="add-feature" class="hide-on-start add-feature">
         <form action="/idea/@idea.Id/feature" method="POST">
@@ -153,12 +153,12 @@ else
 }
 else
 {
-    <h4>No activity yet, add the first comment!</h4>
+    <strong>No activity yet, add the first comment!</strong>
 }
 @if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-comment">
-        <h4 class="hoverheader">Leave a comment</h4>
+        <h5 class="hoverheader">Leave a comment</h5>
     </div>
     <div id="add-comment" class="hide-on-start add-comment">
         <form action="/comment/@idea.Id/add" method="POST">
