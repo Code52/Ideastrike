@@ -79,8 +79,17 @@ namespace Ideastrike.Nancy.Modules
                 {
                     content = reader.ReadToEnd();
                 }
-                var idea = ideas.Get(1);
                 var j = JsonConvert.DeserializeObject<dynamic>(content);
+                string repourl = j.repository.url.ToString();
+                string reponame = j.repository.name.ToString();
+                var idea = ideas
+                            .Include("Activities")
+                            .Where(i => i.GithubUrl == repourl || i.GithubName == reponame)
+                            .FirstOrDefault();
+
+                if (idea == null)
+                    return HttpStatusCode.NotFound;
+
                 foreach (var c in j.commits)
                 {
                     string date = c.timestamp;
@@ -94,7 +103,8 @@ namespace Ideastrike.Nancy.Modules
                         Sha = c.id
                     };
 
-                    idea.Activities.Add(activity);
+                    if (!idea.Activities.OfType<GitHubActivity>().Any(a => a.Sha == activity.Sha))
+                        idea.Activities.Add(activity);
                 }
 
                 ideas.Save();

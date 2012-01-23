@@ -32,6 +32,9 @@ namespace Ideastrike.Nancy.Models
         [NotMapped]
         public bool UserHasVoted { get; set; }
 		
-        public virtual ICollection<Image> Images { get; set; } 
+        public virtual ICollection<Image> Images { get; set; }
+
+        public string GithubUrl { get; set; }
+        public string GithubName { get; set; }
     }
 }
