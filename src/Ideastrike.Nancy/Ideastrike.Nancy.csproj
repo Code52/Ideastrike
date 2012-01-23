@@ -160,8 +160,6 @@
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
-    <Compile Include="Models\Repositories\StatusRepository.cs" />
-    <Compile Include="Models\Repositories\IStatusRepository.cs" />
     <Compile Include="Models\Repositories\GenericRepository.cs" />
     <Compile Include="Models\Repositories\IGenericRepository.cs" />
     <Compile Include="Models\Status.cs" />
