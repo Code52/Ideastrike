@@ -9,10 +9,8 @@ namespace Ideastrike.Nancy.Models.ViewModels
         {
             Text = MarkdownHelper.Markdown(feature.Text);
             FriendlyTime = FriendlyTimeHelper.Parse(feature.Time);
-
-            // TODO: not hard code these
-            Author = "shiftkey";
-            GravatarUrl = "me@brendanforster.com".ToGravatarUrl(40);
+            Author = feature.User.UserName;
+            GravatarUrl = (string.IsNullOrEmpty(feature.User.AvatarUrl)) ? feature.User.Email.ToGravatarUrl(40) : feature.User.AvatarUrl;
         }
 
         public IHtmlString FriendlyTime { get; private set; }

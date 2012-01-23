@@ -1,43 +1,37 @@
-﻿.features, .comments
-{
+﻿
+.features, .comments {
     margin-bottom: 20px;
 }
 
-.features ul, .comments ul
-{
+.features ul, .comments ul {
     margin: 0;
 }
 
-.features .gravatar
-{
+.features .gravatar, .comments .gravatar {
     padding-left: 10px;
 }
 
-.features li, #activity-feed li
-{
+.features li, .comments li {
     list-style-type: none;
 }
 
-.features .time, #activity-feed.time
-{
+.features .time, .comments .time {
     margin-top: 10px;
 }
 
-.features .author, #activity-feed .author
+.features .author, .features .author
 {
     font-size: 1.1em;
     font-weight: bold;
 }
 
-.features .text, #activity-feed .text
-{
+.features .text, .comments .text {
     font-size: 1.3em;
     padding-bottom: 10px;
 }
 
-.options
-{
-    margin-bottom: 5px;
+.options {
+    margin-bottom: 5px;   
 }
 
 .commit-group-item .gravatar

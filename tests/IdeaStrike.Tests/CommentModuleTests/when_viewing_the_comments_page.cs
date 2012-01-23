@@ -11,7 +11,6 @@ namespace IdeaStrike.Tests.CommentModuleTests
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 
-     
         public void it_should_set_the_status_code_to_OK()
         {
             //noop - The GET method is commented out in the CommentModule

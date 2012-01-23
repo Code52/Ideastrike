@@ -11,7 +11,7 @@ namespace Ideastrike.Nancy.Models
         {
             Activities = new Collection<Activity>();
             Votes = new Collection<Vote>();
-			Features = new Collection<Feature>();
+            Features = new Collection<Feature>();
         }
 
         [Key]
@@ -19,11 +19,19 @@ namespace Ideastrike.Nancy.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+
         public DateTime Time { get; set; }
-        public User Author { get; set; }
-        public Status Status { get; set; }
-		public virtual ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
         public virtual ICollection<Activity> Activities { get; set; }
         public virtual ICollection<Feature> Features { get; set; }
+
+        public virtual User Author { get; set; }
+
+        public virtual Status Status { get; set; }
+
+        [NotMapped]
+        public bool UserHasVoted { get; set; }
+		
+        public virtual ICollection<Image> Images { get; set; } 
     }
 }

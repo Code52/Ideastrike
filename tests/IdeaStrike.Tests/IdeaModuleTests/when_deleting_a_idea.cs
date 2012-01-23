@@ -6,7 +6,8 @@ namespace IdeaStrike.Tests.IdeaModuleTests
     {
         public when_deleting_a_idea()
         {
-            var testRequest = GetTestRequest("/idea/0/delete/");
+            var testRequest = PostTestRequest("/idea/0/delete/");
+            RunFirst(r => AuthenticateUser(r, "shiftkey"));
             testResponse = engine.HandleRequest(testRequest).Response;
         }
 

@@ -4,8 +4,10 @@
     {
         public static string ToGravatarUrl(this string emailAddress, int? size = 80)
         {
+            var textToParse = string.IsNullOrWhiteSpace(emailAddress) ? "" : emailAddress.ToLower();
+
             var x = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            var bs = System.Text.Encoding.UTF8.GetBytes(emailAddress.ToLower());
+            var bs = System.Text.Encoding.UTF8.GetBytes(textToParse);
             bs = x.ComputeHash(bs);
             var s = new System.Text.StringBuilder();
             foreach (var b in bs)

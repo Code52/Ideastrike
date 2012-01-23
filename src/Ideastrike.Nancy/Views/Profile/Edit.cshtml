@@ -1,0 +1,60 @@
+﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+<form action="/profile/save" method="POST">
+    <fieldset>
+        <legend>Profile</legend>
+        <div class="clearfix">
+            <label for="title">User Name</label>
+            <div class="input">
+                <input class="xlarge" name="username" id="username" value="@Model.UserName" size="30" type="text" />
+                <span id="validateUsername"></span>
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="title">Email Address<br />(for <a href="http://gravatar.com/">Gravatar</a>)</label>
+            <div class="input">
+                <input class="xlarge" name="email" id="email" value="@Model.Email" size="30" type="text" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="title">Github Username</label>
+            <div class="input">
+                <input class="xlarge" name="github" id="github" value="@Model.Github" size="30" type="text" />
+            </div>
+        </div>
+        <div class="input">
+            <button type="submit" class="btn primary">Save</button>
+        </div>
+    </fieldset>
+</form>
+
+@section PageScript {
+    <script>
+        $(document).ready(function() {
+            var validateUsername = $('#validateUsername');
+            $('#username').keyup(function() {
+                var t = this;
+                if (this.value != this.lastValue) {
+                    if (this.timer) clearTimeout(this.timer);
+                    validateUsername.removeClass('error').html(' checking availability...');
+
+                    this.timer = setTimeout(function() {
+                        $.ajax({
+                            url: '/profile/checkuser',
+                            data: 'username=' + t.value,
+                            dataType: 'json',
+                            type: 'post',
+                            success: function(j) {
+                                validateUsername.html(j.msg);
+                            }
+                        });
+                    }, 200);
+
+                    this.lastValue = this.value;
+                }
+            });
+        });
+    </script>
+}

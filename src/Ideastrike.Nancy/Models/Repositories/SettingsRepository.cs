@@ -71,7 +71,7 @@ namespace Ideastrike.Nancy.Models.Repositories
             }
             set
             {
-                Set("HomePage", value); 
+                Set("HomePage", value);
                 _homePage = value;
             }
         }
@@ -101,12 +101,21 @@ namespace Ideastrike.Nancy.Models.Repositories
         public void Set(string key, string value)
         {
             var setting = db.Settings.FirstOrDefault(s => s.Key == key);
-            setting.Value = value;
+            if (setting == null)
+            {
+                db.Settings.Add(new Setting {Key = key, Value = value});
+            }
+            else
+            {
+                setting.Value = value;
+            }
+
             db.SaveChanges();
         }
         public string Get(string key)
         {
-            return db.Settings.FirstOrDefault(s => s.Key == key).Value;
+            var setting = db.Settings.FirstOrDefault(s => s.Key == key);
+            return setting != null ? setting.Value : "";
         }
 
         public void Delete(string key)

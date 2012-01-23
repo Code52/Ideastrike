@@ -1,19 +1,24 @@
-using Autofac;
-using Ideastrike.Nancy;
+using System.Collections.Generic;
+using System;
+using Nancy.Testing;
 
 namespace IdeaStrike.Tests
 {
-    public class IdeaStrikeTestBootStrapper : IdeastrikeBootstrapper
+    public class IdeaStrikeTestBootStrapper : ConfigurableBootstrapper
     {
-        private readonly ContainerBuilder builder;
-        public IdeaStrikeTestBootStrapper(ContainerBuilder builder)
+        private readonly IDictionary<Type, object> _mocks;
+        
+        public IdeaStrikeTestBootStrapper(IDictionary<Type,object> mocks)
         {
-            this.builder = builder;
+            _mocks = mocks;
         }
 
-        protected override void ConfigureApplicationContainer(ILifetimeScope existingContainer)
+        protected override void ConfigureRequestContainer(TinyIoC.TinyIoCContainer container)
         {
-            builder.Update(existingContainer.ComponentRegistry);
+            foreach (var mock in _mocks)
+            {
+                container.Register(mock.Key, mock.Value);
+            }
         }
     }
 }
