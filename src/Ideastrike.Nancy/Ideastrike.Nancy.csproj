@@ -135,6 +135,10 @@
     <Content Include="Resources\showdown.js" />
     <Content Include="Resources\social.js" />
     <Content Include="Resources\style.css" />
+    <Content Include="Views\Shared\Templates\comment.html" />
+    <Content Include="Views\Shared\Templates\github.html" />
+    <Content Include="Views\Shared\Templates\download.html" />
+    <Content Include="Views\Shared\Templates\upload.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

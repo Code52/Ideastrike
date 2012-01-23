@@ -182,37 +182,8 @@ else
     </div>
 }
 @section PageScript {
-<script id="comment_template" type="text/x-jquery-tmpl">
-    <li style="margin-top:25px;" class="span11">
-        <div class="pull-right gravatar"><img src="{{GravatarUrl}}" />
-        <!--
-            <div class="ideadate">author</div>
-        -->
-        </div>
-        <div class="activity">{{{ Text }}}</div>
-        <div><a href=""><span class="author">{{Author}}</span></a> <span class="ideadate">{{FriendlyTime}}</span></div>
-                    
-        <div class="clearfix"> </div>
-        <div class="comment">
-            <!-- TODO: reply to an activity -->
-        </div>
-    </li>
-</script>
-
-<script id="github_template" type="text/x-jquery-tmpl"> 
-    <li class="commit commit-group-item js-navigation-item js-details-container span11">
-        <div style="font-family:monospace;">
-            <a href="{{CommitUrl}}">{{ShaShortened}}</a>
-            <img class="gravatar" height="15" width="15" src="{{GravatarUrl}}" />
-        </div>
-        <div class="commit-title pull-left"><a href="{{CommitUrl}}" class="message">{{{Text}}}</a></div>
-        <div class="clearfix"> </div>
-        <div class="authorship">
-		    <span class="author-name"><a href="{{AuthorUrl}}">{{AuthorName}}</a></span>&nbsp;authored&nbsp;<time class="js-relative-date">{{FriendlyTime}}</time>
-		</div>
-    </li>
-</script>
-
+    @Html.Partial("Shared/Templates/github.html")
+    @Html.Partial("Shared/Templates/comment.html")
     <script src="/Resources/social.js"></script>
     <script type="text/javascript">
         function updateVoteCount(data) {
