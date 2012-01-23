@@ -14,10 +14,9 @@ namespace Ideastrike.Nancy
             context.Settings.Add(new Setting { Key = "HomePage", Value = "http://www.code52.org" });
             context.Settings.Add(new Setting { Key = "GAnalyticsKey", Value = "" });
 
-            context.Statuses.Add(new Status { Title = "New" });
-            context.Statuses.Add(new Status { Title = "Active" });
-            context.Statuses.Add(new Status { Title = "Completed" });
-            context.Statuses.Add(new Status { Title = "Declined" });
+            string ideaStatusDefault = "New";
+            context.Settings.Add(new Setting { Key = "IdeaStatusChoices", Value = "New,Active,Completed,Declined" });
+            context.Settings.Add(new Setting { Key = "IdeaStatusDefault", Value = ideaStatusDefault });
 
             // TODO: define some more data
 

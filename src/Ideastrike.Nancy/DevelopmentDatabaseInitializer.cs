@@ -15,12 +15,9 @@ namespace Ideastrike.Nancy
             context.Settings.Add(new Setting {Key = "HomePage", Value = "http://www.code52.org"});
             context.Settings.Add(new Setting {Key = "GAnalyticsKey", Value = ""});
 
-            var status = new Status { Title = "New" };
-
-            context.Statuses.Add(status);
-            context.Statuses.Add(new Status { Title = "Active" });
-            context.Statuses.Add(new Status { Title = "Completed" });
-            context.Statuses.Add(new Status { Title = "Declined" });
+            string ideaStatusDefault = "New";
+            context.Settings.Add(new Setting {Key = "IdeaStatusChoices", Value = "New,Active,Completed,Declined"});
+            context.Settings.Add(new Setting {Key = "IdeaStatusDefault", Value = ideaStatusDefault });
 
             context.SaveChanges();
 
@@ -30,7 +27,7 @@ namespace Ideastrike.Nancy
                                       Author = new User { Id = Guid.NewGuid(), UserName = "aeoth", Email = "paul@theleagueofpaul.com" },
                                       Title = "So Meta",
                                       Description = "Put an idea in your idea so you can idea when you idea",
-                                      Status = status
+                                      Status = ideaStatusDefault
                                   });
 
             context.Ideas.Add(new Idea
@@ -39,7 +36,7 @@ namespace Ideastrike.Nancy
                 Author = new User { Id = Guid.NewGuid(), UserName = "shiftkey", Email = "me@brendanforster.com" },
                 Title = "Lorem Ipsum",
                 Description = "This is also another idea",
-                Status = status
+                Status = ideaStatusDefault
             });
 
             // TODO: define some more data
