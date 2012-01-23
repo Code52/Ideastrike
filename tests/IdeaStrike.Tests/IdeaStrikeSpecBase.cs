@@ -6,23 +6,24 @@ using Moq;
 using Nancy;
 using Nancy.Security;
 using Nancy.Testing;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace IdeaStrike.Tests
 {
     public class IdeaStrikeSpecBase
     {
-        public Mock<IActivityRepository> mockActivityRepo;
-        public Mock<IFeatureRepository> mockFeatureRepo;
-        public Mock<IIdeaRepository> mockIdeasRepo;
-        public Mock<IdeastrikeContext> mockIdeaStrikeContext;
-        public Mock<ISettingsRepository> mockSettingsRepo;
-        public Mock<IUserRepository> mockUsersRepo;
-        public Mock<IImageRepository> mockImageRepo;
+        protected Mock<IActivityRepository> mockActivityRepo;
+        protected Mock<IFeatureRepository> mockFeatureRepo;
+        protected Mock<IIdeaRepository> mockIdeasRepo;
+        protected Mock<IdeastrikeContext> mockIdeaStrikeContext;
+        protected Mock<ISettingsRepository> mockSettingsRepo;
+        protected Mock<IUserRepository> mockUsersRepo;
+        protected Mock<IImageRepository> mockImageRepo;
 
-        protected Response testResponse;
-        protected INancyEngine engine;
+        protected BrowserResponse testResponse;
         protected Browser browser;
-        public IdeaStrikeTestBootStrapper context;
+        protected IdeaStrikeTestBootStrapper context;
 
         public IdeaStrikeSpecBase()
         {
@@ -41,8 +42,6 @@ namespace IdeaStrike.Tests
 
             context = new IdeaStrikeTestBootStrapper(mocks);
             context.Initialise();
-
-            engine = context.GetEngine();
             browser = new Browser(context);
         }
 
@@ -57,43 +56,20 @@ namespace IdeaStrike.Tests
             mockIdeaStrikeContext = new Mock<IdeastrikeContext>();
         }
 
-        public static IUserIdentity CreateMockUser(string name)
-        {
-            var user = new Mock<IUserIdentity>();
-            user.Setup(i => i.UserName).Returns(name);
-            return user.Object;
+        protected User CreateMockUser(string name) {
+            var user = new User {
+                Id= Guid.NewGuid(),
+                UserName= name
+            };
+            mockUsersRepo.Setup(d => d.Get(user.Id)).Returns(user);
+            mockUsersRepo.Setup(d => d.GetUserFromIdentifier(user.Id)).Returns(user);
+            mockUsersRepo.Setup(d => d.FindBy(It.IsAny<Expression<Func<User,bool>>>())).Returns(new [] { user }.AsQueryable());
+            return user;
         }
 
-        public static Response AuthenticateUser(NancyContext arg, string username)
-        {
-            arg.CurrentUser = CreateMockUser(username);
-            return null;
-        }
-
-
-        public virtual void BeforeRequest()
-        {
-
-        }
-
-        private static Request CreateTestRequest(string httpMethod, string route)
-        {
-            return new Request(httpMethod, route, "http");
-        }
-
-        protected static Request GetTestRequest(string route)
-        {
-            return CreateTestRequest("Get", route);
-        }
-
-        public static Request PostTestRequest(string route)
-        {
-            return CreateTestRequest("POST", route);
-        }
-
-        protected void RunFirst(Func<NancyContext, Response> authenticateUser)
-        {
-            context.BeforeRequest.AddItemToStartOfPipeline(authenticateUser);
+        protected Idea CreateMockIdea(Idea idea) {
+            mockIdeasRepo.Setup(d => d.Get(idea.Id)).Returns(idea);
+            return idea;
         }
     }
 }

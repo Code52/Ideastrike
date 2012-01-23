@@ -1,4 +1,5 @@
 ﻿using Nancy;
+using Nancy.Testing;
 using Xunit;
 
 namespace IdeaStrike.Tests.AdminModuleTests
@@ -7,15 +8,13 @@ namespace IdeaStrike.Tests.AdminModuleTests
     {
         public when_an_unauthenticated_user_views_the_admin_page()
         {
-            var testRequest = GetTestRequest("/admin");
-            testResponse = engine.HandleRequest(testRequest).Response;
+            testResponse = browser.Get("/admin");
         }
 
         [Fact]
         public void it_should_redirect_to_the_login_page()
         {
-            Assert.Equal(HttpStatusCode.SeeOther, testResponse.StatusCode);
-            Assert.Equal("/login", testResponse.Headers["Location"]);
+            testResponse.ShouldHaveRedirectedTo("/login");
         }
     }
 }

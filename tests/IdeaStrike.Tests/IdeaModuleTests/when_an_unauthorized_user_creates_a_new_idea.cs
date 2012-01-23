@@ -2,6 +2,7 @@ using Ideastrike.Nancy.Models;
 using Moq;
 using Nancy;
 using Xunit;
+using Nancy.Testing;
 
 namespace IdeaStrike.Tests.IdeaModuleTests
 {
@@ -9,15 +10,13 @@ namespace IdeaStrike.Tests.IdeaModuleTests
     {
         public when_an_unauthorized_user_creates_a_new_idea()
         {
-            var testRequest = PostTestRequest("/idea/new");
-            testResponse = engine.HandleRequest(testRequest).Response;
+            testResponse = browser.Post("/idea/new");
         }
 
         [Fact]
         public void it_should_redirect_to_the_login_page()
         {
-            Assert.Equal(HttpStatusCode.SeeOther, testResponse.StatusCode);
-            Assert.Equal("/login", testResponse.Headers["Location"]);
+            testResponse.ShouldHaveRedirectedTo("/login");
         }
 
         [Fact]

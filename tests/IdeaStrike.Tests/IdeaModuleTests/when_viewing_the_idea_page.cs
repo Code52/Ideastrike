@@ -7,8 +7,7 @@ namespace IdeaStrike.Tests.IdeaModuleTests
     {
         public when_viewing_the_idea_page()
         {
-            var testRequest = GetTestRequest("/idea/0/");
-            testResponse = engine.HandleRequest(testRequest).Response;
+            testResponse = browser.Get("/idea/0");
         }
 
         [Fact]

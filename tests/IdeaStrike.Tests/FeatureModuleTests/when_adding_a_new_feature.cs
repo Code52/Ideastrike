@@ -10,9 +10,9 @@ namespace IdeaStrike.Tests.FeatureModuleTests
     {
         public when_adding_a_new_feature()
         {
-            var testRequest = PostTestRequest("/idea/0/feature");
-            RunFirst(r => AuthenticateUser(r, "shiftkey"));
-            testResponse = engine.HandleRequest(testRequest).Response;
+            testResponse = browser.Post("/idea/0/feature", with => {
+                with.LoggedInUser(CreateMockUser("shiftkey"));
+            });
         }
 
         [Fact]

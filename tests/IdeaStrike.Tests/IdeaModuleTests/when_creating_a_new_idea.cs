@@ -12,19 +12,11 @@ namespace IdeaStrike.Tests.IdeaModuleTests
 {
     public class when_creating_a_new_idea : IdeaStrikeSpecBase
     {
-        string userName = "shiftkey";
-
         public when_creating_a_new_idea()
         {
-            var users = new[] { new User { UserName = userName } };
-            mockUsersRepo.Setup(u => u.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
-                         .Returns(users.AsQueryable());
-
-            RunFirst(r => AuthenticateUser(r, userName));
-
-            var testRequest = PostTestRequest("/idea/new");
-
-            testResponse = engine.HandleRequest(testRequest).Response;
+            testResponse = browser.Post("/idea/new", with => {
+                with.LoggedInUser(CreateMockUser("shiftkey"));
+            });
         }
 
         [Fact]
