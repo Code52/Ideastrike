@@ -44,6 +44,7 @@ namespace Ideastrike.Nancy.Modules
                 var m = Context.Model(string.Format("Edit Idea: '{0}' - {1}", idea.Title, _settings.Title));
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
+                m.StatusChoices = _settings.IdeaStatusChoices.Split(',');
 
                 return View["Idea/Edit", m];
             };
@@ -59,6 +60,7 @@ namespace Ideastrike.Nancy.Modules
 
                 idea.Title = Request.Form.Title;
                 idea.Description = Request.Form.Description;
+                idea.Status = Request.Form.Status;
 
                 _ideas.Save();
 
@@ -79,6 +81,7 @@ namespace Ideastrike.Nancy.Modules
                                 Time = DateTime.UtcNow,
                                 Title = Request.Form.Title,
                                 Description = Request.Form.Description,
+                                Status = settings.IdeaStatusDefault
                             };
 
                 IEnumerable<string> keys = Context.Request.Form;

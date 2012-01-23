@@ -59,7 +59,7 @@
                 }
                 </form>
             </div>
-            <h3 class="ideaheader"><a href="/idea/@i.Id">@i.Title</a></h3>
+            <h3 class="ideaheader"><a href="/idea/@i.Id">@i.Title</a> <span class="label @StatusColorHelper.ColorClass(i.Status)">@i.Status</span></h3>
             <div class="ideadate">@FriendlyTimeHelper.Parse(i.Time)</div>
             <div class="ideadesc" style="margin-left:85px;">@MarkdownHelper.Markdown(i.Description)</div>
             <div class="clearfix"> </div>

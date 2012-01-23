@@ -19,6 +19,7 @@ namespace Ideastrike.Nancy
             context.Settings.Add(new Setting {Key = "GAnalyticsKey", Value = ""});
 
             var status = new Status { Title = "New" };
+
             context.Statuses.Add(status);
             context.Statuses.Add(new Status { Title = "Active" });
             context.Statuses.Add(new Status { Title = "Completed" });

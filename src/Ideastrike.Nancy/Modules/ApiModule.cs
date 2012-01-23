@@ -16,7 +16,7 @@ namespace Ideastrike.Nancy.Modules
     // make unannounced changes to the public surface.
     public class ApiModule : NancyModule
     {
-        public ApiModule(IdeastrikeContext db, IIdeaRepository ideas, IUserRepository users, IStatusRepository statuses)
+        public ApiModule(IdeastrikeContext db, IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings)
             : base("/api") {
             Get["/ideas"] = _ => {
                 return Response.AsJson(db.Ideas.Select(idea =>
@@ -27,7 +27,7 @@ namespace Ideastrike.Nancy.Modules
                         time = SqlFunctions.DateDiff("s", new DateTime(1970, 1, 1), idea.Time),
                         author = new { id = idea.Author.Id, username = idea.Author.UserName },
                         vote_count = idea.Votes.Sum(vote => (int?)vote.Value) ?? 0,
-                        status = idea.Status == null ? null : idea.Status.Title
+                        status = idea.Status
                     }));
             };
 

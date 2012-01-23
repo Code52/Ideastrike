@@ -149,6 +149,7 @@
     <Compile Include="App_Start\AppHarborDatabaseInitializer.cs" />
     <Compile Include="App_Start\DatabaseSelector.cs" />
     <Compile Include="DevelopmentDatabaseInitializer.cs" />
+    <Compile Include="Helpers\StatusColorHelper.cs" />
     <Compile Include="Helpers\GravatarExtensions.cs" />
     <Compile Include="Helpers\FriendlyTimeHelper.cs" />
     <Compile Include="Helpers\ImageExtensions.cs" />
@@ -161,8 +162,6 @@
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
     <Compile Include="Models\Activity.cs" />
-    <Compile Include="Models\Repositories\StatusRepository.cs" />
-    <Compile Include="Models\Repositories\IStatusRepository.cs" />
     <Compile Include="Models\Repositories\GenericRepository.cs" />
     <Compile Include="Models\Repositories\IGenericRepository.cs" />
     <Compile Include="Models\Status.cs" />
