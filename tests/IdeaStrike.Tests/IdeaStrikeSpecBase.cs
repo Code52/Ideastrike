@@ -18,6 +18,7 @@ namespace IdeaStrike.Tests
         public Mock<ISettingsRepository> mockSettingsRepo;
         public Mock<IUserRepository> mockUsersRepo;
         public Mock<IImageRepository> mockImageRepo;
+        public Mock<IStatusRepository> mockStatusRepo;
 
         protected Response testResponse;
         protected INancyEngine engine;
@@ -36,7 +37,8 @@ namespace IdeaStrike.Tests
                                 { typeof (ISettingsRepository),mockSettingsRepo.Object },
                                 { typeof (IUserRepository),mockUsersRepo.Object },
                                 { typeof (IImageRepository),mockImageRepo.Object },
-                                { typeof (IdeastrikeContext),mockIdeaStrikeContext.Object }
+                                { typeof (IdeastrikeContext),mockIdeaStrikeContext.Object },
+                                { typeof (IStatusRepository),mockStatusRepo.Object }
                             };
 
             context = new IdeaStrikeTestBootStrapper(mocks);
@@ -55,6 +57,7 @@ namespace IdeaStrike.Tests
             mockUsersRepo = new Mock<IUserRepository>();
             mockImageRepo = new Mock<IImageRepository>();
             mockIdeaStrikeContext = new Mock<IdeastrikeContext>();
+            mockStatusRepo = new Mock<IStatusRepository>();
         }
 
         public static IUserIdentity CreateMockUser(string name)
