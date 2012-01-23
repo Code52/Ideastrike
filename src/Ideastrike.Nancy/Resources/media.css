@@ -34,14 +34,21 @@
    Modify as content requires.
    ========================================================================== */
 
-@media only screen and (min-width: 480px) {
-  /* Style adjustments for viewports 480px and over go here */
-
+@media only screen and (max-width: 480px) {
+  /* Style adjustments for viewports under 480px */
 }
 
-@media only screen and (min-width: 750px) {
-  /* Style adjustments for viewports 768px and over go here */
-  
+@media only screen and (max-width: 750px) 
+{
+  /* Style adjustments for viewports under 768px */
+}
+
+@media only screen and (max-width: 1024px) 
+{
+  /* Style adjustments for viewports under 1024px */
+  #github-banner { display: none; }  
+  .container { width: 100%; margin: 15px; }
+  .topbar .brand { margin-left: 5px !important; }
 }
 
 /* =============================================================================
