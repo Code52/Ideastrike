@@ -14,9 +14,10 @@ namespace IdeaStrike.Tests.IdeaModuleTests
         }
 
         [Fact]
-        public void it_should_redirect_to_the_new_idea()
+        public void it_should_redirect_to_the_login_page()
         {
-            Assert.Equal(HttpStatusCode.Unauthorized, testResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.SeeOther, testResponse.StatusCode);
+            Assert.Equal("/login", testResponse.Headers["Location"]);
         }
 
         [Fact]
