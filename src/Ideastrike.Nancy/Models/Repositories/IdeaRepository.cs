@@ -50,7 +50,7 @@ namespace Ideastrike.Nancy.Models
             });
 
             Save();
-            return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
+            return Context.Ideas.Include("Votes").First(i => i.Id == ideaId).Votes.Sum(v => v.Value);
         }
 
         public int Unvote(int ideaId, Guid userId)
@@ -61,7 +61,7 @@ namespace Ideastrike.Nancy.Models
             var votesToRemove = Context.Votes.Where(v => v.UserId == userId && v.IdeaId == ideaId).ToList();
             votesToRemove.ForEach(v => Context.Votes.Remove(v));
             Save();
-            return Context.Ideas.Find(ideaId).Votes.Sum(v => v.Value);
+            return Context.Ideas.Include("Votes").First(i => i.Id == ideaId).Votes.Sum(v => v.Value);
         }
 
         public int Count
