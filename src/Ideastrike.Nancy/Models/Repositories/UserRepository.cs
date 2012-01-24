@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace Ideastrike.Nancy.Models
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : GenericRepository<IdeastrikeContext, User>, IUserRepository
     {
         public UserRepository(IdeastrikeContext db)
         {
@@ -37,29 +37,10 @@ namespace Ideastrike.Nancy.Models
             set { _entities = value; }
         }
 
-        public virtual IQueryable<User> GetAll()
-        {
-
-            IQueryable<User> query = _entities.Set<User>();
-            return query;
-        }
-
         public virtual User Get(Guid id)
         {
             var query = _entities.Set<User>().Find(id);
             return query;
-        }
-
-        public IQueryable<User> FindBy(Expression<Func<User, bool>> predicate)
-        {
-            IQueryable<User> query = _entities.Set<User>().Where(predicate);
-            return query;
-        }
-
-        public virtual void Add(User entity)
-        {
-            _entities.Set<User>().Add(entity);
-            _entities.SaveChanges();
         }
 
         public virtual void Delete(Guid id)
@@ -67,17 +48,6 @@ namespace Ideastrike.Nancy.Models
             var entity = Get(id);
             entity.IsActive = false;
             entity.Identity = "Deleted User - " + entity.Identity;
-            _entities.SaveChanges();
-        }
-
-        public virtual void Edit(User entity)
-        {
-            _entities.Entry(entity).State = System.Data.EntityState.Modified;
-            _entities.SaveChanges();
-        }
-
-        public virtual void Save()
-        {
             _entities.SaveChanges();
         }
 
