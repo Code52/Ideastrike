@@ -15,11 +15,6 @@
 $(function () {
     'use strict';
 
-    // Initialize the jQuery File Upload widget:
- 
-    if (window.location.hostname === 'blueimp.github.com') {
-        
-    } else {
         // Load existing files:
         $.getJSON($('#fileupload').prop('action'), function (files) {
             var fu = $('#fileupload').data('fileupload'),
@@ -32,7 +27,6 @@ $(function () {
                 template[0].offsetWidth;
             template.addClass('in');
         });
-    }
 
     // Enable iframe cross-domain access via redirect page:
     var redirectPage = window.location.href.replace(
