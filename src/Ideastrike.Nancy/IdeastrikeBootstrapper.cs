@@ -4,6 +4,10 @@ using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
 using Ideastrike.Nancy.Modules;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Configuration;
+using System;
 
 namespace Ideastrike.Nancy
 {
@@ -12,7 +16,15 @@ namespace Ideastrike.Nancy
         protected override void ConfigureRequestContainer(Autofac.ILifetimeScope existingContainer)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<IdeastrikeContext>()
+
+            if (ConfigurationManager.ConnectionStrings.Count > 0 && ConfigurationManager.ConnectionStrings["Ideastrike"] != null)
+                builder.RegisterType<IdeastrikeContext>()
+                    .WithParameter(new NamedParameter("nameOrConnectionString", ConfigurationManager.ConnectionStrings["Ideastrike"].ConnectionString + ";MultipleActiveResultSets=true"))
+                    .AsSelf()
+                    .InstancePerLifetimeScope();
+
+            else
+                builder.RegisterType<IdeastrikeContext>()
                 .AsSelf()
                 .InstancePerLifetimeScope();
 
@@ -48,9 +60,9 @@ namespace Ideastrike.Nancy
             var formsAuthConfiguration =
                 new FormsAuthenticationConfiguration
                     {
-                    RedirectUrl = "~/login",
-                    UserMapper = container.Resolve<IUserRepository>(),
-                };
+                        RedirectUrl = "~/login",
+                        UserMapper = container.Resolve<IUserRepository>(),
+                    };
 
             FormsAuthentication.Enable(pipelines, formsAuthConfiguration);
         }
