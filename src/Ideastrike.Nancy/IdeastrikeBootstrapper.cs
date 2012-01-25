@@ -14,7 +14,7 @@ namespace Ideastrike.Nancy
             var builder = new ContainerBuilder();
             builder.RegisterType<IdeastrikeContext>()
                 .AsSelf()
-                .SingleInstance();
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<IdeaRepository>()
                 .AsImplementedInterfaces()
