@@ -144,8 +144,24 @@
                 enableSubmitButton();
                 return true;
             }
+
         });
-    
+
+        $(function() {
+            $.getJSON('/idea/imagesforidea/' + @Model.Idea.Id, function(files) {
+                var fu = $('#fileupload').data('fileupload'),
+                    template;
+                fu._adjustMaxNumberOfFiles(-files.length);
+                template = fu._renderDownload(files)
+                    .appendTo($('#fileupload .files'));
+                // Force reflow:
+                fu._reflow = fu._transition && template.length &&
+                    template[0].offsetWidth;
+                template.addClass('in');
+            });
+        });
+
+
        function disableSubmitButton() {
             $("#submitButton").attr('disabled', 'disabled');
         }

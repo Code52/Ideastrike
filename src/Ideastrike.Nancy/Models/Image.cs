@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Ideastrike.Nancy.Models
 {
-    public class Image
+    public class Image : IEqualityComparer<Image>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,5 +15,31 @@ namespace Ideastrike.Nancy.Models
         public byte[] ImageBits { get; set; }
 
         public int? IdeaId { get; set; }
+
+        public int CompareTo(Image other)
+        {
+            return this.Id.CompareTo(other.Id);
+        }
+
+        public bool Equals(Image x, Image y)
+        {
+            if(x == null && y == null)
+            {
+                return true;
+            }
+
+            if(x == null || y == null)
+            {
+                return false;
+            }
+
+            return x.Id == y.Id;
+
+        }
+
+        public int GetHashCode(Image obj)
+        {
+            return obj.Id.GetHashCode();
+        }
     }
 }
