@@ -95,7 +95,7 @@ namespace Ideastrike.Nancy.Modules
             Post["/uservoice"] = _ =>
             {
                 var client = new WebClient();
-                var suggestions = GetSuggestions(client, Request.Form.channel, Request.Form.forumid, Request.Form.apikey);
+                var suggestions = GetSuggestions(client, Request.Form.channel, Request.Form.forumid, Request.Form.apikey, Request.Form.trusted);
 
                 foreach (var s in suggestions)
                 {
@@ -111,8 +111,25 @@ namespace Ideastrike.Nancy.Modules
                         Title = title,
                         Description = s.text,
                         Time = DateTime.Parse(date.Substring(0, date.Length - 5)),
-
                     };
+
+                    string status = string.Empty;
+                    switch ((string)s.state)
+                    {
+                        case "approved":
+                            status = "Active";
+                            break;
+                        case "closed" :
+                            if (s.status.key == "completed")
+                                status = "Completed";
+                            else
+                                status = "Declined";
+                            break;
+                        default:
+                            status = "New";
+                            break;
+                    }
+                    idea.Status = status;
 
                     //Get the author, or create
                     string name = s.creator.name;
@@ -121,14 +138,14 @@ namespace Ideastrike.Nancy.Modules
                         idea.Author = existing;
                     else
                     {
-                        idea.Author = NewUser(name);
+                        idea.Author = NewUser(s.creator);
                         users.Add(idea.Author);
                     }
 
                     ideas.Add(idea);
 
                     //Process all comments
-                    var comments = GetComments(client, (string)s.id, Request.Form.channel, Request.Form.forumid, Request.Form.apikey);
+                    var comments = GetComments(client, (string)s.id, Request.Form.channel, Request.Form.forumid, Request.Form.apikey, Request.Form.trusted);
                     List<Activity> ideaComments = new List<Activity>();
                     foreach (var c in comments)
                     {
@@ -145,7 +162,7 @@ namespace Ideastrike.Nancy.Modules
                             comment.User = existing;
                         else
                         {
-                            comment.User = NewUser(commentname);
+                            comment.User = NewUser(c.creator);
                             users.Add(comment.User);
                         }
 
@@ -153,7 +170,7 @@ namespace Ideastrike.Nancy.Modules
                     }
 
                     //Process all votes
-                    var votes = GetVotes(client, (string)s.id, Request.Form.channel, Request.Form.forumid, Request.Form.apikey);
+                    var votes = GetVotes(client, (string)s.id, Request.Form.channel, Request.Form.forumid, Request.Form.apikey, Request.Form.trusted);
                     foreach (var v in votes)
                     {
                         string votername = v.user.name;
@@ -162,11 +179,11 @@ namespace Ideastrike.Nancy.Modules
                         if (Int32.TryParse(votesfor, out vote))
                         {
                             existing = users.FindBy(u => u.UserName == votername).FirstOrDefault();
-                            if (existing != null) 
+                            if (existing != null)
                                 ideas.Vote(idea.Id, existing.Id, vote);
                             else
                             {
-                                var author = NewUser(votername);
+                                var author = NewUser(v.user);
                                 users.Add(author);
                                 ideas.Vote(idea.Id, author.Id, vote);
                             }
@@ -178,36 +195,44 @@ namespace Ideastrike.Nancy.Modules
             };
         }
 
-        private static User NewUser(string Username)
+        private static User NewUser(dynamic user)
         {
             var author = new User
             {
                 Id = Guid.NewGuid(),
-                UserName = Username,
-            };   
+                UserName = user.name,
+            };
 
+            if (user.avatar_url != null)
+            {
+                string avatar = user.avatar_url;
+                if (avatar.Contains("&"))
+                    avatar = avatar.Substring(0, avatar.IndexOf("&"));
+                author.AvatarUrl = avatar;
+            }
             return author;
         }
 
-        private static IEnumerable<dynamic> GetSuggestions(WebClient client, string SuggestionsChannel, string ForumID, string APIKey)
+        private static IEnumerable<dynamic> GetSuggestions(WebClient client, string SuggestionsChannel, string ForumID, string APIKey, bool trusted)
         {
-            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions.json?per_page=50&sort=newest&client={2}", SuggestionsChannel, ForumID, APIKey)));
+            var url = new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions.json?per_page=100&sort=newest&client={2}{3}", SuggestionsChannel, ForumID, APIKey, (trusted) ? "&filter=all" : ""));
+            var uvResponse = client.DownloadString(url);
             var suggestions = JsonConvert.DeserializeObject<dynamic>(uvResponse).suggestions;
 
             return suggestions;
         }
 
-        private static IEnumerable<dynamic> GetComments(WebClient client, string IdeadId, string SuggestionsChannel, string ForumID, string APIKey)
+        private static IEnumerable<dynamic> GetComments(WebClient client, string IdeadId, string SuggestionsChannel, string ForumID, string APIKey, bool trusted)
         {
-            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions/{3}/comments.json?per_page=50&client={2}", SuggestionsChannel, ForumID, APIKey, IdeadId)));
+            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions/{3}/comments.json?per_page=50&client={2}{4}", SuggestionsChannel, ForumID, APIKey, IdeadId, (trusted) ? "&filter=all" : "")));
             var comments = JsonConvert.DeserializeObject<dynamic>(uvResponse).comments;
 
             return comments;
         }
 
-        private static IEnumerable<dynamic> GetVotes(WebClient client, string IdeadId, string SuggestionsChannel, string ForumID, string APIKey)
+        private static IEnumerable<dynamic> GetVotes(WebClient client, string IdeadId, string SuggestionsChannel, string ForumID, string APIKey, bool trusted)
         {
-            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions/{3}/supporters.json?per_page=50&client={2}", SuggestionsChannel, ForumID, APIKey, IdeadId)));
+            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions/{3}/supporters.json?per_page=50&client={2}{4}", SuggestionsChannel, ForumID, APIKey, IdeadId, (trusted) ? "&filter=all" : "")));
             var supporters = JsonConvert.DeserializeObject<dynamic>(uvResponse).supporters;
 
             return supporters;

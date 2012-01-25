@@ -49,7 +49,7 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return Response.AsJson(new { Status = "error" });
 
-                var results = idea.Activities.Select(MapToViewModel);
+                var results = idea.Activities.OrderBy(a => a.Time).Select(MapToViewModel);
 
                 return Response.AsJson(new
                 {
