@@ -6,6 +6,8 @@ namespace Ideastrike.Nancy.Models.Repositories
 {
     public class FeatureRepository : GenericRepository<IdeastrikeContext, Feature>, IFeatureRepository
     {
+        public FeatureRepository(IdeastrikeContext ctx) : base(ctx) { }
+
         public bool Add(int ideaid, Feature feature)
         {
             var idea = Context.Ideas.Find(ideaid);
