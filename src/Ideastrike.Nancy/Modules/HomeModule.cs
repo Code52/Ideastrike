@@ -18,7 +18,7 @@ namespace Ideastrike.Nancy.Modules
             _users = users;
             _settings = settings;
             Get["/"] = _ => ListIdeas(_ideas.GetAll(), SelectedTab.Popular, "");
-            Get["/top"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Votes.Count), SelectedTab.Hot, "");
+            Get["/top"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Votes.Sum(s=> s.Value)), SelectedTab.Hot, "");
             Get["/new"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Time), SelectedTab.New, "");
             Get["/login"] = _ =>
                                 {

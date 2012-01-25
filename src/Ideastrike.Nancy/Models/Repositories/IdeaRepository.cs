@@ -7,6 +7,8 @@ namespace Ideastrike.Nancy.Models
 {
     public class IdeaRepository : GenericRepository<IdeastrikeContext, Idea>, IIdeaRepository
     {
+        public IdeaRepository(IdeastrikeContext ctx) : base(ctx) { }
+
         public override Idea Get(int id)
         {
             var idea = Context.Ideas
@@ -16,7 +18,7 @@ namespace Ideastrike.Nancy.Models
                 .Include("Features")
                 .Include("Features.User")
                 .Include("Author")
-    			.Include("Images")
+                .Include("Images")
                 .FirstOrDefault(i => i.Id == id);
 
             return idea;
