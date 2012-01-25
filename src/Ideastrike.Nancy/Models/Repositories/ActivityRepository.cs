@@ -6,6 +6,8 @@ namespace Ideastrike.Nancy.Models
 {
     public class ActivityRepository : GenericRepository<IdeastrikeContext, Activity>, IActivityRepository
     {
+        public ActivityRepository(IdeastrikeContext ctx) : base(ctx) { }
+        
         public bool Add(int ideaid, Activity activity)
         {
             var idea = Context.Ideas.Find(ideaid);
