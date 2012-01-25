@@ -106,8 +106,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
   <UsingTask AssemblyFile="..\..\tools\xunit\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit" />
   <Target Name="AfterBuild">
     <xunit Assembly="bin\debug\IdeaStrike.Tests.dll" />
   </Target>
+  </ItemGroup>
 </Project>
