@@ -12,10 +12,7 @@ namespace Ideastrike.Nancy.Models
 {
     public class UserRepository : GenericRepository<IdeastrikeContext, User>, IUserRepository
     {
-        public UserRepository(IdeastrikeContext db)
-        {
-            _entities = db;
-        }
+        public UserRepository(IdeastrikeContext ctx) : base(ctx) { }
 
         public IUserIdentity GetUserFromIdentifier(Guid identifier)
         {
@@ -29,17 +26,9 @@ namespace Ideastrike.Nancy.Models
             return FindBy(u => u.Identity == identity).FirstOrDefault();
         }
 
-        private IdeastrikeContext _entities;
-        public IdeastrikeContext Context
-        {
-
-            get { return _entities; }
-            set { _entities = value; }
-        }
-
         public virtual User Get(Guid id)
         {
-            var query = _entities.Set<User>().Find(id);
+            var query = Context.Set<User>().Find(id);
             return query;
         }
 
@@ -48,7 +37,7 @@ namespace Ideastrike.Nancy.Models
             var entity = Get(id);
             entity.IsActive = false;
             entity.Identity = "Deleted User - " + entity.Identity;
-            _entities.SaveChanges();
+            Context.SaveChanges();
         }
 
         public ICollection<Vote> GetVotes(Guid id)

@@ -150,15 +150,18 @@ namespace Ideastrike.Nancy.Modules
                     {
                         string votername = v.user.name;
                         string votesfor = v.votes_for;
-                        var vote = Int32.Parse(votesfor);
-                        existing = users.FindBy(u => u.UserName == votername).FirstOrDefault();
-                        if (existing != null)
-                            ideas.Vote(idea.Id, existing.Id, vote);
-                        else
+                        int vote;
+                        if (Int32.TryParse(votesfor, out vote))
                         {
-                            var author = NewUser(votername);
-                            users.Add(author);
-                            ideas.Vote(idea.Id, author.Id, vote);
+                            existing = users.FindBy(u => u.UserName == votername).FirstOrDefault();
+                            if (existing != null) 
+                                ideas.Vote(idea.Id, existing.Id, vote);
+                            else
+                            {
+                                var author = NewUser(votername);
+                                users.Add(author);
+                                ideas.Vote(idea.Id, author.Id, vote);
+                            }
                         }
                     }
                 }
