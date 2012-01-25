@@ -13,10 +13,18 @@ namespace Ideastrike.Nancy.Modules
 {
     public class AdminModule : NancyModule
     {
+        private ISettingsRepository _settings;
+        private IUserRepository _users;
+        private IIdeaRepository _ideas;
+        private IActivityRepository _activities;
         public AdminModule(IdeastrikeContext dbContext, ISettingsRepository settings, IUserRepository users, IIdeaRepository ideas, IActivityRepository activities)
             : base("/admin")
         {
             this.RequiresAuthentication();
+            _settings = settings;
+            _users = users;
+            _ideas = ideas;
+            _activities = activities;
 
             Get["/"] = _ =>
             {
@@ -191,7 +199,7 @@ namespace Ideastrike.Nancy.Modules
 
         private static IEnumerable<dynamic> GetComments(WebClient client, string IdeadId, string SuggestionsChannel, string ForumID, string APIKey)
         {
-            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions/{3}/comments.json?client={2}", SuggestionsChannel, ForumID, APIKey, IdeadId)));
+            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions/{3}/comments.json?per_page=50&client={2}", SuggestionsChannel, ForumID, APIKey, IdeadId)));
             var comments = JsonConvert.DeserializeObject<dynamic>(uvResponse).comments;
 
             return comments;
@@ -199,7 +207,7 @@ namespace Ideastrike.Nancy.Modules
 
         private static IEnumerable<dynamic> GetVotes(WebClient client, string IdeadId, string SuggestionsChannel, string ForumID, string APIKey)
         {
-            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions/{3}/supporters.json?client={2}", SuggestionsChannel, ForumID, APIKey, IdeadId)));
+            var uvResponse = client.DownloadString(new Uri(string.Format("http://{0}.uservoice.com/api/v1/forums/{1}/suggestions/{3}/supporters.json?per_page=50&client={2}", SuggestionsChannel, ForumID, APIKey, IdeadId)));
             var supporters = JsonConvert.DeserializeObject<dynamic>(uvResponse).supporters;
 
             return supporters;

@@ -1,5 +1,7 @@
 ﻿@using Ideastrike.Nancy.Helpers
 @using Ideastrike.Nancy.Modules
+@using Ideastrike.Nancy.Models
+@using System.Linq
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @{
     Layout = "Views/Shared/Layout.cshtml";
@@ -36,13 +38,13 @@
         }><a href="/new">New</a> </li>
 </ul>
 <ul id="ideas">
-    @foreach (var i in Model.Ideas)
+    @foreach (Idea i in Model.Ideas)
     {
         <li>
             <div class="pull-left sidebox">
                 <form>
                 <div class="voteinfo">
-                    <h3 class="votecount @i.Id">@i.Votes.Count</h3>
+                    <h3 class="votecount @i.Id">@i.Votes.Sum(v => v.Value)</h3>
                     votes
                 </div>
                 @if (Model.IsLoggedIn)
