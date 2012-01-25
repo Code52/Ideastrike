@@ -85,6 +85,14 @@ namespace Ideastrike.Nancy.Modules
                     }
                 }
             };
+
+            Get["/imagesforidea/{id}"] = parameters =>
+                                             {
+                                                 Idea idea = _ideas.Get((int)parameters.id);
+                                                 return Response.AsJson(idea.Images.Select(i => new ImageFileStatus(i.Id, i.ImageBits.Length, i.Name))
+                                                                                            .ToArray()
+                                                                            ).WithHeader("Vary", "Accept");
+                                             };
         }
 
         private static object MapToViewModel(Activity activity)

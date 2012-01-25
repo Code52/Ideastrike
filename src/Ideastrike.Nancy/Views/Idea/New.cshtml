@@ -71,7 +71,7 @@
             </div>
         </div>
         <div class="actions">
-            <button type="submit" class="btn primary">
+            <button type="submit" class="btn primary" id="submitButton">
                 Submit</button>
         </div>
         </form>
@@ -119,8 +119,22 @@
             url: '/idea/uploadimage',
             maxFileSize: 5000000,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-            maxNumberOfFiles: 5
+            maxNumberOfFiles: 5,
+            always: function () {
+                enableSubmitButton();
+                return true;
+            }
+
         });
+
+        function disableSubmitButton() {
+            $("#submitButton").attr('disabled', 'disabled');
+        }
+        
+        function enableSubmitButton() {
+            $("#submitButton").removeAttr('disabled');
+        }
+
     </script>
     <script src="@Url.Content("~/Resources/application.js")"></script>
 }
