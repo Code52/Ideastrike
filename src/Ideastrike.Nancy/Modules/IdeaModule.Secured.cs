@@ -68,7 +68,12 @@ namespace Ideastrike.Nancy.Modules
                 var ids = x.Select(c => Context.Request.Form[c].ToString()).Cast<string>();
                 var images = ids.Select(y => _imageRepository.Get(Convert.ToInt32(y)));
                 foreach (var i in images)
-                    idea.Images.Add(i);
+                {
+                    if (!idea.Images.Contains(i, i))
+                    {
+                        idea.Images.Add(i);
+                    }
+                }
 
                 _ideas.Save();
 
@@ -166,7 +171,7 @@ namespace Ideastrike.Nancy.Modules
                 var status = new ImageFileStatus(image.Id, bytes.Length, image.Name);
                 return Response.AsJson(new[] { status }).WithHeader("Vary", "Accept");
             };
-            
+
             Delete["/deleteimage/{id}"] = parameters =>
             {
                 var user = Context.GetCurrentUser(_users);
