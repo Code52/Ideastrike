@@ -1,12 +1,10 @@
 using Autofac;
+using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Configuration;
-using System;
 
 namespace Ideastrike.Nancy
 {
@@ -64,6 +62,18 @@ namespace Ideastrike.Nancy
                     };
 
             FormsAuthentication.Enable(pipelines, formsAuthConfiguration);
+        }
+
+        protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines)
+        {
+            pipelines.OnError.AddItemToEndOfPipeline((context, exception) =>
+                                                         {
+                                                             var message = string.Format("Exception: {0} - Stack: {1}",
+                                                                                         exception.Message,
+                                                                                         exception.StackTrace);
+                                                             new ElmahErrorHandler.LogEvent(message).Raise();
+                                                             return null;
+                                                         });
         }
     }
 }
