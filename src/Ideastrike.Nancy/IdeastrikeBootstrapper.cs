@@ -68,9 +68,7 @@ namespace Ideastrike.Nancy
         {
             pipelines.OnError.AddItemToEndOfPipeline((context, exception) =>
                                                          {
-                                                             var message = string.Format("Exception: {0} - Stack: {1}",
-                                                                                         exception.Message,
-                                                                                         exception.StackTrace);
+                                                             var message = string.Format("Exception: {0}", exception);
                                                              new ElmahErrorHandler.LogEvent(message).Raise();
                                                              return null;
                                                          });
