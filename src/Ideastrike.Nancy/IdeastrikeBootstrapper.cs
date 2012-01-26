@@ -3,7 +3,6 @@ using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
-using Ideastrike.Nancy.Modules;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Configuration;
@@ -13,7 +12,7 @@ namespace Ideastrike.Nancy
 {
     public class IdeastrikeBootstrapper : AutofacNancyBootstrapper
     {
-        protected override void ConfigureRequestContainer(Autofac.ILifetimeScope existingContainer)
+        protected override void ConfigureRequestContainer(ILifetimeScope existingContainer)
         {
             var builder = new ContainerBuilder();
 
