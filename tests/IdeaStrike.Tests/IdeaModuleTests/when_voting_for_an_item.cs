@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Nancy;
-using Nancy.Security;
 using Xunit;
 using Moq;
 using Ideastrike.Nancy.Models;

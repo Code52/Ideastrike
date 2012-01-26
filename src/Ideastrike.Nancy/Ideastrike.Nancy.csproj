@@ -165,7 +165,7 @@
     <Compile Include="Migrations\201201260958254_VoteTime.Designer.cs">
       <DependentUpon>201201260958254_VoteTime.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\IdeastrikeDbConfiguration.cs" />
     <Compile Include="Models\Repositories\IUserRepository.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />

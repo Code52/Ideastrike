@@ -4,11 +4,11 @@ using Ideastrike.Nancy.Models;
 
 namespace Ideastrike.Nancy.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<IdeastrikeContext>
+    internal sealed class IdeastrikeDbConfiguration : DbMigrationsConfiguration<IdeastrikeContext>
     {
         private const string IdeaStatusDefault = "New";
 
-        public Configuration()
+        public IdeastrikeDbConfiguration()
         {
             AutomaticMigrationsEnabled = true;
         }

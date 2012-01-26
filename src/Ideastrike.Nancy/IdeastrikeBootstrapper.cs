@@ -1,5 +1,8 @@
+using System;
+using System.Data.Entity.Migrations;
 using Autofac;
 using Ideastrike.Nancy.Helpers;
+using Ideastrike.Nancy.Migrations;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Bootstrapper;
@@ -10,6 +13,7 @@ namespace Ideastrike.Nancy
 {
     public class IdeastrikeBootstrapper : AutofacNancyBootstrapper
     {
+        private const string SqlClient = "System.Data.SqlClient";
         protected override void ConfigureRequestContainer(ILifetimeScope existingContainer)
         {
             var builder = new ContainerBuilder();
@@ -50,6 +54,25 @@ namespace Ideastrike.Nancy
                 .SingleInstance();
 
             builder.Update(existingContainer.ComponentRegistry);
+
+            DoMigrations();
+        }
+
+        private static void DoMigrations()
+        {
+            // Get the Jabbr connection string
+            var connectionString = ConfigurationManager.ConnectionStrings["Jabbr"];
+
+            if (String.IsNullOrEmpty(connectionString.ProviderName) ||
+                !connectionString.ProviderName.Equals(SqlClient, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            // Only run migrations for SQL server (Sql ce not supported as yet)
+            var settings = new IdeastrikeDbConfiguration();
+            var migrator = new DbMigrator(settings);
+            migrator.Update();
         }
 
         protected override void RequestStartup(ILifetimeScope container, IPipelines pipelines)
