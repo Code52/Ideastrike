@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data.Entity;
 
 namespace Ideastrike.Nancy.Models.Repositories
 {
     public abstract class GenericRepository<C, T> :
-        IGenericRepository<T>
+        IGenericRepository<T>, IDisposable
         where T : class
         where C : DbContext
     {
+        public C Context { get; private set; }
 
-        private C _context;
-        public C Context { get { return _context; } }
-
-        public GenericRepository(C ctx) {
-            _context = ctx;
+        protected GenericRepository(C ctx) {
+            Context = ctx;
         }
 
         public virtual IQueryable<T> GetAll()
         {
-
             IQueryable<T> query = Context.Set<T>();
             return query;
         }
@@ -66,6 +61,21 @@ namespace Ideastrike.Nancy.Models.Repositories
         public virtual void Save()
         {
             Context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            if (Context != null)
+            {
+                try
+                {
+                    Context.Dispose();
+                }
+                catch(Exception ex)
+                {
+                    
+                }
+            }
         }
     }
 }
