@@ -153,6 +153,7 @@
     <Compile Include="App_Start\AppHarborDatabaseInitializer.cs" />
     <Compile Include="App_Start\DatabaseSelector.cs" />
     <Compile Include="DevelopmentDatabaseInitializer.cs" />
+    <Compile Include="Helpers\ElmahErrorHandler.cs" />
     <Compile Include="Helpers\StatusColorHelper.cs" />
     <Compile Include="Helpers\GravatarExtensions.cs" />
     <Compile Include="Helpers\FriendlyTimeHelper.cs" />
