@@ -18,7 +18,7 @@ namespace Ideastrike.Nancy.Modules
             _users = users;
             _settings = settings;
             Get["/"] = _ => ListIdeas(_ideas.GetAll(), SelectedTab.Popular, "");
-            Get["/top"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Votes.Sum(s=> s.Value)), SelectedTab.Hot, "");
+            Get["/top"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Votes.Sum(s => s.Value)), SelectedTab.Hot, "");
             Get["/new"] = _ => ListIdeas(_ideas.GetAll().OrderByDescending(i => i.Time), SelectedTab.New, "");
             Get["/login"] = _ =>
                                 {
@@ -29,16 +29,18 @@ namespace Ideastrike.Nancy.Modules
 
         public Response ListIdeas(IEnumerable<Idea> ideas, SelectedTab selected, string ErrorMessage)
         {
-            foreach(var i in ideas)
+            User user = Context.GetCurrentUser(_users);
+
+            if (user != null)
             {
-                User user = Context.GetCurrentUser(_users);
-                if (user != null)
+                foreach (var i in ideas)
                 {
                     if (i.Votes.Any(u => u.UserId == user.Id))
                         i.UserHasVoted = true;
 
                 }
             }
+
 
             var m = Context.Model(_settings.Title);
             m.Name = _settings.Name;
