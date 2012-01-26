@@ -16,7 +16,7 @@ namespace IdeaStrike.Tests
         protected Mock<IActivityRepository> mockActivityRepo;
         protected Mock<IFeatureRepository> mockFeatureRepo;
         protected Mock<IIdeaRepository> mockIdeasRepo;
-        protected Mock<IdeastrikeContext> mockIdeaStrikeContext;
+        //protected Mock<IdeastrikeContext> mockIdeaStrikeContext;
         protected Mock<ISettingsRepository> mockSettingsRepo;
         protected Mock<IUserRepository> mockUsersRepo;
         protected Mock<IImageRepository> mockImageRepo;
@@ -37,7 +37,7 @@ namespace IdeaStrike.Tests
                                 { typeof (ISettingsRepository),mockSettingsRepo.Object },
                                 { typeof (IUserRepository),mockUsersRepo.Object },
                                 { typeof (IImageRepository),mockImageRepo.Object },
-                                { typeof (IdeastrikeContext),mockIdeaStrikeContext.Object }
+                                // { typeof (IdeastrikeContext),mockIdeaStrikeContext.Object }
                             };
 
             context = new IdeaStrikeTestBootStrapper(mocks);
@@ -53,7 +53,7 @@ namespace IdeaStrike.Tests
             mockSettingsRepo = new Mock<ISettingsRepository>();
             mockUsersRepo = new Mock<IUserRepository>();
             mockImageRepo = new Mock<IImageRepository>();
-            mockIdeaStrikeContext = new Mock<IdeastrikeContext>();
+            // mockIdeaStrikeContext = new Mock<IdeastrikeContext>();
         }
 
         protected User CreateMockUser(string name) {
