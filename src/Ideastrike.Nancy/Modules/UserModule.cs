@@ -42,6 +42,7 @@ namespace Ideastrike.Nancy.Modules
                                               Ideas = i,
                                               Features = f,
                                               Votes = v,
+                                              Claims = user.Claims.ToList(),
                                               IsLoggedIn = Context.IsLoggedIn()
                                           }];
                                   };
