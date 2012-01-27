@@ -93,9 +93,8 @@
     <Compile Include="IdeaModuleTests\when_deleting_a_idea.cs" />
     <Compile Include="IdeaModuleTests\when_viewing_the_idea_page.cs" />
     <Compile Include="IdeaModuleTests\when_voting_for_an_item.cs" />
-    <Compile Include="IdeaStrikeSpecBase.cs" />
-    <Compile Include="IdeaStrikeTestBootStrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IdeaStrikeSpecBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
