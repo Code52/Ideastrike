@@ -75,15 +75,7 @@ namespace Ideastrike.Nancy.Modules
                 settings.Name = Request.Form.yourname;
                 settings.HomePage = Request.Form.homepage;
                 settings.GAnalyticsKey = Request.Form.analyticskey;
-                try
-                {
-                    dbContext.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    var y = ex.Message;
-                }
-
+               
                 return Response.AsRedirect("/admin/settings");
             };
 
