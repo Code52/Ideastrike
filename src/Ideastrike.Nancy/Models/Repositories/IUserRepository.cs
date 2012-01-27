@@ -28,7 +28,7 @@ namespace Ideastrike.Nancy.Models
         void Delete(Guid id);
         void Edit(User entity);
         void Save();
-
+        void AddRole(User entity, string roleName);
         ICollection<Vote> GetVotes(Guid id);
     }
 }

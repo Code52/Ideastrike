@@ -18,8 +18,9 @@ namespace IdeaStrike.Tests.AdminModuleTests
 		}
 
 		[Fact]
-		public void it_should_set_the_status_code_to_ok() {
-			Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
+		public void it_should_set_the_status_code_to_ok()
+		{
+		    Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
 		}
 	}
 }

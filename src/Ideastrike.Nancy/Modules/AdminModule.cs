@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Dynamic;
 using System.Linq;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
@@ -21,6 +20,8 @@ namespace Ideastrike.Nancy.Modules
             : base("/admin")
         {
             this.RequiresAuthentication();
+            this.RequiresValidatedClaims(c => c.Contains("admin"));
+
             _settings = settings;
             _users = users;
             _ideas = ideas;

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.Remoting.Contexts;
-using System.Web;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Security;
-using System.Data.Entity;
 
 namespace Ideastrike.Nancy.Models
 {
@@ -26,6 +23,16 @@ namespace Ideastrike.Nancy.Models
             return FindBy(u => u.Identity == identity).FirstOrDefault();
         }
 
+
+        public IQueryable<User> FindBy(System.Linq.Expressions.Expression<Func<User, bool>> predicate)
+        {
+            IQueryable<User> query = Context.Set<User>()
+                                            .Include("UserClaims")
+                                            .Include("UserClaims.Claim")
+                                            .Where(predicate);
+            return query;
+        }
+
         public virtual User Get(Guid id)
         {
             var query = Context.Set<User>().Find(id);
@@ -37,6 +44,21 @@ namespace Ideastrike.Nancy.Models
             var entity = Get(id);
             entity.IsActive = false;
             entity.Identity = "Deleted User - " + entity.Identity;
+            Context.SaveChanges();
+        }
+
+        public void AddRole(User user, string roleName)
+        {
+            var c = Context.Claims.FirstOrDefault(claim => claim.Name.ToLower() == roleName.ToLower());
+            if (c == null)
+            {
+                Context.Claims.Add(new Claim {Name = roleName});
+                Context.SaveChanges();
+            }
+            if (user.UserClaims == null)
+                user.UserClaims = new Collection<UserClaim>();
+
+            user.UserClaims.Add(new UserClaim { Claim = c });
             Context.SaveChanges();
         }
 
