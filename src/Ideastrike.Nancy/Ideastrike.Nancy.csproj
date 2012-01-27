@@ -77,6 +77,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ElmahErrorHandler.cs" />
+    <Compile Include="Helpers\FeedHelpers.cs" />
     <Compile Include="Helpers\StatusColorHelper.cs" />
     <Compile Include="Helpers\GravatarExtensions.cs" />
     <Compile Include="Helpers\FriendlyTimeHelper.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Modules\ApiModule.Secured.cs" />
     <Compile Include="Modules\CommentModule.cs" />
     <Compile Include="Modules\FeatureModule.cs" />
+    <Compile Include="Modules\FeedModule.cs" />
     <Compile Include="Modules\IdeaModule.Secured.cs" />
     <Compile Include="Modules\SelectedTab.cs" />
     <Compile Include="Modules\UserModule.cs" />
