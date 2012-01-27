@@ -60,16 +60,6 @@ namespace Ideastrike.Nancy
 
         private static void DoMigrations()
         {
-            // Get the Jabbr connection string
-            var connectionString = ConfigurationManager.ConnectionStrings["Jabbr"];
-
-            if (String.IsNullOrEmpty(connectionString.ProviderName) ||
-                !connectionString.ProviderName.Equals(SqlClient, StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
-            // Only run migrations for SQL server (Sql ce not supported as yet)
             var settings = new IdeastrikeDbConfiguration();
             var migrator = new DbMigrator(settings);
             migrator.Update();
