@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Ideastrike.Nancy.Models
 {
@@ -8,11 +7,6 @@ namespace Ideastrike.Nancy.Models
         public IdeastrikeContext(): base("Ideastrike")
         {
             Configuration.ProxyCreationEnabled = false;
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         public DbSet<Idea> Ideas { get; set; }

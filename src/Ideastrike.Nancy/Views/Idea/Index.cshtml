@@ -234,6 +234,7 @@ else
         function loadFeed(elem, id) {
                $.ajax({
                     type: "GET",
+                    cache: false,   
                     url: "/idea/" + id + "/activity",
                     context: document.body,
                     success: function (data) {

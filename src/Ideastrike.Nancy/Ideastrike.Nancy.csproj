@@ -44,8 +44,9 @@
     <Reference Include="Devtalk.EF.CodeFirst">
       <HintPath>..\packages\EFCodeFirst.CreateTablesOnly.1.0.2\lib\Devtalk.EF.CodeFirst.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.4.3.0-beta1\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownDeep">
       <HintPath>..\packages\MarkdownDeep.NET.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
@@ -150,9 +151,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AppHarborDatabaseInitializer.cs" />
-    <Compile Include="App_Start\DatabaseSelector.cs" />
-    <Compile Include="DevelopmentDatabaseInitializer.cs" />
     <Compile Include="Helpers\ElmahErrorHandler.cs" />
     <Compile Include="Helpers\StatusColorHelper.cs" />
     <Compile Include="Helpers\GravatarExtensions.cs" />
@@ -163,6 +161,11 @@
     <Compile Include="Helpers\FormsAuthentication.cs" />
     <Compile Include="Helpers\FormsAuthenticationConfiguration.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
+    <Compile Include="Migrations\201201260958254_VoteTime.cs" />
+    <Compile Include="Migrations\201201260958254_VoteTime.Designer.cs">
+      <DependentUpon>201201260958254_VoteTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\IdeastrikeDbConfiguration.cs" />
     <Compile Include="Models\Repositories\IUserRepository.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
@@ -206,7 +209,6 @@
     <Compile Include="Modules\LoginModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\IdeaModule.cs" />
-    <Compile Include="ProductionDatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

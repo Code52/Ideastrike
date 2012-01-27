@@ -48,7 +48,8 @@ namespace Ideastrike.Nancy.Models
             {
                 IdeaId = ideaId,
                 UserId = userId,
-                Value = value
+                Value = value,
+                Time = DateTime.UtcNow
             });
 
             Save();
