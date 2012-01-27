@@ -23,13 +23,13 @@ namespace IdeaStrike.Tests
 		protected Mock<IFeatureRepository> _Features = new Mock<IFeatureRepository>();
 		protected Mock<IActivityRepository> _Activity = new Mock<IActivityRepository>();
 		protected Mock<ISettingsRepository> _Settings = new Mock<ISettingsRepository>();
-		protected Mock<IdeastrikeContext> _Context = new Mock<IdeastrikeContext>();
+		//protected Mock<IdeastrikeContext> _Context = new Mock<IdeastrikeContext>();
 		protected Mock<IImageRepository> _Images = new Mock<IImageRepository>();
 
 		public IdeaStrikeSpecBase() {
 			Bootstrapper = new ConfigurableBootstrapper(with => {
 				with.Module<TModule>();
-				with.Dependencies(_Users.Object, _Ideas.Object, _Features.Object, _Activity.Object, _Settings.Object, _Context.Object, _Images.Object);
+				with.Dependencies(_Users.Object, _Ideas.Object, _Features.Object, _Activity.Object, _Settings.Object, _Images.Object);
 				with.DisableAutoRegistration();
 				with.NancyEngine<NancyEngine>();
 			});
