@@ -55,7 +55,7 @@ namespace Ideastrike.Nancy
 
             builder.Update(existingContainer.ComponentRegistry);
 
-            DoMigrations();
+            
         }
 
         private static void DoMigrations()
@@ -85,6 +85,8 @@ namespace Ideastrike.Nancy
                                                              new ElmahErrorHandler.LogEvent(message).Raise();
                                                              return null;
                                                          });
+
+            DoMigrations();
         }
     }
 }

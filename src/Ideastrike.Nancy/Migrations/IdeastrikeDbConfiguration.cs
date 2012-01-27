@@ -1,6 +1,7 @@
 using System;
 using System.Data.Entity.Migrations;
 using Ideastrike.Nancy.Models;
+using System.Linq;
 
 namespace Ideastrike.Nancy.Migrations
 {
@@ -10,20 +11,22 @@ namespace Ideastrike.Nancy.Migrations
 
         public IdeastrikeDbConfiguration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(IdeastrikeContext context)
         {
-            context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "Title", Value = "Yet Another Ideastrike" });
-            context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "Name", Value = "Ideastrike" });
-            context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "WelcomeMessage", Value = "You've been.... Ideastruck" });
-            context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "HomePage", Value = "http://www.code52.org" });
-            context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "GAnalyticsKey", Value = "" });
-            context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "IdeaStatusChoices", Value = "New,Active,Completed,Declined" });
-            context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "IdeaStatusDefault", Value = IdeaStatusDefault });
-            context.SaveChanges();
-
+            if (!context.Settings.Any())
+            {
+                context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "Title", Value = "Yet Another Ideastrike" });
+                context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "Name", Value = "Ideastrike" });
+                context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "WelcomeMessage", Value = "You've been.... Ideastruck" });
+                context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "HomePage", Value = "http://www.code52.org" });
+                context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "GAnalyticsKey", Value = "" });
+                context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "IdeaStatusChoices", Value = "New,Active,Completed,Declined" });
+                context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "IdeaStatusDefault", Value = IdeaStatusDefault });
+                context.SaveChanges();
+            }
 #if DEBUG
             context.Ideas.Add(new Idea
                                   {
