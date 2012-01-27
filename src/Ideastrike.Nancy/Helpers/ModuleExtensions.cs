@@ -105,6 +105,8 @@ namespace Ideastrike
             model.Title = title;
             model.IsLoggedIn = context.IsLoggedIn();
             model.UserName = context.Username();
+            if (model.IsLoggedIn)
+                model.Claims = context.CurrentUser.Claims.ToList();
             return model;
         }
     }

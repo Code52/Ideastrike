@@ -16,5 +16,7 @@ namespace Ideastrike.Nancy.Models
         public DbSet<Vote> Votes { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Claim> Claims { get; set; }
+        public DbSet<UserClaim> UserClaims { get; set; }
     }
 }

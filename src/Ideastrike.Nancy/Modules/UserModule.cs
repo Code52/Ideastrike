@@ -59,6 +59,7 @@ namespace Ideastrike.Nancy.Modules
                                                                                UserName = user.UserName,
                                                                                Email = user.Email,
                                                                                Github = user.Github,
+                                                                               Claims = user.Claims.ToList(),
                                                                                IsLoggedIn = Context.IsLoggedIn(),
                                                                            }];
                                        };
