@@ -58,7 +58,7 @@
                 <ul class="nav">
                     <li><a href="/">Home</a></li>
                     <li><a href="/idea/new">New Idea</a></li>
-                    <li><a href="/inbox">Inbox</a></li>
+                    @*<li><a href="/inbox">Inbox</a></li>*@
                 </ul>
                 <div class="pull-right loggedin">
                 @if(Model.IsLoggedIn)
@@ -67,7 +67,11 @@
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" style="min-width:160px;">@*<img src="@@Model.GravatarUrl" />*@ @Model.UserName </a>
                           <ul class="dropdown-menu">
-                            <li><a href="/profile/edit">Profile</a></li>
+                              <li><a href="/profile/edit">Profile</a></li>
+                              @if (Model.Claims != null && Model.Claims.Contains("admin"))
+                              {
+                                  <li><a href="/admin/">Admin Panel</a></li>
+                              }
                             <li><a href="/logout">Log out</a></li>
                           </ul>
                         </li>
@@ -91,7 +95,6 @@
         </div>
         <footer>
             <p><a href="https://github.com/code52/ideastrike">Powered by Ideastrike</a></p>
-            <p><a href="/admin/">Admin Panel</a></p>
         </footer>
     </div>
     <!-- /container -->

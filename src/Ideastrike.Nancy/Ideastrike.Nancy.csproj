@@ -165,7 +165,12 @@
     <Compile Include="Migrations\201201260958254_VoteTime.Designer.cs">
       <DependentUpon>201201260958254_VoteTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201201270809242_Claims.cs" />
+    <Compile Include="Migrations\201201270809242_Claims.Designer.cs">
+      <DependentUpon>201201270809242_Claims.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\IdeastrikeDbConfiguration.cs" />
+    <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Repositories\IUserRepository.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
@@ -174,6 +179,7 @@
     <Compile Include="Models\Repositories\IGenericRepository.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\UserClaim.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
     <Compile Include="Models\ViewModels\CommentViewModel.cs" />
     <Compile Include="Models\ViewModels\FeatureViewModel.cs" />

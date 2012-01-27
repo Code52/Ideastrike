@@ -68,6 +68,10 @@ namespace Ideastrike.Nancy.Modules
                                     Github = (!string.IsNullOrEmpty(username)) ? username : "",
                                     IsActive = true,
                                 };
+
+                    if (!_user.GetAll().Any())
+                        _user.AddRole(u, "Admin");
+
                     if (j.profile.photo != null)
                         u.AvatarUrl = j.profile.photo.ToString();
 

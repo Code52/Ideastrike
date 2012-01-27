@@ -27,25 +27,28 @@ namespace Ideastrike.Nancy.Migrations
                 context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "IdeaStatusDefault", Value = IdeaStatusDefault });
                 context.SaveChanges();
             }
-#if DEBUG
-            context.Ideas.Add(new Idea
-                                  {
-                                      Time = DateTime.UtcNow,
-                                      Author = new User { Id = Guid.NewGuid(), UserName = "aeoth", Email = "paul@theleagueofpaul.com" },
-                                      Title = "So Meta",
-                                      Description = "Put an idea in your idea so you can idea when you idea",
-                                      Status = IdeaStatusDefault
-                                  });
 
-            context.Ideas.Add(new Idea
-            {
-                Time = DateTime.UtcNow,
-                Author = new User { Id = Guid.NewGuid(), UserName = "shiftkey", Email = "me@brendanforster.com" },
-                Title = "Lorem Ipsum",
-                Description = "This is also another idea",
-                Status = IdeaStatusDefault
-            });
-            context.SaveChanges();
+            context.Claims.AddOrUpdate(s => s.Name, new Claim { Name = "admin"});
+            context.Claims.AddOrUpdate(s => s.Name, new Claim { Name = "moderator" });
+#if DEBUG
+            //context.Ideas.Add(new Idea
+            //                      {
+            //                          Time = DateTime.UtcNow,
+            //                          Author = new User { Id = Guid.NewGuid(), UserName = "aeoth", Email = "paul@theleagueofpaul.com" },
+            //                          Title = "So Meta",
+            //                          Description = "Put an idea in your idea so you can idea when you idea",
+            //                          Status = IdeaStatusDefault
+            //                      });
+
+            //context.Ideas.Add(new Idea
+            //{
+            //    Time = DateTime.UtcNow,
+            //    Author = new User { Id = Guid.NewGuid(), UserName = "shiftkey", Email = "me@brendanforster.com" },
+            //    Title = "Lorem Ipsum",
+            //    Description = "This is also another idea",
+            //    Status = IdeaStatusDefault
+            //});
+            //context.SaveChanges();
 #endif
         }
     }

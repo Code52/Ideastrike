@@ -14,7 +14,8 @@ namespace Ideastrike.Nancy
     public class IdeastrikeBootstrapper : AutofacNancyBootstrapper
     {
         private const string SqlClient = "System.Data.SqlClient";
-        protected override void ConfigureRequestContainer(ILifetimeScope existingContainer)
+
+        protected override void ConfigureApplicationContainer(ILifetimeScope existingContainer)
         {
             var builder = new ContainerBuilder();
 
@@ -55,7 +56,6 @@ namespace Ideastrike.Nancy
 
             builder.Update(existingContainer.ComponentRegistry);
 
-            
         }
 
         private static void DoMigrations()
