@@ -75,20 +75,12 @@ namespace Ideastrike.Nancy.Modules
             Post["/user/ban"] = _ => 
             {
                 var userId = Guid.Parse(Request.Form.Id);
-                var user = _users.Get(userId);
-                user.IsActive = false;
-                _users.Save();
-
+                
+                _users.Delete(userId);
+                
                 return Response.AsRedirect("/admin/users");
             };
-            Post["/user/unban"] = _ => {
-                var userId = Guid.Parse(Request.Form.Id);
-                var user = _users.Get(userId);
-                user.IsActive = true;
-                _users.Save();
-
-                return Response.AsRedirect("/admin/users");
-            };
+            
             Get["/moderation"] = _ =>
             {
                 var m = Context.Model(string.Format("Admin - {0}", settings.Title));

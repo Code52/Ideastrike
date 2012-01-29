@@ -46,7 +46,7 @@
             <input type="text" value="@Model.User.Github" />
         </div>
     </div>
-    <div class="cleafix">
+    <div>
         <label for="Is Active">
             Active:
         </label>
@@ -62,18 +62,11 @@
 
 <div class="row">
     <div class="offset1">
-        @if (@Model.User.IsActive) { 
+        
         <form method="post" action="/admin/user/ban">
             <input type="hidden" name="Id" value="@Model.User.Id" />
             <button class="btn danger">Drop the Ban-Hammer&#8482;</button>
         </form>
-        }
-        else 
-        {
-            <form method="post" action="/admin/user/unban">
-                <input type="hidden" name="Id" value="@Model.User.Id" />
-                <button class="btn danger">Un-ban user</button>
-            </form>
-        }
+        
     </div>
 </div>
