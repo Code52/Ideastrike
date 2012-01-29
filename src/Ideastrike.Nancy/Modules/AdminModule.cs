@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
@@ -48,6 +49,46 @@ namespace Ideastrike.Nancy.Modules
                 return View["Admin/Users", m];
             };
 
+            Get["/user/{id}"] = parameters => 
+            {
+                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                Guid userIdAsGuid;
+                if (!Guid.TryParse(parameters.id.ToString(), out userIdAsGuid)) 
+                {
+                    //not a valid guid.
+                    return 404;
+                }
+                var user = _users.Get(userIdAsGuid);
+                if (user == null) 
+                {
+                    //user can't be found, throw 404
+                    return 404;
+                }
+                //give them a bigger gravatar picture...
+                user.AvatarUrl = user.Email.ToGravatarUrl(180);
+
+                m.User = user;
+
+                return View["Admin/User", m];
+            };
+
+            Post["/user/ban"] = _ => 
+            {
+                var userId = Guid.Parse(Request.Form.Id);
+                var user = _users.Get(userId);
+                user.IsActive = false;
+                _users.Save();
+
+                return Response.AsRedirect("/admin/users");
+            };
+            Post["/user/unban"] = _ => {
+                var userId = Guid.Parse(Request.Form.Id);
+                var user = _users.Get(userId);
+                user.IsActive = true;
+                _users.Save();
+
+                return Response.AsRedirect("/admin/users");
+            };
             Get["/moderation"] = _ =>
             {
                 var m = Context.Model(string.Format("Admin - {0}", settings.Title));
