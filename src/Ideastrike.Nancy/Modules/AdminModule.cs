@@ -84,10 +84,16 @@ namespace Ideastrike.Nancy.Modules
             Get["/moderation"] = _ =>
             {
                 var m = Context.Model(string.Format("Admin - {0}", settings.Title));
-                m.Name = settings.Name;
-                m.WelcomeMessage = settings.WelcomeMessage;
-                m.HomePage = settings.HomePage;
-                m.GAnalyticsKey = settings.GAnalyticsKey;
+                
+                //get a list of the latest ideas that are flagged as 'new'
+                //this query is going to suck performance wise...
+                var newIdeas = _ideas
+                    .FindBy(x => x.Status == "New")
+                    .OrderByDescending(x => x.Time)
+                    .ToList();
+                //var newIdeas = _ideas.GetAll().ToList();
+                m.Ideas = newIdeas;
+
                 return View["Admin/Moderation", m];
             };
 

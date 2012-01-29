@@ -60,13 +60,11 @@
 </fieldset>
 </form>
 
-<div class="row">
-    <div class="offset1">
+<div class="actions">
         
-        <form method="post" action="/admin/user/ban">
-            <input type="hidden" name="Id" value="@Model.User.Id" />
-            <button class="btn danger">Drop the Ban-Hammer&#8482;</button>
-        </form>
+    <form method="post" action="/admin/user/ban">
+        <input type="hidden" name="Id" value="@Model.User.Id" />
+        <button class="btn danger">Drop the Ban-Hammer&#8482;</button>
+    </form>
         
-    </div>
 </div>
