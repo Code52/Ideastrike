@@ -70,6 +70,36 @@
     <div style="clear: both;"></div>
 }
 
+
+@if (Model.CanChangeIdeaStatus) 
+{
+<div class="status">
+    <h3>Idea Status</h3>
+    <form method="post">
+        <div class="input">
+            <select id="Status" name="Status">
+            @foreach (string statusChoice in Model.StatusChoices)
+            {
+                string sel = "";
+                if (Model.Idea.Status == statusChoice)
+                {
+                    sel = "selected";
+                }
+                <option @sel>@statusChoice</option>
+            }
+            </select>
+            </div>
+        <div class="input">
+            
+            <textarea name="AdminResponse"></textarea>
+        </div>
+    </form>
+    
+</div>
+<hr />
+
+}
+
 @if (idea.Features.Count > 0)
 { 
     <div class="features">
