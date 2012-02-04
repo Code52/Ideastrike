@@ -1,8 +1,18 @@
 ﻿#container { width: 880px;margin-left: auto;margin-right: auto;}
-.brand { background: url('/Resources/logo_small.png') no-repeat;width: 115px;height: 57px;}
+.topbar .brand { 
+    background: url('/Resources/logo_small.png') no-repeat;
+    /* LIR @see http://www.kryogenix.org/code/browser/lir/ */
+    height:0;
+    overflow:hidden;
+    padding:57px 0 0;
+    width: 115px;
+}
 .topbar div > ul, .nav { margin: 5px 10px 0 0;}
+.topbar div > ul a, .nav a {
+    padding-top:14px;
+}
 .topbar form { margin-top: 10px; }
-.topbar h3 a, .topbar .brand { padding: 0px;}
+.topbar h3 a { padding: 0px;}
 .topbar .fill{ background-color:#660000;
                background-repeat:repeat-x;
                background-image:-khtml-gradient(linear, left top, left bottom, from(#400000), to(#660000));
@@ -110,3 +120,6 @@ border: 0;
 .activity { margin-right:75px;}
 .loggedin { color: White; }
 .loggedin img {width:15px; height:15px;}
+#fileupload .span11 {
+    margin-left:5px;
+}
