@@ -28,6 +28,11 @@ namespace Ideastrike.Nancy.Migrations
                 context.SaveChanges();
             }
 
+            if (context.Settings.FirstOrDefault<Setting>(s => s.Key == "MaxThumbnailWidth") == null)
+            {
+                context.Settings.AddOrUpdate(s => s.Key, new Setting { Key = "MaxThumbnailWidth", Value = 1000.ToString() });
+            }
+
             context.Claims.AddOrUpdate(s => s.Name, new Claim { Name = "admin"});
             context.Claims.AddOrUpdate(s => s.Name, new Claim { Name = "moderator" });
 #if DEBUG
