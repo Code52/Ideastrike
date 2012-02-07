@@ -67,6 +67,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminModuleTests\when_an_authenticated_user_views_the_admin_page.cs" />
+    <Compile Include="AdminModuleTests\when_an_authenticated_user_views_the_settings_page.cs" />
     <Compile Include="AdminModuleTests\when_an_unauthenticated_user_views_the_admin_page.cs" />
     <Compile Include="ApiModuleTests\when_posting_a_new_idea.cs" />
     <Compile Include="ApiModuleTests\when_updating_an_idea.cs" />
@@ -91,6 +93,8 @@
     <Compile Include="IdeaModuleTests\when_an_unauthorized_user_creates_a_new_idea.cs" />
     <Compile Include="IdeaModuleTests\when_creating_a_new_idea.cs" />
     <Compile Include="IdeaModuleTests\when_deleting_a_idea.cs" />
+    <Compile Include="IdeaModuleTests\when_viewing_an_image_thumbnail_with_width_greater_than_max.cs" />
+    <Compile Include="IdeaModuleTests\when_viewing_an_image_thumbnail_with_width_less_than_max.cs" />
     <Compile Include="IdeaModuleTests\when_viewing_the_idea_page.cs" />
     <Compile Include="IdeaModuleTests\when_voting_for_an_item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
