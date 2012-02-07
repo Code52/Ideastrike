@@ -7,6 +7,7 @@ namespace Ideastrike.Nancy.Models
         string WelcomeMessage { get; set; }
         string HomePage { get; set; }
         string GAnalyticsKey { get; set; }
+        int MaxThumbnailWidth { get; set; }
         string IdeaStatusDefault { get; set; }
         string IdeaStatusChoices { get; set; }
         void Add(string key, string value);

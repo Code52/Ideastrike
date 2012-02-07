@@ -65,6 +65,7 @@ namespace Ideastrike.Nancy.Modules
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
                 m.GAnalyticsKey = settings.GAnalyticsKey;
+                m.MaxThumbnailWidth = settings.MaxThumbnailWidth;
 
                 return View["Admin/Settings", m];
             };
@@ -76,6 +77,7 @@ namespace Ideastrike.Nancy.Modules
                 settings.Name = Request.Form.yourname;
                 settings.HomePage = Request.Form.homepage;
                 settings.GAnalyticsKey = Request.Form.analyticskey;
+                settings.MaxThumbnailWidth = Request.Form.maxthumbnailwidth;
                
                 return Response.AsRedirect("/admin/settings");
             };
