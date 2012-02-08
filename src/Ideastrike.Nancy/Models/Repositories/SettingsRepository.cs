@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Ideastrike.Nancy.Models.Repositories
 {
@@ -89,6 +90,22 @@ namespace Ideastrike.Nancy.Models.Repositories
             {
                 Set("GAnalyticsKey", value);
                 _gAnalyticsKey = value;
+            }
+        }
+
+        private int _maxThumbnailWidth;
+        public int MaxThumbnailWidth
+        {
+            get
+            {
+                if (_maxThumbnailWidth == 0)
+                    _maxThumbnailWidth = Convert.ToInt32(Get("MaxThumbnailWidth"));
+                return _maxThumbnailWidth;
+            }
+            set
+            {
+                Set("MaxThumbnailWidth", value.ToString());
+                _maxThumbnailWidth = value;
             }
         }
 

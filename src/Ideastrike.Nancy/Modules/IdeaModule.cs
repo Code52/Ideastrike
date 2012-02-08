@@ -76,7 +76,12 @@ namespace Ideastrike.Nancy.Modules
                 using (var memoryStream = new MemoryStream(image.ImageBits))
                 {
                     var drawingImage = System.Drawing.Image.FromStream(memoryStream);
-                    var thumb = drawingImage.ToThumbnail((int)parameters.width);
+                    int thumbWidth = (int)parameters.width;
+                    if (thumbWidth > settings.MaxThumbnailWidth)
+                    {
+                        thumbWidth = settings.MaxThumbnailWidth;
+                    }
+                    var thumb = drawingImage.ToThumbnail(thumbWidth);
                     using (var thumbnailStream = new MemoryStream())
                     {
                         // TODO: format should be adaptive based on backing source?

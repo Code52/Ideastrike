@@ -10,6 +10,9 @@ using Ideastrike.Nancy.Models.Repositories;
 using Moq;
 using Nancy;
 using Nancy.Testing;
+using System.Drawing;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace IdeaStrike.Tests
 {
@@ -58,6 +61,22 @@ namespace IdeaStrike.Tests
                 RedirectUrl = "~/login",
                 UserMapper = _Users.Object
             });
+        }
+
+        protected byte[] CreateImageBits()
+        {
+            Bitmap img = new Bitmap(10, 10);
+            Graphics imgData = Graphics.FromImage(img);
+            imgData.DrawLine(new Pen(Color.Blue), 0, 0, 10, 10);
+
+            
+            byte[] imageBits = null;
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                img.Save(memoryStream, ImageFormat.Bmp);
+                imageBits = memoryStream.ToArray();
+            }
+            return imageBits;
         }
 
         protected void Get(string path, Action<BrowserContext> browserContext = null)
