@@ -91,6 +91,7 @@
     <Compile Include="FeatureModuleTests\when_an_unauthenticated_user_adds_a_features.cs" />
     <Compile Include="HomeModuleTests\when_viewing_the_home_page.cs" />
     <Compile Include="IdeaModuleTests\when_an_unauthorized_user_creates_a_new_idea.cs" />
+    <Compile Include="IdeaModuleTests\when_create_new_idea_with_empty_fields.cs" />
     <Compile Include="IdeaModuleTests\when_creating_a_new_idea.cs" />
     <Compile Include="IdeaModuleTests\when_deleting_a_idea.cs" />
     <Compile Include="IdeaModuleTests\when_viewing_an_image_thumbnail_with_width_greater_than_max.cs" />

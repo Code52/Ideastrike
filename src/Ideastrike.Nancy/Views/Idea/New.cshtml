@@ -5,7 +5,11 @@
 <div class="row">
     <div class="span10">
         <div class="fill">
-            <div class="alert-message error" style="display: none">
+            @{
+                var displayError = Model.Errors ? "block" : "none";
+            }
+
+            <div class="alert-message error" style="display: @displayError">
                 <a class="close" href="#">&times;</a>
                 <p>
                     Please fill Title and Description
