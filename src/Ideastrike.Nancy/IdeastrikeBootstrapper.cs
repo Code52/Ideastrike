@@ -1,4 +1,3 @@
-using System;
 using System.Data.Entity.Migrations;
 using Autofac;
 using Ideastrike.Nancy.Helpers;
@@ -13,8 +12,6 @@ namespace Ideastrike.Nancy
 {
     public class IdeastrikeBootstrapper : AutofacNancyBootstrapper
     {
-        private const string SqlClient = "System.Data.SqlClient";
-
         protected override void ConfigureApplicationContainer(ILifetimeScope existingContainer)
         {
             var builder = new ContainerBuilder();
