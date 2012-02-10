@@ -52,6 +52,12 @@ namespace Ideastrike.Nancy.Modules
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
                 m.StatusChoices = _settings.IdeaStatusChoices.Split(',');
+                m.Errors = false;
+
+                if (Request.Query["validation"] == "failed")
+                {
+                    m.Errors = true;
+                }
 
                 return View["Idea/Edit", m];
             };
@@ -61,6 +67,12 @@ namespace Ideastrike.Nancy.Modules
             Post["/{id}/edit"] = parameters =>
             {
                 int id = parameters.id;
+
+                if (string.IsNullOrEmpty(Request.Form.Title) || string.IsNullOrEmpty(Request.Form.Description))
+                {
+                    return Response.AsRedirect(string.Format("/idea/{0}/edit?validation=failed", id));
+                }
+
                 var idea = _ideas.Get(id);
                 if (idea == null)
                     return View["404"];
