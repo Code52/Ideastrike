@@ -24,7 +24,7 @@ namespace Ideastrike.Nancy.Models
         }
 
 
-        public IQueryable<User> FindBy(System.Linq.Expressions.Expression<Func<User, bool>> predicate)
+        public new IQueryable<User> FindBy(System.Linq.Expressions.Expression<Func<User, bool>> predicate)
         {
             IQueryable<User> query = Context.Set<User>()
                                             .Include("UserClaims")
