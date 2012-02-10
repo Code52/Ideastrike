@@ -30,6 +30,13 @@ namespace Ideastrike.Nancy.Modules
             {
                 var m = Context.Model(string.Format("New Idea - {0}", _settings.Title));
                 m.Ideas = _ideas.GetAll();
+                m.Errors = false;
+
+                if (Request.Query["validation"] == "failed")
+                {
+                    m.Errors = true;
+                }
+
                 return View["Idea/New", m];
             };
 
@@ -45,6 +52,12 @@ namespace Ideastrike.Nancy.Modules
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
                 m.StatusChoices = _settings.IdeaStatusChoices.Split(',');
+                m.Errors = false;
+
+                if (Request.Query["validation"] == "failed")
+                {
+                    m.Errors = true;
+                }
 
                 return View["Idea/Edit", m];
             };
@@ -54,6 +67,12 @@ namespace Ideastrike.Nancy.Modules
             Post["/{id}/edit"] = parameters =>
             {
                 int id = parameters.id;
+
+                if (string.IsNullOrEmpty(Request.Form.Title) || string.IsNullOrEmpty(Request.Form.Description))
+                {
+                    return Response.AsRedirect(string.Format("/idea/{0}/edit?validation=failed", id));
+                }
+
                 var idea = _ideas.Get(id);
                 if (idea == null)
                     return View["404"];
@@ -83,12 +102,17 @@ namespace Ideastrike.Nancy.Modules
             // save result of create to database
             Post["/new"] = _ =>
             {
+                if (string.IsNullOrEmpty(Request.Form.Title) || string.IsNullOrEmpty(Request.Form.Description))
+                {
+                    return Response.AsRedirect("/idea/new?validation=failed");
+                }
+
                 var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
 
                 if (user == null)
                     return Response.AsRedirect("/login");
 
-                var i = new Idea
+                var idea = new Idea
                             {
                                 Author = user,
                                 Time = DateTime.UtcNow,
@@ -102,19 +126,18 @@ namespace Ideastrike.Nancy.Modules
                 var parameters = keys.Where(c => c.StartsWith("imageId"));
                 var ids = parameters.Select(c => Context.Request.Form[c].ToString()).Cast<string>();
                 var images = ids.Select(id => _imageRepository.Get(Convert.ToInt32(id)));
-                i.Images = images.ToList();
+                idea.Images = images.ToList();
 
                 //i.Images = form.Cast<string>()
                 //    .Where(k => k.StartsWith("imageId"))
                 //    .Select(k => _imageRepository.Get(Convert.ToInt32(form[k])))
                 //    .ToList(); //is there a way to do this using Nancy?
-                if (i.Votes.Any(u => u.UserId == user.Id))
-                    i.UserHasVoted = true;
+                if (idea.Votes.Any(u => u.UserId == user.Id))
+                    idea.UserHasVoted = true;
 
+                ideas.Add(idea);
 
-                ideas.Add(i);
-
-                return Response.AsRedirect("/idea/" + i.Id);
+                return Response.AsRedirect("/idea/" + idea.Id);
             };
 
             // someone else votes for the idea

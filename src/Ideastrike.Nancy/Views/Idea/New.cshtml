@@ -4,12 +4,25 @@
 }
 <div class="row">
     <div class="span10">
-        <h2>Submit a New Idea</h2>
-        <form action="/idea/new" method="POST">
+        <div class="fill">
+            @{
+                var displayError = Model.Errors ? "block" : "none";
+            }
+
+            <div class="alert-message error" style="display: @displayError">
+                <a class="close" href="#">&times;</a>
+                <p>
+                    Please fill Title and Description
+                </p>
+            </div>
+        </div>
+
+    <h2>Submit a New Idea</h2>
+    <form action="/idea/new" method="POST">
         <div class="clearfix">
-            <label for="Title">Title</label>
+            <label for="title">Title</label>
             <div class="input">
-                <input id="Title" name="Title" type="text" />
+                <input id="title" name="title" type="text" />
             </div>
         </div>
         <div class="clearfix">
@@ -106,14 +119,15 @@
     </script>
     @Html.Partial("Shared/Templates/upload.html")
     @Html.Partial("Shared/Templates/download.html")
-    <script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
-    <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.j"s></script>
+    <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
     <script src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-modal.min.js"></script>
     <script src="http://blueimp.github.com/Bootstrap-Image-Gallery/bootstrap-image-gallery.min.js"></script>
     <script src="@Url.Content("~/Resources/jquery.iframe-transport.js")"></script>
     <script src="@Url.Content("~/Resources/jquery.fileupload.js")"></script>
     <script src="@Url.Content("~/Resources/jquery.fileupload-ui.js")"></script>
+    <script src="@Url.Content("~/Resources/Validation/newidea.js")"></script>
     <script type="text/javascript">
         $('#fileupload').fileupload({
             url: '/idea/uploadimage',

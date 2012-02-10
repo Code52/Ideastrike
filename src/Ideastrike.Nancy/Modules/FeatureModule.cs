@@ -2,20 +2,17 @@
 using System.Linq;
 using Ideastrike.Nancy.Models;
 using Nancy;
-using Ideastrike.Nancy.Models.Repositories;
 using Nancy.Security;
 
 namespace Ideastrike.Nancy.Modules
 {
     public class FeatureModule : NancyModule
     {
-        private readonly IIdeaRepository _ideas;
         private readonly IFeatureRepository _features;
 
-        public FeatureModule(IIdeaRepository ideas, IFeatureRepository features, IUserRepository users)
+        public FeatureModule(IFeatureRepository features, IUserRepository users)
             : base("/idea")
         {
-            _ideas = ideas;
             _features = features;
 
             this.RequiresAuthentication();
