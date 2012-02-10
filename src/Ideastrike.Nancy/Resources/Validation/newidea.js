@@ -2,28 +2,19 @@
     $('form').submit(function () {
         var invalid = false;
 
-        if ($('#title').val() == '') {
-            invalid = true;
-            $('#title').closest('.clearfix').addClass('error');
-        }
-
-        if ($('#new-idea').val() == '') {
-            invalid = true;
-            $('#new-idea').closest('.clearfix').addClass('error');
-        }
+        invalid = $('#title').val() == '';
+        invalid = invalid || $('#new-idea').val() == '';
 
         if (invalid) {
-            $('.alert-message').show();
+            $('.error').show();
         }
 
         return !invalid;
     });
 
     $('#title, #new-idea').live('keyup', function () {
-        if ($(this).val().length > 0) {
-            $(this).closest('.clearfix').removeClass('error');
-            $('.alert-message').hide();
+        if ($('#title').val().length > 0 && $('#new-idea').val().length > 0) {
+            $('.error').hide();
         }
     });
-
 })();
