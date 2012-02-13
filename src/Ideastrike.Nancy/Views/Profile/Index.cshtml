@@ -2,29 +2,79 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
-<h3>@Model.UserName Profile</h3>
+@functions{
+    public string ValueOrNotSet(string value) 
+    {
+        return string.IsNullOrEmpty(value) ? "[not set]" : value;
+    }
+}
 
-@Model.Email<br/>
-@Model.Github<br/>
 
-@if (Model.Ideas.Count > 0)
-{
-    foreach (var i in Model.Ideas)
+<h2>
+    <span class="gravatar pull-right">
+        <img src="@Model.AvatarUrl" alt="gravatar" />
+    </span>
+    @Model.UserName profile
+</h2>
+
+<hr />
+
+<div class="well">
+    <div class="clearfix">
+        <span>Email:  @ValueOrNotSet(Model.Email)</span>
+        <span>Github: @ValueOrNotSet(Model.Github)</span>
+
+
+    </div>
+</div>
+
+<section>
+    <h3>Ideas you submitted:</h3>
+    @if (Model.Ideas.Count > 0)
     {
-        <div class="span8 text">@i.Title</div><br/>
+        <ul>
+        @foreach (var idea in Model.Ideas)
+        {
+            <li class="span8 text"><a href="/idea/@idea.Id">@idea.Title</a></li>
+        }
+        </ul>
     }
-}
-@if (Model.Features.Count > 0)
-{
-    foreach (var i in Model.Features)
+    else
     {
-        <div class="span8 text">@i.Title</div><br/>
+        <span>No ideas yet.. Go ahead and create one!</span>
     }
-}
-@if (Model.Votes.Count > 0)
-{
-    foreach (var i in Model.Votes)
+</section>
+
+<section>
+    <h3>Features you submitted:</h3>
+    @if (Model.Features.Count > 0)
     {
-        <div class="span8 text">@i.Idea.Title</div><br/>
+        <ul>
+        @foreach (var feature in Model.Features)
+        {
+            <li class="span8 text"><a href="/idea/@feature.Idea.Id#@feature.Id">@feature.Text</a></li>
+        }
+        </ul>
     }
-}
+    else
+    {
+        <span>No features yet..</span>
+    }
+</section>
+
+<section>
+    <h3>Voted up for such ideas:</h3>
+    @if (Model.Votes.Count > 0)
+    {
+        <ul>
+        @foreach (var vote in Model.Votes)
+        {
+            <li class="span8 text"><a href="/idea/@vote.Idea.Id">@vote.Idea.Title</a></li>
+        }
+        </ul>
+    }
+    else
+    {
+        <span>No votes yet..</span>
+    }
+</section>
