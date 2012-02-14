@@ -48,6 +48,9 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return View["404"];
 
+                if (idea.Author.UserName != Context.CurrentUser.UserName)
+                    return View["404"];
+
                 var m = Context.Model(string.Format("Edit Idea: '{0}' - {1}", idea.Title, _settings.Title));
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
