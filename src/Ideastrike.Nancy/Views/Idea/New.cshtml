@@ -12,36 +12,37 @@
             <div class="alert-message error" style="display: @displayError">
                 <a class="close" href="#">&times;</a>
                 <p>
-                    Please fill Title and Description
+                                        @Ideastrike.Nancy.Localization.Strings.Idea_Edit_Error
+
                 </p>
             </div>
         </div>
 
-    <h2>Submit a New Idea</h2>
+    <h2>@Ideastrike.Nancy.Localization.Strings.Idea_New_Submit</h2>
     <form action="/idea/new" method="POST">
         <div class="clearfix">
-            <label for="title">Title</label>
+            <label for="title">@Ideastrike.Nancy.Localization.Strings.Idea_Title</label>
             <div class="input">
                 <input id="title" name="title" type="text" />
             </div>
         </div>
         <div class="clearfix">
-            <label for="Description">Description</label>
+            <label for="Description">@Ideastrike.Nancy.Localization.Strings.Idea_Description</label>
             <div class="input">
                 <div class="options">
                     <button type="button" disabled="disabled" id="edit-new-idea" class="btn edit" data-other="#preview-new-idea"
                         data-editor="#new-idea" data-view="#new-idea-view">
-                        Edit</button>
+                        @Ideastrike.Nancy.Localization.Strings.Common_Edit</button>
                     <button type="button" id="preview-new-idea" class="btn preview" data-other="#edit-new-idea"
                         data-editor="#new-idea" data-view="#new-idea-view">
-                        Preview</button>
+                        @Ideastrike.Nancy.Localization.Strings.Common_Preview</button>
                 </div>
                 <textarea id="new-idea" name="Description" rows="10"></textarea>
                 <div id="new-idea-view"></div>
             </div>
         </div>
         <div class="clearfix">
-            <label for="Images">Images</label>
+            <label for="Images">@Ideastrike.Nancy.Localization.Strings.Idea_Images</label>
             <div class="input">
                 <div class="container">
                     <br>
@@ -51,7 +52,7 @@
                                 <div class="progressbar fileupload-progressbar fade">
                                     <div style="width: 0%;"></div>
                                 </div>
-                                <span class="btn success fileinput-button"><span>Add image</span>
+                                <span class="btn success fileinput-button"><span>@Ideastrike.Nancy.Localization.Strings.Idea_Edit_AddImages</span>
                                     <input type="file" name="files[]" multiple="multiple" />
                                 </span>
                             </div>
@@ -78,19 +79,19 @@
                 <div class="modal-body">
                 </div>
                 <div class="modal-footer">
-                    <a class="btn primary next">Next</a> <a class="btn info prev">Previous</a> <a class="btn success download"
-                        target="_blank">Download</a>
+                    <a class="btn primary next">@Ideastrike.Nancy.Localization.Strings.Idea_Next</a> <a class="btn info prev">@Ideastrike.Nancy.Localization.Strings.Idea_Previous</a> <a class="btn success download"
+                        target="_blank">@Ideastrike.Nancy.Localization.Strings.Idea_Download</a>
                 </div>
             </div>
         </div>
         <div class="actions">
             <button type="submit" class="btn primary" id="submitButton">
-                Submit</button>
+                @Ideastrike.Nancy.Localization.Strings.Idea_Submit</button>
         </div>
         </form>
     </div>
     <div class="span4">
-        <h3>Popular Ideas</h3>
+        <h3>@Ideastrike.Nancy.Localization.Strings.Home_Popular</h3>
         <ul>
             @foreach (var i in Model.Ideas)
             {

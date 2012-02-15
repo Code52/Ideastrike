@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="HomeModule_LoginRequired" xml:space="preserve">
+    <value>You need to login to do that</value>
+  </data>
+  <data name="IdeaSecuredModule_EditIdea" xml:space="preserve">
+    <value>Edit Idea: '{0}' - {1}</value>
+  </data>
+  <data name="LoginModule_LoginError" xml:space="preserve">
+    <value>Login Error</value>
+  </data>
+  <data name="LoginModule_BadResponse_NoToken" xml:space="preserve">
+    <value>Bad response from login provider - could not find login token.</value>
+  </data>
+  <data name="LoginModule_BadResponse" xml:space="preserve">
+    <value>Bad response from login provider.</value>
+  </data>
+  <data name="LoginModule_BadResponse_NoUser" xml:space="preserve">
+    <value>Bad response from login provider - could not find user.</value>
+  </data>
+  <data name="UserModule_UsernameNotValid" xml:space="preserve">
+    <value>Username is not valid</value>
+  </data>
+  <data name="UserModule_UsernameTaken" xml:space="preserve">
+    <value>Username is already taken</value>
+  </data>
+  <data name="UserModule_UsernameAvailable" xml:space="preserve">
+    <value>Username is available</value>
+  </data>
+  <data name="Admin_GeneralSettings" xml:space="preserve">
+    <value>General Settings</value>
+  </data>
+  <data name="Admin_GoogleAnalyticsHelp" xml:space="preserve">
+    <value>It should look something like UA-XXXXXXX-X</value>
+  </data>
+  <data name="Admin_Home" xml:space="preserve">
+    <value>Admin Home</value>
+  </data>
+  <data name="Admin_HomepageHelp" xml:space="preserve">
+    <value>Link back to your website</value>
+  </data>
+  <data name="Admin_Moderation" xml:space="preserve">
+    <value>Moderation</value>
+  </data>
+  <data name="Admin_OrganizationNameHelp" xml:space="preserve">
+    <value>The name of the individual or organisation running</value>
+  </data>
+  <data name="Admin_RootHelp" xml:space="preserve">
+    <value>This is what visitors will see at the root of your Ideastrike install.</value>
+  </data>
+  <data name="Admin_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Admin_SiteTitle" xml:space="preserve">
+    <value>Site Title</value>
+  </data>
+  <data name="Admin_Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Admin_UservoiceImport" xml:space="preserve">
+    <value>Uservoice Import</value>
+  </data>
+  <data name="Admin_WelcomeMessage" xml:space="preserve">
+    <value>Welcome Message</value>
+  </data>
+  <data name="Admin_YourName" xml:space="preserve">
+    <value>Your Name</value>
+  </data>
+  <data name="Layout_AdminPanel" xml:space="preserve">
+    <value>Admin Panel</value>
+  </data>
+  <data name="Layout_Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Layout_LogOut" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="Layout_NewIdea" xml:space="preserve">
+    <value>New Idea</value>
+  </data>
+  <data name="Layout_SignIn" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="Admin_GoogleAnalytics" xml:space="preserve">
+    <value>Google Analytics</value>
+  </data>
+  <data name="Admin_Homepage" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="Admin_ImageSettings" xml:space="preserve">
+    <value>Image Settings</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Admin_ThumbnailWidth" xml:space="preserve">
+    <value>Thumbnail Width</value>
+  </data>
+  <data name="Admin_ThumbnailWidthHelp" xml:space="preserve">
+    <value>The maximum width in pixels for image thumbnails (default is 1000)</value>
+  </data>
+  <data name="Home_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Home_Popular" xml:space="preserve">
+    <value>Popular</value>
+  </data>
+  <data name="Home_Top" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="Common_UnVote" xml:space="preserve">
+    <value>unvote</value>
+  </data>
+  <data name="Common_Vote" xml:space="preserve">
+    <value>vote</value>
+  </data>
+  <data name="Common_Votes" xml:space="preserve">
+    <value>Votes</value>
+  </data>
+  <data name="Idea_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Idea_Edit_AddImages" xml:space="preserve">
+    <value>Add Images</value>
+  </data>
+  <data name="Idea_Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Idea_Edit_Error" xml:space="preserve">
+    <value>Please fill Title and Description</value>
+  </data>
+  <data name="Idea_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Idea_Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Idea_Images" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="Idea_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Idea_Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Idea_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Idea_Tweet" xml:space="preserve">
+    <value>Tweet this Idea!</value>
+  </data>
+  <data name="Login_Error" xml:space="preserve">
+    <value>There was a problem logging you in:</value>
+  </data>
+  <data name="Common_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Idea_Features" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="Idea_GotSomething" xml:space="preserve">
+    <value>Got something to add?</value>
+  </data>
+  <data name="Idea_HowAbout" xml:space="preserve">
+    <value>how about ...</value>
+  </data>
+  <data name="Idea_NoFeatures" xml:space="preserve">
+    <value>No features suggested yet, be the first!</value>
+  </data>
+  <data name="Common_Markdown" xml:space="preserve">
+    <value>You can use &lt;a href="http://daringfireball.net/projects/markdown/syntax"&gt;Markdown&lt;/a&gt;!</value>
+  </data>
+  <data name="Common_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Idea_ActivityFeed" xml:space="preserve">
+    <value>Activity Feed</value>
+  </data>
+  <data name="Idea_AddComment" xml:space="preserve">
+    <value>Add Comment</value>
+  </data>
+  <data name="Idea_AddFeature" xml:space="preserve">
+    <value>Add Feature</value>
+  </data>
+  <data name="Idea_LeaveComment" xml:space="preserve">
+    <value>Leave a Comment</value>
+  </data>
+  <data name="Idea_NoActivity" xml:space="preserve">
+    <value>No activity yet, add the first comment!</value>
+  </data>
+  <data name="Profile_Email" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="Profile_Github" xml:space="preserve">
+    <value>Github Username</value>
+  </data>
+  <data name="Profile_UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Idea_Edit" xml:space="preserve">
+    <value>Edit an idea</value>
+  </data>
+  <data name="Idea_New_Submit" xml:space="preserve">
+    <value>Submit a New Idea</value>
+  </data>
+</root>

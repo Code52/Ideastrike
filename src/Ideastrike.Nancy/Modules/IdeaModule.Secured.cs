@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ideastrike.Nancy.Helpers;
+using Ideastrike.Nancy.Localization;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
@@ -51,7 +52,7 @@ namespace Ideastrike.Nancy.Modules
                 if (idea.Author.UserName != Context.CurrentUser.UserName)
                     return View["404"];
 
-                var m = Context.Model(string.Format("Edit Idea: '{0}' - {1}", idea.Title, _settings.Title));
+                var m = Context.Model(string.Format(Strings.IdeaSecuredModule_EditIdea, idea.Title, _settings.Title));
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
                 m.StatusChoices = _settings.IdeaStatusChoices.Split(',');
