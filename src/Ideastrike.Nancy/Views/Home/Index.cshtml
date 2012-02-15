@@ -28,14 +28,14 @@
     <li @if (Model.Selected == SelectedTab.Popular)
         {@:class="active"
         }
-        ><a href="/">Popular</a></li>
+        ><a href="/">@Ideastrike.Nancy.Localization.Strings.Home_Popular</a></li>
     <li @if (Model.Selected == SelectedTab.Hot)
         {@:class="active"
         }
-        ><a href="/top">Top</a></li>
+        ><a href="/top">@Ideastrike.Nancy.Localization.Strings.Home_Top</a></li>
     <li @if (Model.Selected == SelectedTab.New)
         {@:class="active"
-        }><a href="/new">New</a> </li>
+        }><a href="/new">@Ideastrike.Nancy.Localization.Strings.Home_New</a> </li>
 </ul>
 <ul id="ideas">
     @foreach (Idea i in Model.Ideas)
@@ -45,18 +45,18 @@
                 <form>
                 <div class="voteinfo">
                     <h3 class="votecount @i.Id">@i.Votes.Sum(v => v.Value)</h3>
-                    votes
+                    @Ideastrike.Nancy.Localization.Strings.Common_Votes
                 </div>
                 @if (Model.IsLoggedIn)
                 {
                     <button type="button" class="btn vote" data-id="@i.Id" data-voted="@i.UserHasVoted" >
                         @if (i.UserHasVoted)
                         { 
-                            @:unvote
+                            @Ideastrike.Nancy.Localization.Strings.Common_UnVote
                         }
                         else
                         { 
-                            @: vote
+                            @Ideastrike.Nancy.Localization.Strings.Common_Vote
                         }</button>
                 }
                 </form>

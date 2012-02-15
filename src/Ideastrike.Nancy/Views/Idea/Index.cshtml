@@ -12,18 +12,18 @@
         <form>
         <div class="voteinfo">
             <h3 id="votecount">@idea.TotalVotes</h3>
-            votes
+            @Ideastrike.Nancy.Localization.Strings.Common_Votes
         </div>
         @if (Model.IsLoggedIn)
         { 
             <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
                         @if (idea.UserHasVoted)
                         { 
-                            @:unvote
+                            @Ideastrike.Nancy.Localization.Strings.Common_UnVote
                         }
                         else
                         { 
-                            @: vote
+                            @Ideastrike.Nancy.Localization.Strings.Common_Vote
                         }</button>
         }
         </form>
@@ -34,7 +34,7 @@
             <a href="https://twitter.com/share" 
                class="twitter-share-button" 
                data-text="Idea: @idea.Title" 
-               data-hashtags="ideastrike">Tweet this idea!</a>
+               data-hashtags="ideastrike">Idea_Tweet</a>
         </div>
         <div id="fb-root">
         </div>
@@ -51,7 +51,7 @@
 <div class="ideadesc gravatarsmall"><img src="@idea.GravatarUrl" /> <a href="">@idea.Author.UserName</a> <span class="ideadate">@FriendlyTimeHelper.Parse(idea.Time)</span>
 @if (idea.Author.UserName == Model.UserName)
 { 
-    <a href="/idea/@idea.Id/edit">Edit</a>
+    <a href="/idea/@idea.Id/edit">@Ideastrike.Nancy.Localization.Strings.Common_Edit</a>
 }</div>
 
 <hr />
@@ -59,7 +59,7 @@
 @if (idea.Images != null && idea.Images.Count >0)
 {
     <div>
-        <h4>Images</h4>
+        <h4>@Ideastrike.Nancy.Localization.Strings.Idea_Images</h4>
         <p>
             @foreach(var image in idea.Images)
             {
@@ -73,7 +73,7 @@
 @if (idea.Features.Count > 0)
 { 
     <div class="features">
-        <h3>Features</h3>
+        <h3>@Ideastrike.Nancy.Localization.Strings.Idea_Features</h3>
         <ul>
             @foreach (var a in idea.Features)
             {
@@ -96,12 +96,12 @@
 }
 else
 {
-    <strong>No features suggested yet, be the first!</strong>
+    <strong>@Ideastrike.Nancy.Localization.Strings.Idea_NoFeatures</strong>
 }
 @if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-feature">
-        <h5 class="hoverheader">Got something to add?</h5>
+        <h5 class="hoverheader">@Ideastrike.Nancy.Localization.Strings.Idea_GotSomething</h5>
     </div>
     <div id="add-feature" class="hide-on-start add-feature">
         <form action="/idea/@idea.Id/feature" method="POST">
@@ -114,18 +114,18 @@ else
                 -->
         <!--  TODO: can we hook in some anti-forgery bits? -->
         <label for="feature" id="label-text">
-            how about ...</label>
+            @Ideastrike.Nancy.Localization.Strings.Idea_HowAbout</label>
         <div class="input">
             <div class="options">
                 <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
                     data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
-                    Edit</button>
+                    @Ideastrike.Nancy.Localization.Strings.Common_Edit</button>
                 <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
                     data-editor="#new-feature" data-view="#new-feature-view">
-                    Preview</button>
+                    @Ideastrike.Nancy.Localization.Strings.Common_Preview</button>
             </div>
             <textarea id="new-feature" name="feature"></textarea><br />
-            <span class="help-block">You can use <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>!</span>
+            <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Common_Markdown</span>
             <div id="new-feature-view">
             </div>
         </div>
@@ -133,7 +133,7 @@ else
         <label for="submit">
         </label>
         <button class="btn primary" type="submit">
-            Add Feature</button>
+            @Ideastrike.Nancy.Localization.Strings.Idea_AddFeature</button>
         </form>
     </div>
 }
@@ -141,7 +141,7 @@ else
 @if (idea.Activities.Count > 0)
 { 
     <div class="comments">
-        <h3>Activity Feed</h3>
+        <h3>@Ideastrike.Nancy.Localization.Strings.Idea_ActivityFeed</h3>
         <div id="activity-feed">
             <ol></ol>
         </div>
@@ -153,31 +153,31 @@ else
 }
 else
 {
-    <strong>No activity yet, add the first comment!</strong>
+    <strong>@Ideastrike.Nancy.Localization.Strings.Idea_NoActivity</strong>
 }
 @if (Model.IsLoggedIn)
 {
     <div class="expander" data-element="#add-comment">
-        <h5 class="hoverheader">Leave a comment</h5>
+        <h5 class="hoverheader">@Ideastrike.Nancy.Localization.Strings.Idea_LeaveComment</h5>
     </div>
     <div id="add-comment" class="hide-on-start add-comment">
         <form action="/comment/@idea.Id/add" method="POST">
-        <label for="comment">leave a comment</label>
+        <label for="comment">@Ideastrike.Nancy.Localization.Strings.Idea_LeaveComment</label>
         <div class="input">
             <div class="options">
                 <button type="button" disabled="disabled" id="edit-new-comment" class="btn edit"
-                    data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">Edit</button>
+                    data-other="#preview-new-comment" data-editor="#new-comment" data-view="#new-comment-view">@Ideastrike.Nancy.Localization.Strings.Common_Edit</button>
                 <button type="button" id="preview-new-comment" class="btn preview" data-other="#edit-new-comment"
-                    data-editor="#new-comment" data-view="#new-comment-view">Preview</button>
+                    data-editor="#new-comment" data-view="#new-comment-view">@Ideastrike.Nancy.Localization.Strings.Common_Preview</button>
             </div>
             <textarea id="new-comment" name="comment"></textarea><br />
-            <span class="help-block">You can use <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>!</span>
+            <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Common_Markdown</span>
             <div id="new-comment-view">
             </div>
         </div>
         <br />
         <label for="submit"></label>
-        <button class="btn primary" type="submit">Add Comment</button>
+        <button class="btn primary" type="submit">@Ideastrike.Nancy.Localization.Strings.Idea_AddComment</button>
         </form>
     </div>
 }

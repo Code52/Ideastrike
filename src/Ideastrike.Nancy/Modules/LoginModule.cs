@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Ideastrike.Nancy.Localization;
 using Ideastrike.Nancy.Models;
 using Nancy;
 using System.Net;
@@ -24,8 +25,8 @@ namespace Ideastrike.Nancy.Modules
                         View["Login/Error",
                             new
                                 {
-                                    Title = "Login Error",
-                                    Message = "Bad response from login provider - could not find login token."
+                                    Title = Strings.LoginModule_LoginError,
+                                    Message = Strings.LoginModule_BadResponse_NoToken
                                 }];
 
                 var response = new WebClient().DownloadString(string.Format("https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}",apikey, Request.Form.token));
@@ -35,8 +36,8 @@ namespace Ideastrike.Nancy.Modules
                         View["Login/Error",
                             new
                                 {
-                                    Title = "Login Error",
-                                    Message = "Bad response from login provider - could not find user."
+                                    Title = Strings.LoginModule_LoginError,
+                                    Message = Strings.LoginModule_BadResponse_NoUser
                                 }];
 
                 var j = JsonConvert.DeserializeObject<dynamic>(response);
@@ -46,8 +47,8 @@ namespace Ideastrike.Nancy.Modules
                         View["Login/Error",
                             new
                                 {
-                                    Title = "Login Error",
-                                    Message = "Bad response from login provider."
+                                    Title = Strings.LoginModule_LoginError,
+                                    Message = Strings.LoginModule_BadResponse
                                 }];
 
                 var userIdentity = j.profile.identifier.ToString();
