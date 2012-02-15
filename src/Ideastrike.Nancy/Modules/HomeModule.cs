@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Ideastrike.Nancy.Localization;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
@@ -23,7 +24,7 @@ namespace Ideastrike.Nancy.Modules
             Get["/login"] = _ =>
                                 {
                                     return ListIdeas(_ideas.GetAll(), SelectedTab.Popular,
-                                                     "You need to login to do that");
+                                                     Strings.HomeModule_LoginRequired);
                                 };
         }
 

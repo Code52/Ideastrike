@@ -1,4 +1,6 @@
 using System.Data.Entity.Migrations;
+using System.Globalization;
+using System.Linq;
 using Autofac;
 using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Migrations;
@@ -82,6 +84,21 @@ namespace Ideastrike.Nancy
                                                              new ElmahErrorHandler.LogEvent(message).Raise();
                                                              return null;
                                                          });
+
+            pipelines.BeforeRequest.AddItemToEndOfPipeline(ctx =>
+                                                               {
+                                                                   var lang = ctx.Request.Headers.AcceptLanguage.FirstOrDefault();
+                                                                   if (lang != null)
+                                                                   {
+                                                                       // Accepted language can be something like "fi-FI", but it can also can be like fi-FI,fi;q=0.9,en;q=0.8
+                                                                       if (lang.Contains(","))
+                                                                           lang = lang.Substring(0, lang.IndexOf(","));
+
+                                                                       System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(lang);
+                                                                       System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
+                                                                   }
+                                                                   return null;
+                                                               });
 
             DoMigrations();
         }
