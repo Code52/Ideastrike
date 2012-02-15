@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Ideastrike.Nancy.Helpers;
+using Ideastrike.Nancy.Localization;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
@@ -76,10 +77,10 @@ namespace Ideastrike.Nancy.Modules
                                                  if (username == Context.CurrentUser.UserName)
                                                      msg = "";
                                                  else if (string.IsNullOrWhiteSpace(username))
-                                                     msg = "Username is not valid";
+                                                     msg = Strings.UserModule_UsernameNotValid;
                                                  else if (userExists)
-                                                     msg = "Username is already taken";
-                                                 else msg = "Username is available";
+                                                     msg = Strings.UserModule_UsernameTaken;
+                                                 else msg = Strings.UserModule_UsernameAvailable;
 
                                                  return Response.AsJson(new
                                                                             {
