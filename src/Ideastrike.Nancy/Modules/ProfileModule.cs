@@ -34,7 +34,11 @@ namespace Ideastrike.Nancy.Modules
                                       return View["Profile/Index",
                                           new
                                           {
-                                              Title = "Profile", user.Id, user.UserName, user.Email, user.Github,
+                                              Title = "Profile", 
+                                              Id = user.Id, 
+                                              UserName = user.UserName, 
+                                              Email = user.Email, 
+                                              Github = user.Github,
                                               Ideas = usersIdeas,
                                               Features = usersFeatures,
                                               Votes = usersVotes, user.AvatarUrl,
@@ -51,7 +55,11 @@ namespace Ideastrike.Nancy.Modules
 
                                            return View["Profile/Edit", new
                                                                            {
-                                                                               Title = "Profile", user.Id, user.UserName, user.Email, user.Github,
+                                                                               Title = "Profile", 
+                                                                               Id = user.Id, 
+                                                                               UserName = user.UserName, 
+                                                                               Email = user.Email, 
+                                                                               Github = user.Github,
                                                                                Claims = user.Claims.ToList(),
                                                                                IsLoggedIn = Context.IsLoggedIn(),
                                                                            }];
