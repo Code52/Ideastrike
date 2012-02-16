@@ -41,7 +41,8 @@ namespace Ideastrike.Nancy.Modules
                                               Github = user.Github,
                                               Ideas = usersIdeas,
                                               Features = usersFeatures,
-                                              Votes = usersVotes, user.AvatarUrl,
+                                              Votes = usersVotes,
+                                              AvatarUrl = user.AvatarUrl,
                                               Claims = user.Claims.ToList(),
                                               IsLoggedIn = Context.IsLoggedIn()
                                           }];
