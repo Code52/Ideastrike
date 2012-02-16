@@ -8,13 +8,13 @@ using Nancy.Security;
 
 namespace Ideastrike.Nancy.Modules
 {
-    public class UserModule : NancyModule
+    public class ProfileModule : NancyModule
     {
         public readonly IUserRepository _users;
         public readonly IFeatureRepository _features;
         public readonly IIdeaRepository _ideas;
 
-        public UserModule(IUserRepository users, IIdeaRepository ideas, IFeatureRepository features)
+        public ProfileModule(IUserRepository users, IIdeaRepository ideas, IFeatureRepository features)
         {
             _users = users;
             _ideas = ideas;
@@ -27,21 +27,22 @@ namespace Ideastrike.Nancy.Modules
                                       User user = Context.GetCurrentUser(_users);
                                       if (user == null) return Response.AsRedirect("/");
 
-                                      var i = _ideas.GetAll().Where(u => u.Author.Id == user.Id).ToList();
-                                      var f = _features.GetAll().Where(u => u.User.Id == user.Id).ToList();
-                                      var v = _users.GetVotes(user.Id).ToList();
+                                      var usersIdeas = _ideas.GetAll().Where(u => u.Author.Id == user.Id).ToList();
+                                      var usersFeatures = _features.GetAll().Where(u => u.User.Id == user.Id).ToList();
+                                      var usersVotes = _users.GetVotes(user.Id).ToList();
 
                                       return View["Profile/Index",
                                           new
                                           {
-                                              Title = "Profile",
-                                              Id = user.Id,
-                                              UserName = user.UserName,
-                                              Email = user.Email,
+                                              Title = "Profile", 
+                                              Id = user.Id, 
+                                              UserName = user.UserName, 
+                                              Email = user.Email, 
                                               Github = user.Github,
-                                              Ideas = i,
-                                              Features = f,
-                                              Votes = v,
+                                              Ideas = usersIdeas,
+                                              Features = usersFeatures,
+                                              Votes = usersVotes,
+                                              AvatarUrl = user.AvatarUrl,
                                               Claims = user.Claims.ToList(),
                                               IsLoggedIn = Context.IsLoggedIn()
                                           }];
@@ -55,10 +56,10 @@ namespace Ideastrike.Nancy.Modules
 
                                            return View["Profile/Edit", new
                                                                            {
-                                                                               Title = "Profile",
-                                                                               Id = user.Id,
-                                                                               UserName = user.UserName,
-                                                                               Email = user.Email,
+                                                                               Title = "Profile", 
+                                                                               Id = user.Id, 
+                                                                               UserName = user.UserName, 
+                                                                               Email = user.Email, 
                                                                                Github = user.Github,
                                                                                Claims = user.Claims.ToList(),
                                                                                IsLoggedIn = Context.IsLoggedIn(),
