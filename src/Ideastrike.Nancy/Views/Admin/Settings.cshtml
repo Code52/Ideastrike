@@ -4,64 +4,64 @@
 }
 
 <ul class="pills">
-    <li><a href="/admin/">Admin Home</a></li>
-    <li class="active"><a href="/admin/settings">Settings</a></li>
-    <li><a href="/admin/users">Users</a></li>
-    <li><a href="/admin/moderation">Moderation</a></li>
+    <li><a href="/admin/">@Ideastrike.Nancy.Localization.Strings.Admin_Home</a></li>
+    <li class="active"><a href="/admin/settings">@Ideastrike.Nancy.Localization.Strings.Admin_Settings</a></li>
+    <li><a href="/admin/users">@Ideastrike.Nancy.Localization.Strings.Admin_Users</a></li>
+    <li><a href="/admin/moderation">@Ideastrike.Nancy.Localization.Strings.Admin_Moderation</a></li>
 </ul>
 
 <form action="/admin/settings" method="POST">
 <fieldset>
-    <legend>General Settings</legend>
+    <legend>@Ideastrike.Nancy.Localization.Strings.Admin_GeneralSettings</legend>
     <div class="clearfix">
-        <label for="title">Site Title</label>
+        <label for="title">@Ideastrike.Nancy.Localization.Strings.Admin_SiteTitle</label>
         <div class="input">
             <input class="xlarge" id="title" name="title" value="@Model.Title" size="30" type="text" />
         </div>
     </div>
     <div class="clearfix">
-        <label for="yourname">Your Name</label>
+        <label for="yourname">@Ideastrike.Nancy.Localization.Strings.Admin_YourName</label>
         <div class="input">
             <input class="xlarge"  value="@Model.Name" id="yourname" name="yourname" size="30" type="text" />
-            <span class="help-block">The name of the individual or organisation running the show</span>
+            <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Admin_OrganizationNameHelp</span>
         </div>
     </div>
     <div class="clearfix">
         <label for="welcomemessage">
-            Welcome Message</label>
+            @Ideastrike.Nancy.Localization.Strings.Admin_WelcomeMessage</label>
         <div class="input">
             <textarea id="welcomemessage" name="welcomemessage">@Model.WelcomeMessage</textarea>
-            <span class="help-block">This is what visitors will see at the root of your Ideastrike install. <br/><em>This uses <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a></em></span>
+            <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Admin_RootHelp <br/><em>This uses <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a></em></span>
         </div>
     </div>
         <div class="clearfix">
-        <label for="homepage">Home Page</label>
+        <label for="homepage">@Ideastrike.Nancy.Localization.Strings.Admin_Homepage</label>
         <div class="input">
             <input class="xlarge" id="homepage" name="homepage"  value="@Model.HomePage"  size="30" type="text" />
-            <span class="help-block">Link back to your website</span>
+            <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Admin_HomepageHelp</span>
         </div>
     </div>
     <div class="clearfix">
-        <label for="analyticskey">Google Analytics</label>
+        <label for="analyticskey">@Ideastrike.Nancy.Localization.Strings.Admin_GoogleAnalytics</label>
         <div class="input">
             <input class="xlarge" id="analyticskey" name="analyticskey" value="@Model.GAnalyticsKey"  size="30" type="text" />
-            <span class="help-block">It should look something like UA-XXXXXXX-X</span>
+            <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Admin_GoogleAnalyticsHelp</span>
         </div>
     </div>
 </fieldset>
 <fieldset>
-    <legend>Image Settings</legend>
+    <legend>@Ideastrike.Nancy.Localization.Strings.Admin_ImageSettings</legend>
     <div class="clearfix">
-        <label for="maxthumbnailwidth">Thumbnail Width</label>
+        <label for="maxthumbnailwidth">@Ideastrike.Nancy.Localization.Strings.Admin_ThumbnailWidth</label>
         <div class="input">
             <input class="xlarge" id="maxthumbnailwidth" name="maxthumbnailwidth" value="@Model.MaxThumbnailWidth" type="number" />
-            <span class="help-block">The maximum width in pixels for image thumbnails (default is 1000)</span>
+            <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Admin_ThumbnailWidthHelp</span>
         </div>
     </div>
 </fieldset>
 <fieldset>
      <div class="input">
-        <button type="submit" class="btn primary">Save</button>
+        <button type="submit" class="btn primary">@Ideastrike.Nancy.Localization.Strings.Common_Save</button>
      </div>
 </fieldset>
 </form>

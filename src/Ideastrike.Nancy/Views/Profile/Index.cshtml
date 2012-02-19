@@ -8,10 +8,8 @@
         return string.IsNullOrEmpty(value) ? "[not set]" : value;
     }
 }
-
-
 <h2>
-    @Model.UserName profile 
+    @Model.UserName @Ideastrike.Nancy.Localization.Strings.Profile 
     <small><a href="/profile/edit">Edit</a></small>
     <span class="gravatar pull-right">
         <img src="@Model.AvatarUrl" alt="gravatar" />
