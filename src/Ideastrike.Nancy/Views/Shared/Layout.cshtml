@@ -67,7 +67,7 @@
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" style="min-width:160px;">@*<img src="@@Model.GravatarUrl" />*@ @Model.UserName </a>
                           <ul class="dropdown-menu">
-                              <li><a href="/profile/edit">Profile</a></li>
+                              <li><a href="/profile">Profile</a></li>
                               @if (Model.Claims != null && Model.Claims.Contains("admin"))
                               {
                                   <li><a href="/admin/">Admin Panel</a></li>
