@@ -28,15 +28,13 @@
         <div class="clearfix">
             <label for="Description">Description</label>
             <div class="input">
-                <div class="options">
-                    <button type="button" disabled="disabled" id="edit-new-idea" class="btn edit" data-other="#preview-new-idea"
-                        data-editor="#new-idea" data-view="#new-idea-view">
-                        Edit</button>
-                    <button type="button" id="preview-new-idea" class="btn preview" data-other="#edit-new-idea"
-                        data-editor="#new-idea" data-view="#new-idea-view">
-                        Preview</button>
-                </div>
-                <textarea id="new-idea" name="Description" rows="10"></textarea>
+                <div class="wmd-panel">
+					<div id="wmd-button-bar"></div>
+					<textarea class="wmd-input" id="wmd-input">
+					</textarea>
+				</div>
+				<div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+				
                 <div id="new-idea-view"></div>
             </div>
         </div>
@@ -128,6 +126,9 @@
     <script src="@Url.Content("~/Resources/jquery.fileupload.js")"></script>
     <script src="@Url.Content("~/Resources/jquery.fileupload-ui.js")"></script>
     <script src="@Url.Content("~/Resources/Validation/newidea.js")"></script>
+	<script src="@Url.Content("~/Resources/Markdown.Converter.js")"></script>
+	<script src="@Url.Content("~/Resources/Markdown.Sanitizer.js")"></script>
+	<script src="@Url.Content("~/Resources/Markdown.Editor.js")"></script>
     <script type="text/javascript">
         $('#fileupload').fileupload({
             url: '/idea/uploadimage',
