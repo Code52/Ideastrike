@@ -102,7 +102,7 @@ namespace Ideastrike
         public static dynamic Model(this NancyContext context, string title)
         {
             dynamic model = new ExpandoObject();
-            model.Title = title;
+            model.Title = string.Format("{0}{1}", (context.CurrentUser != null && context.CurrentUser.Claims.Contains("admin") ? "Admin - " : string.Empty), title).Trim();
             model.IsLoggedIn = context.IsLoggedIn();
             model.UserName = context.Username();
             if (model.IsLoggedIn)

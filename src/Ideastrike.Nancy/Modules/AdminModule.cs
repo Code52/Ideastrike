@@ -29,7 +29,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                var m = Context.Model(settings.Title);
                 m.Name = settings.Name;
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
@@ -39,7 +39,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/users"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                var m = Context.Model(settings.Title);
                 m.Name = settings.Name;
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
@@ -50,7 +50,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/moderation"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                var m = Context.Model(settings.Title);
                 m.Name = settings.Name;
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
@@ -60,7 +60,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/settings"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                var m = Context.Model(settings.Title);
                 m.Name = settings.Name;
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
