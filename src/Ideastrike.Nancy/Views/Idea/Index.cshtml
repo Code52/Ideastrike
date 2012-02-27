@@ -1,4 +1,4 @@
-﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @using Nancy
 @using Ideastrike.Nancy.Helpers
 @using Ideastrike.Nancy.Modules
@@ -182,8 +182,8 @@ else
     </div>
 }
 @section PageScript {
-    @Html.Partial("Shared/Templates/github.html")
-    @Html.Partial("Shared/Templates/comment.html")
+    @Html.Partial("Shared/Templates/github.cshtml")
+    @Html.Partial("Shared/Templates/comment.cshtml")
     <script src="/Resources/social.js"></script>
     <script type="text/javascript">
         function updateVoteCount(data) {

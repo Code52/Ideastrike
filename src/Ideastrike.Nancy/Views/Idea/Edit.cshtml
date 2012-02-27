@@ -1,4 +1,4 @@
-﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
@@ -136,8 +136,8 @@
         emptyResult: 'Empty file upload result'
     };
     </script>
-    @Html.Partial("Shared/Templates/upload.html")
-    @Html.Partial("Shared/Templates/download.html")
+    @Html.Partial("Shared/Templates/upload.cshtml")
+    @Html.Partial("Shared/Templates/download.cshtml")
     <script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
     <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>

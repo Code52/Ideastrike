@@ -1,6 +1,4 @@
-using System;
-using System.Web;
-using System.Web.Mvc;
+using Nancy.ViewEngines.Razor;
 
 namespace Ideastrike.Nancy.Helpers
 {
@@ -11,15 +9,15 @@ namespace Ideastrike.Nancy.Helpers
             switch (Status)
             {
                 case "New":
-                    return new MvcHtmlString("warning");
+                    return new NonEncodedHtmlString("warning");
                 case "Active":
-                    return new MvcHtmlString("success");
+                    return new NonEncodedHtmlString("success");
                 case "Declined":
-                    return new MvcHtmlString("important");
+                    return new NonEncodedHtmlString("important");
                 case "Completed":
-                    return new MvcHtmlString("notice");
+                    return new NonEncodedHtmlString("notice");
                 default:
-                    return new MvcHtmlString(String.Empty);
+                    return new NonEncodedHtmlString(string.Empty);
             }
         }
     }

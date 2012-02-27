@@ -1,5 +1,5 @@
-﻿using System.Web;
-using Ideastrike.Nancy.Helpers;
+﻿using Ideastrike.Nancy.Helpers;
+using Nancy.ViewEngines.Razor;
 
 namespace Ideastrike.Nancy.Models.ViewModels
 {

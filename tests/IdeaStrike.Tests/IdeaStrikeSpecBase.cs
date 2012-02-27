@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using Ideastrike;
+using Ideastrike.Nancy;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Moq;
@@ -16,6 +17,14 @@ using System.Drawing.Imaging;
 
 namespace IdeaStrike.Tests
 {
+    public class CustomRootPathProvider : IRootPathProvider
+    {
+        public string GetRootPath()
+        {
+            return Path.GetDirectoryName(typeof(IdeastrikeBootstrapper).Assembly.Location);
+        }
+    }
+
     public class IdeaStrikeSpecBase<TModule> where TModule : NancyModule
     {
         protected ConfigurableBootstrapper Bootstrapper;
@@ -38,6 +47,7 @@ namespace IdeaStrike.Tests
                 with.Dependencies(_Users.Object, _Ideas.Object, _Features.Object, _Activity.Object, _Settings.Object, _Images.Object);
                 with.DisableAutoRegistration();
                 with.NancyEngine<NancyEngine>();
+                with.RootPathProvider<CustomRootPathProvider>();
             });
         }
 

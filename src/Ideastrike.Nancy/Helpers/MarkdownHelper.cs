@@ -1,6 +1,6 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using MarkdownDeep;
+using Nancy.ViewEngines.Razor;
 
 namespace Ideastrike.Nancy.Helpers
 {
@@ -21,7 +21,7 @@ namespace Ideastrike.Nancy.Helpers
 			string html = markdownTransformer.Transform(text);
 
 			// Wrap the html in an MvcHtmlString otherwise it'll be HtmlEncoded and displayed to the user as HTML :(
-			return new MvcHtmlString(html);
+            return new NonEncodedHtmlString(html);
 		}
 
 		/// <summary>
