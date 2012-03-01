@@ -1,0 +1,20 @@
+permalink: /:title.html
+auto: true
+markdown: rdiscount
+exclude: rakefile.rb, server.bat, config.ru
+appname: Ideastrike
+appslogan: 'You&#145;ve been hit with an...'
+username: Code52
+reponame: ideastrike
+accent: 430000
+darkaccent: fd0000
+description: 
+
+feature1title: 'Easy to host'
+feature2title: 'Built on Nancy'
+feature3title: 'Markdown powered'
+
+
+feature1desc: 'Built with AppHarbor in mind, you can deploy your own Ideastrike with a *tiny* amount of config (on AppHarbor) and a couple of git commands'
+feature2desc: 'Following the *Super-Duper-Happy-Path*, Nancy is a lightweight "alt.net" web framework thats a joy to use'
+feature3desc: 'Markdown everywhere - from ideas to responses and default messages. Markdown provides an easy, yet powerful way to format text'
