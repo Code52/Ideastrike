@@ -6,6 +6,7 @@ using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Migrations;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
+using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
 using System.Configuration;
@@ -64,7 +65,7 @@ namespace Ideastrike.Nancy
             migrator.Update();
         }
 
-        protected override void RequestStartup(ILifetimeScope container, IPipelines pipelines)
+        protected override void RequestStartup(ILifetimeScope container, IPipelines pipelines, NancyContext context)
         {
             var formsAuthConfiguration =
                 new FormsAuthenticationConfiguration
@@ -91,11 +92,12 @@ namespace Ideastrike.Nancy
                                                                    if (lang != null)
                                                                    {
                                                                        // Accepted language can be something like "fi-FI", but it can also can be like fi-FI,fi;q=0.9,en;q=0.8
-                                                                       if (lang.Contains(","))
-                                                                           lang = lang.Substring(0, lang.IndexOf(","));
+                                                                       var langId = lang.Item1;
+                                                                       if (langId.Contains(","))
+                                                                           langId = langId.Substring(0, langId.IndexOf(","));
 
-                                                                       System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(lang);
-                                                                       System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
+                                                                       System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(langId);
+                                                                       System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(langId);
                                                                    }
                                                                    return null;
                                                                });

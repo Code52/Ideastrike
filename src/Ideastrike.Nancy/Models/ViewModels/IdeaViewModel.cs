@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Ideastrike.Nancy.Helpers;
+using Nancy.ViewEngines.Razor;
 
 namespace Ideastrike.Nancy.Models.ViewModels
 {
@@ -22,7 +22,10 @@ namespace Ideastrike.Nancy.Models.ViewModels
             Features = idea.Features.Select(f => new FeatureViewModel(f)).ToList();
             Activities = idea.Activities.Select(f => new ActivityViewModel(f)).ToList();
 
-            Images = idea.Images.ToList();
+            if (idea.Images != null)
+            {
+                Images = idea.Images.ToList();
+            }
         }
 
         public IEnumerable<Image> Images { get; set; }
