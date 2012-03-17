@@ -1,6 +1,9 @@
+using System;
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Autofac;
 using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Migrations;
@@ -9,7 +12,6 @@ using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
-using System.Configuration;
 
 namespace Ideastrike.Nancy
 {
@@ -55,7 +57,6 @@ namespace Ideastrike.Nancy
                 .SingleInstance();
 
             builder.Update(existingContainer.ComponentRegistry);
-
         }
 
         private static void DoMigrations()
@@ -79,30 +80,36 @@ namespace Ideastrike.Nancy
 
         protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines)
         {
-            pipelines.OnError.AddItemToEndOfPipeline((context, exception) =>
-                                                         {
-                                                             var message = string.Format("Exception: {0}", exception);
-                                                             new ElmahErrorHandler.LogEvent(message).Raise();
-                                                             return null;
-                                                         });
-
-            pipelines.BeforeRequest.AddItemToEndOfPipeline(ctx =>
-                                                               {
-                                                                   var lang = ctx.Request.Headers.AcceptLanguage.FirstOrDefault();
-                                                                   if (lang != null)
-                                                                   {
-                                                                       // Accepted language can be something like "fi-FI", but it can also can be like fi-FI,fi;q=0.9,en;q=0.8
-                                                                       var langId = lang.Item1;
-                                                                       if (langId.Contains(","))
-                                                                           langId = langId.Substring(0, langId.IndexOf(","));
-
-                                                                       System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(langId);
-                                                                       System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(langId);
-                                                                   }
-                                                                   return null;
-                                                               });
+            pipelines.OnError.AddItemToEndOfPipeline(LogException);
+            pipelines.BeforeRequest.AddItemToEndOfPipeline(DetectLanguage);
 
             DoMigrations();
+        }
+
+        private static Response LogException(NancyContext context, Exception exception)
+        {
+            var message = string.Format("Exception: {0}", exception);
+            new ElmahErrorHandler.LogEvent(message).Raise();
+            return null;
+        }
+
+        private static Response DetectLanguage(NancyContext ctx)
+        {
+            var lang = ctx.Request.Headers.AcceptLanguage.FirstOrDefault();
+            if (lang != null)
+            {
+                // Accepted language can be something like "fi-FI", but it can also can be like fi-FI,fi;q=0.9,en;q=0.8
+                var langId = lang.Item1;
+                if (langId.Contains(","))
+                {
+                    var index = langId.IndexOf(",");
+                    langId = langId.Substring(0, index);
+                }
+
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(langId);
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(langId);
+            }
+            return null;
         }
     }
 }
