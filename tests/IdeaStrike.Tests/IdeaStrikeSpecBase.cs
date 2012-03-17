@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Ideastrike;
 using Ideastrike.Nancy;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Moq;
 using Nancy;
+using Nancy.Responses;
 using Nancy.Testing;
-using System.Drawing;
-using System.IO;
-using System.Drawing.Imaging;
+using Nancy.ViewEngines;
 
 namespace IdeaStrike.Tests
 {
@@ -36,33 +36,36 @@ namespace IdeaStrike.Tests
         protected Mock<IFeatureRepository> _Features = new Mock<IFeatureRepository>();
         protected Mock<IActivityRepository> _Activity = new Mock<IActivityRepository>();
         protected Mock<ISettingsRepository> _Settings = new Mock<ISettingsRepository>();
-        //protected Mock<IdeastrikeContext> _Context = new Mock<IdeastrikeContext>();
         protected Mock<IImageRepository> _Images = new Mock<IImageRepository>();
 
         public IdeaStrikeSpecBase()
         {
+            ViewFactory = new Mock<IViewFactory>();
+
             Bootstrapper = new ConfigurableBootstrapper(with =>
             {
                 with.Module<TModule>();
                 with.Dependencies(_Users.Object, _Ideas.Object, _Features.Object, _Activity.Object, _Settings.Object, _Images.Object);
                 with.DisableAutoRegistration();
                 with.NancyEngine<NancyEngine>();
+                with.ViewFactory(ViewFactory.Object);
                 with.RootPathProvider<CustomRootPathProvider>();
             });
         }
 
         protected User CreateMockUser(string username)
         {
-            var user = new User {
-				Id = Guid.NewGuid(),
-				UserName = username,
-                UserClaims = new Collection<UserClaim> {new UserClaim {Claim = new Claim {Name = "admin"}} }
-			};
-			_Users.Setup(d => d.Get(user.Id)).Returns(user);
-			_Users.Setup(d => d.GetUserFromIdentifier(user.Id)).Returns(user);
-			_Users.Setup(d => d.FindBy(It.IsAny<Expression<Func<User, bool>>>())).Returns(new[] { user }.AsQueryable());
-			return user;
-		}
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                UserName = username,
+                UserClaims = new Collection<UserClaim> { new UserClaim { Claim = new Claim { Name = "admin" } } }
+            };
+            _Users.Setup(d => d.Get(user.Id)).Returns(user);
+            _Users.Setup(d => d.GetUserFromIdentifier(user.Id)).Returns(user);
+            _Users.Setup(d => d.FindBy(It.IsAny<Expression<Func<User, bool>>>())).Returns(new[] { user }.AsQueryable());
+            return user;
+        }
 
         protected void EnableFormsAuth()
         {
@@ -75,13 +78,12 @@ namespace IdeaStrike.Tests
 
         protected byte[] CreateImageBits()
         {
-            Bitmap img = new Bitmap(10, 10);
-            Graphics imgData = Graphics.FromImage(img);
+            var img = new Bitmap(10, 10);
+            var imgData = Graphics.FromImage(img);
             imgData.DrawLine(new Pen(Color.Blue), 0, 0, 10, 10);
 
-            
             byte[] imageBits = null;
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
                 img.Save(memoryStream, ImageFormat.Bmp);
                 imageBits = memoryStream.ToArray();
@@ -105,6 +107,14 @@ namespace IdeaStrike.Tests
         {
             Browser = new Browser(Bootstrapper);
             Response = Browser.Put(path, browserContext);
+        }
+
+        public Mock<IViewFactory> ViewFactory { get; set; }
+
+        public void SetView(string path, HtmlResponse htmlResponse)
+        {
+            ViewFactory.Setup(v => v.RenderView(path, It.IsAny<object>(), It.IsAny<ViewLocationContext>()))
+                       .Returns(htmlResponse);
         }
     }
 }

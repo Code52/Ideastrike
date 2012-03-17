@@ -1,6 +1,7 @@
 ﻿using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Modules;
 using Nancy;
+using Nancy.Responses;
 using Xunit;
 
 namespace IdeaStrike.Tests.IdeaModuleTests
@@ -11,6 +12,8 @@ namespace IdeaStrike.Tests.IdeaModuleTests
 
         public when_viewing_the_idea_page()
         {
+            SetView("Idea/Index", new HtmlResponse());
+        
             _Ideas.Setup(d => d.Get(_Idea.Id)).Returns(_Idea);
 
             Get("/idea/0");
