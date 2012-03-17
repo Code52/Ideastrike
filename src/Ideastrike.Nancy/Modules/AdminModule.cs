@@ -29,7 +29,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                var m = Context.Model(string.Format("Admin - {0}", settings.SiteTitle));
                 m.Name = settings.Name;
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
@@ -39,7 +39,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/users"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                var m = Context.Model(string.Format("Admin - {0}", settings.SiteTitle));
                 m.Name = settings.Name;
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
@@ -50,7 +50,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/moderation"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                var m = Context.Model(string.Format("Admin - {0}", settings.SiteTitle));
                 m.Name = settings.Name;
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
@@ -60,7 +60,8 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/settings"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
+                var m = Context.Model(string.Format("Admin - {0}", settings.SiteTitle));
+                m.SiteTitle = settings.SiteTitle;
                 m.Name = settings.Name;
                 m.WelcomeMessage = settings.WelcomeMessage;
                 m.HomePage = settings.HomePage;
@@ -73,7 +74,7 @@ namespace Ideastrike.Nancy.Modules
             Post["/settings"] = _ =>
             {
                 settings.WelcomeMessage = Request.Form.welcomemessage;
-                settings.Title = Request.Form.title;
+                settings.SiteTitle = Request.Form.sitetitle;
                 settings.Name = Request.Form.yourname;
                 settings.HomePage = Request.Form.homepage;
                 settings.GAnalyticsKey = Request.Form.analyticskey;

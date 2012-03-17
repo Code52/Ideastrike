@@ -2,7 +2,7 @@ namespace Ideastrike.Nancy.Models
 {
     public interface ISettingsRepository
     {
-        string Title { get; set; }
+        string SiteTitle { get; set; }
         string Name { get; set; }
         string WelcomeMessage { get; set; }
         string HomePage { get; set; }

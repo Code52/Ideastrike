@@ -43,7 +43,7 @@ namespace Ideastrike.Nancy.Modules
             }
 
 
-            var m = Context.Model(_settings.Title);
+            var m = Context.Model(_settings.SiteTitle);
             m.Name = _settings.Name;
             m.WelcomeMessage = _settings.WelcomeMessage;
             m.Ideas = ideas;

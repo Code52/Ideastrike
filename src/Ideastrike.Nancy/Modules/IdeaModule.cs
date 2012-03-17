@@ -37,7 +37,7 @@ namespace Ideastrike.Nancy.Modules
                 }
 
                 var viewModel = new IdeaViewModel(idea);
-                var model = Context.Model(string.Format("{0} - {1}", idea.Title, _settings.Title));
+                var model = Context.Model(string.Format("{0} - {1}", idea.Title, _settings.SiteTitle));
                 model.Idea = viewModel;
                 return View["Idea/Index", model];
             };

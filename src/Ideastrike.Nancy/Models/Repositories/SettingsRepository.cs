@@ -13,19 +13,19 @@ namespace Ideastrike.Nancy.Models.Repositories
             this.db = db;
         }
 
-        private string _title;
-        public string Title
+        private string _siteTitle;
+        public string SiteTitle
         {
             get
             {
-                if (string.IsNullOrEmpty(_title))
-                    _title = Get("Title");
-                return _title;
+                if (string.IsNullOrEmpty(_siteTitle))
+                    _siteTitle = Get("Title");
+                return _siteTitle;
             }
             set
             {
                 Set("Title", value);
-                _title = value;
+                _siteTitle = value;
             }
         }
 
