@@ -169,6 +169,7 @@
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="Helpers\FormsAuthentication.cs" />
     <Compile Include="Helpers\FormsAuthenticationConfiguration.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
     <Compile Include="Localization\Strings.fi.Designer.cs">
       <DependentUpon>Strings.fi.resx</DependentUpon>

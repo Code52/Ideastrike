@@ -59,7 +59,7 @@ namespace Ideastrike.Nancy.Helpers
 
         private static IHtmlString HtmlString(string value)
         {
-            return new NonEncodedHtmlString(value);
+            return value.ToHtmlString();
         }
     }
 }

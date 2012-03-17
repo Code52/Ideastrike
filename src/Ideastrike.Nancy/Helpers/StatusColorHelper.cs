@@ -2,22 +2,22 @@ using Nancy.ViewEngines.Razor;
 
 namespace Ideastrike.Nancy.Helpers
 {
-    public static partial class StatusColorHelper
+    public static class StatusColorHelper
     {
-        public static IHtmlString ColorClass(string Status)
+        public static IHtmlString ColorClass(string status)
         {
-            switch (Status)
+            switch (status)
             {
                 case "New":
-                    return new NonEncodedHtmlString("warning");
+                    return "warning".ToHtmlString();
                 case "Active":
-                    return new NonEncodedHtmlString("success");
+                    return "success".ToHtmlString();
                 case "Declined":
-                    return new NonEncodedHtmlString("important");
+                    return "important".ToHtmlString();
                 case "Completed":
-                    return new NonEncodedHtmlString("notice");
+                    return "notice".ToHtmlString();
                 default:
-                    return new NonEncodedHtmlString(string.Empty);
+                    return string.Empty.ToHtmlString();
             }
         }
     }
