@@ -144,6 +144,9 @@
     <Content Include="Resources\social.js" />
     <Content Include="Resources\style.css" />
     <Content Include="Resources\Validation\newidea.js" />
+    <Content Include="Views\Shared\401.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Views\Shared\Templates\comment.cshtml" />
     <None Include="Views\Shared\Templates\github.cshtml" />
     <None Include="Views\Shared\Templates\download.cshtml" />

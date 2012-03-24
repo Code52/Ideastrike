@@ -46,6 +46,14 @@ namespace Ideastrike.Nancy.Modules
                 int id = parameters.id;
                 var idea = _ideas.Get(id);
 
+                //hack...
+                if ((!Context.CurrentUser.Claims.Contains("admin") || !Context.CurrentUser.Claims.Contains("moderator")) ||
+                    idea.Author.UserName != Context.CurrentUser.UserName)
+                {
+                    //not an admin or moderator, or the idea author
+                    return View["Shared/401"];
+                }
+
                 var m = Context.Model(string.Format(Strings.IdeaSecuredModule_EditIdea, idea.Title, _settings.SiteTitle));
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
@@ -81,7 +89,7 @@ namespace Ideastrike.Nancy.Modules
                     idea.Author.UserName != Context.CurrentUser.UserName) 
                 {
                     //not an admin or moderator, or the idea author
-                    return View["401"];
+                    return View["Shared/401"];
                 }
                 idea.Title = Request.Form.Title;
                 idea.Description = Request.Form.Description;
