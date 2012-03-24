@@ -123,3 +123,6 @@ border: 0;
 #fileupload .span11 {
     margin-left:5px;
 }
+textarea#AdminResponse {
+    height: 140px;
+}

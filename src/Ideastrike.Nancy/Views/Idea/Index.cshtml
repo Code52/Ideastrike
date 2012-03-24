@@ -1,7 +1,5 @@
 ﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
-@using Nancy
 @using Ideastrike.Nancy.Helpers
-@using Ideastrike.Nancy.Modules
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
@@ -17,14 +15,8 @@
         @if (Model.IsLoggedIn)
         { 
             <button class="btn" type="button" data-voted="@idea.UserHasVoted" id="vote">
-                        @if (idea.UserHasVoted)
-                        { 
-                            @Ideastrike.Nancy.Localization.Strings.Common_UnVote
-                        }
-                        else
-                        { 
-                            @Ideastrike.Nancy.Localization.Strings.Common_Vote
-                        }</button>
+                @(idea.UserHasVoted ? Ideastrike.Nancy.Localization.Strings.Common_UnVote : Ideastrike.Nancy.Localization.Strings.Common_Vote)
+            </button>
         }
         </form>
     </div>
@@ -36,11 +28,8 @@
                data-text="Idea: @idea.Title" 
                data-hashtags="ideastrike">Idea_Tweet</a>
         </div>
-        <div id="fb-root">
-        </div>
-        <div class="fb-like" data-send="false" data-layout="button_count" data-width="450"
-            data-show-faces="true">
-        </div>
+        <div id="fb-root"></div>
+        <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
     </div>
 </div>
 <h1 style="margin-bottom:0px;">@idea.Title <span class="label @StatusColorHelper.ColorClass(idea.Status)">@idea.Status</span></h1>
@@ -73,31 +62,33 @@
 
 @if (Model.CanChangeIdeaStatus) 
 {
-<div class="status">
-    <h3>Idea Status</h3>
-    <form method="post">
-        <div class="input">
-            <select id="Status" name="Status">
-            @foreach (string statusChoice in Model.StatusChoices)
-            {
-                string sel = "";
-                if (Model.Idea.Status == statusChoice)
-                {
-                    sel = "selected";
-                }
-                <option @sel>@statusChoice</option>
-            }
-            </select>
+    <div class="status">
+        <h3>Moderate</h3>
+        <form method="post" action="/idea/@idea.Id/admincomment">
+            <div class="input">
+                <div>
+                    <select id="Status" name="Status">
+                        @foreach (string statusChoice in Model.StatusChoices)
+                        {
+                            string sel = "";
+                            if (Model.Idea.Status == statusChoice)
+                            {
+                                sel = "selected";
+                            }
+                            <option @sel>@statusChoice</option>
+                        }
+                    </select>
+                    <br /><br />
+                </div>
+                <div>
+                    <textarea id="AdminResponse" name="AdminResponse"></textarea>
+                    <br /><br />
+                </div>
+                <button class="btn primary" type="submit">Respond</button>
             </div>
-        <div class="input">
-            
-            <textarea name="AdminResponse"></textarea>
-        </div>
-    </form>
-    
-</div>
-<hr />
-
+        </form>
+    </div>
+    <hr />
 }
 
 @if (idea.Features.Count > 0)
@@ -135,35 +126,31 @@ else
     </div>
     <div id="add-feature" class="hide-on-start add-feature">
         <form action="/idea/@idea.Id/feature" method="POST">
-        <!-- TODO: i want this text to change dynamically 
-                text to rotate through:
-                - how about ...
-                - it would be cool if ...
-                - can it also do ...
-                - etc
-                -->
-        <!--  TODO: can we hook in some anti-forgery bits? -->
-        <label for="feature" id="label-text">
-            @Ideastrike.Nancy.Localization.Strings.Idea_HowAbout</label>
-        <div class="input">
-            <div class="options">
-                <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
-                    data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
-                    @Ideastrike.Nancy.Localization.Strings.Common_Edit</button>
-                <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
-                    data-editor="#new-feature" data-view="#new-feature-view">
-                    @Ideastrike.Nancy.Localization.Strings.Common_Preview</button>
+            <!-- TODO: i want this text to change dynamically 
+                    text to rotate through:
+                    - how about ...
+                    - it would be cool if ...
+                    - can it also do ...
+                    - etc
+                    -->
+            <!--  TODO: can we hook in some anti-forgery bits? -->
+            <label for="feature" id="label-text">@Ideastrike.Nancy.Localization.Strings.Idea_HowAbout</label>
+            <div class="input">
+                <div class="options">
+                    <button type="button" disabled="disabled" id="edit-new-feature" class="btn edit"
+                        data-other="#preview-new-feature" data-editor="#new-feature" data-view="#new-feature-view">
+                        @Ideastrike.Nancy.Localization.Strings.Common_Edit</button>
+                    <button type="button" id="preview-new-feature" class="btn preview" data-other="#edit-new-feature"
+                        data-editor="#new-feature" data-view="#new-feature-view">
+                        @Ideastrike.Nancy.Localization.Strings.Common_Preview</button>
+                </div>
+                <textarea id="new-feature" name="feature"></textarea><br />
+                <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Common_Markdown</span>
+                <div id="new-feature-view"></div>
             </div>
-            <textarea id="new-feature" name="feature"></textarea><br />
-            <span class="help-block">@Ideastrike.Nancy.Localization.Strings.Common_Markdown</span>
-            <div id="new-feature-view">
-            </div>
-        </div>
-        <br />
-        <label for="submit">
-        </label>
-        <button class="btn primary" type="submit">
-            @Ideastrike.Nancy.Localization.Strings.Idea_AddFeature</button>
+            <br />
+            <label for="submit"></label>
+            <button class="btn primary" type="submit">@Ideastrike.Nancy.Localization.Strings.Idea_AddFeature</button>
         </form>
     </div>
 }

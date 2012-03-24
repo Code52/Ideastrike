@@ -46,12 +46,8 @@ namespace Ideastrike.Nancy.Modules
                 int id = parameters.id;
                 var idea = _ideas.Get(id);
 
-                //hack...
-                if (!(Context.CurrentUser.Claims.Contains("admin") || Context.CurrentUser.Claims.Contains("moderator")) && idea.Author.UserName != Context.CurrentUser.UserName)
-                {
-                    //not an admin or moderator, or the idea author
-                    return View["Shared/401"];
-                }
+                if (!CanUserEdit(Context.CurrentUser, idea))
+                     return View["Shared/401"];
 
                 var m = Context.Model(string.Format(Strings.IdeaSecuredModule_EditIdea, idea.Title, _settings.SiteTitle));
                 m.PopularIdeas = _ideas.GetAll();
@@ -83,12 +79,9 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return View["404"];
 
-                //hack...
-                if (!(Context.CurrentUser.Claims.Contains("admin") || Context.CurrentUser.Claims.Contains("moderator")) && idea.Author.UserName != Context.CurrentUser.UserName) 
-                {
-                    //not an admin or moderator, or the idea author
+                if (!CanUserEdit(Context.CurrentUser, idea))
                     return View["Shared/401"];
-                }
+
                 idea.Title = Request.Form.Title;
                 idea.Description = Request.Form.Description;
                 idea.Status = Request.Form.Status;
@@ -111,14 +104,14 @@ namespace Ideastrike.Nancy.Modules
                 return Response.AsRedirect(string.Format("/idea/{0}", idea.Id));
             };
 
-            Post["/{id}/change-status"] = parameters => 
+            Post["/{id}/admincomment"] = parameters => 
             {
                 this.RequiresValidatedClaims(x => x.Contains("admin"));
 
-                Idea idea = _ideas.Get(parameters.id);
-
+                int id = parameters.id;
+                var idea = _ideas.Get(id);
                 idea.Status = Request.Form.Status;
-                idea.AdminResponse = Request.Form.AdminResponse;
+                //idea.AdminResponse = Request.Form.AdminResponse;
 
                 _ideas.Save();
 
@@ -230,6 +223,17 @@ namespace Ideastrike.Nancy.Modules
                 imageRepository.Delete(parameters.id);
                 return null;
             };
+        }
+
+
+        private static bool IsUserAdmin(IUserIdentity currentUser)
+        {
+            return (currentUser.Claims.Contains("admin") || currentUser.Claims.Contains("moderator"));
+        }
+
+        private static bool CanUserEdit(IUserIdentity currentUser, Idea idea)
+        {
+            return IsUserAdmin(currentUser) || idea.Author.UserName == currentUser.UserName;
         }
     }
 }

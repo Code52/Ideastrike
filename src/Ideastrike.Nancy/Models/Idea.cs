@@ -25,7 +25,6 @@ namespace Ideastrike.Nancy.Models
         public virtual ICollection<Activity> Activities { get; set; }
         public virtual ICollection<Feature> Features { get; set; }
         public virtual User Author { get; set; }
-        public string AdminResponse { get; set; }
 
         [NotMapped]
         public bool UserHasVoted { get; set; }

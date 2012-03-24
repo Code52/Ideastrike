@@ -13,20 +13,17 @@ namespace Ideastrike.Nancy.Modules
 {
     public class AdminModule : NancyModule
     {
-        private ISettingsRepository _settings;
-        private IUserRepository _users;
-        private IIdeaRepository _ideas;
-        private IActivityRepository _activities;
-        public AdminModule(IdeastrikeContext dbContext, ISettingsRepository settings, IUserRepository users, IIdeaRepository ideas, IActivityRepository activities)
+        private readonly IUserRepository _users;
+        private readonly IIdeaRepository _ideas;
+
+        public AdminModule(ISettingsRepository settings, IUserRepository users, IIdeaRepository ideas, IActivityRepository activities)
             : base("/admin")
         {
             this.RequiresAuthentication();
             this.RequiresValidatedClaims(c => c.Contains("admin"));
 
-            _settings = settings;
             _users = users;
             _ideas = ideas;
-            _activities = activities;
 
             Get["/"] = _ =>
             {
