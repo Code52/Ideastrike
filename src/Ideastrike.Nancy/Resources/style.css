@@ -118,6 +118,7 @@ border: 0;
 .gravatar img {width:40px; height:40px;}
 .gravatarsmall img {width:15px; height:15px;}
 .activity { margin-right:75px;}
+.lactivity { margin-left:50px;}
 .loggedin { color: White; }
 .loggedin img {width:15px; height:15px;}
 #fileupload .span11 {

@@ -192,7 +192,7 @@ namespace Ideastrike.Nancy.Modules
                                            OldStatus = idea.Status,
                                            NewStatus = Request.Form.Status,
                                            User = user,
-                                           Time = DateTime.Now
+                                           Time = DateTime.UtcNow
                                        });
                 activities.Save();
                 

@@ -1,5 +1,10 @@
 ﻿<script id="admin_template" type="text/x-jquery-tmpl">
     <li style="margin-top:25px;" class="span11">
-        <span class="label">{{OldStatus}}</span> &#8594; <span class="label">{{NewStatus}}</span>
+        <div class="pull-left"><img src="{{GravatarUrl}}" /></div>
+        <div class="lactivity">
+            <span class="label {{OldStatusClass}}">{{OldStatus}}</span> &#8594; <span class="label {{NewStatusClass}}">{{NewStatus}}</span>
+            <div><a href=""><span class="author">{{Author}}</span></a> <span class="ideadate">{{FriendlyTime}}</span></div>
+        </div>
+        <div class="clearfix"> </div>
     </li>
 </script>
