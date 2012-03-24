@@ -1,9 +1,7 @@
 using Ideastrike.Nancy.Models;
-using Ideastrike.Nancy.Models.Repositories;
 using Ideastrike.Nancy.Modules;
 using Moq;
 using Nancy;
-using Nancy.Testing;
 using Xunit;
 
 namespace IdeaStrike.Tests.IdeaModuleTests
@@ -17,7 +15,7 @@ namespace IdeaStrike.Tests.IdeaModuleTests
 
 		[Fact]
 		public void it_should_redirect_to_the_login_page() {
-			Response.ShouldHaveRedirectedTo("/login");
+            Assert.Equal(HttpStatusCode.NotFound, Response.StatusCode);
 		}
 
 		[Fact]

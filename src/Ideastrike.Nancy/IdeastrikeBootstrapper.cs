@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Globalization;
@@ -110,6 +111,46 @@ namespace Ideastrike.Nancy
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(langId);
             }
             return null;
+        }
+
+
+        /// <summary>
+        /// Bind the given module types into the container
+        /// </summary>
+        /// <param name="container">Container to register into</param>
+        /// <param name="moduleRegistrationTypes">NancyModule types</param>
+        protected override void RegisterRequestContainerModules(ILifetimeScope container, IEnumerable<ModuleRegistration> moduleRegistrationTypes)
+        {
+            var builder = new ContainerBuilder();
+            foreach (var moduleRegistrationType in moduleRegistrationTypes)
+            {
+                if (moduleRegistrationType.ModuleType.Name == "IdeastrikeModule")
+                    continue;
+
+                builder.RegisterType(moduleRegistrationType.ModuleType).As(typeof(NancyModule)).Named<NancyModule>(moduleRegistrationType.ModuleKey);
+            }
+            builder.Update(container.ComponentRegistry);
+        }
+
+        /// <summary>
+        /// Retrieve all module instances from the container
+        /// </summary>
+        /// <param name="container">Container to use</param>
+        /// <returns>Collection of NancyModule instances</returns>
+        protected override IEnumerable<NancyModule> GetAllModules(ILifetimeScope container)
+        {
+            return container.Resolve<IEnumerable<NancyModule>>();
+        }
+
+        /// <summary>
+        /// Retreive a specific module instance from the container by its key
+        /// </summary>
+        /// <param name="container">Container to use</param>
+        /// <param name="moduleKey">Module key of the module</param>
+        /// <returns>NancyModule instance</returns>
+        protected override NancyModule GetModuleByKey(ILifetimeScope container, string moduleKey)
+        {
+            return container.ResolveNamed(moduleKey, typeof(NancyModule)) as NancyModule;
         }
     }
 }

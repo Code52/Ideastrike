@@ -6,11 +6,10 @@ using Ideastrike.Nancy.Localization;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
-using Nancy.Security;
 
 namespace Ideastrike.Nancy.Modules
 {
-    public class IdeaSecuredModule : NancyModule
+    public class IdeaSecuredModule : IdeastrikeModule
     {
         private readonly IIdeaRepository _ideas;
         private readonly IUserRepository _users;
@@ -25,9 +24,7 @@ namespace Ideastrike.Nancy.Modules
             _imageRepository = imageRepository;
             _users = users;
 
-            this.RequiresAuthentication();
-
-            Get["/new"] = _ =>
+            Get["/new", Authenticated] = _ =>
             {
                 var m = Context.Model(string.Format("New Idea - {0}", _settings.SiteTitle));
                 m.Ideas = _ideas.GetAll();
@@ -41,7 +38,7 @@ namespace Ideastrike.Nancy.Modules
                 return View["Idea/New", m];
             };
 
-            Get["/{id}/edit"] = parameters =>
+            Get["/{id}/edit", Authenticated] = parameters =>
             {
                 int id = parameters.id;
                 var idea = _ideas.Get(id);
@@ -62,7 +59,7 @@ namespace Ideastrike.Nancy.Modules
 
 
             // save result of edit to database
-            Post["/{id}/edit"] = parameters =>
+            Post["/{id}/edit", Authenticated] = parameters =>
             {
                 int id = parameters.id;
 
@@ -98,7 +95,7 @@ namespace Ideastrike.Nancy.Modules
             };
 
             // save result of create to database
-            Post["/new"] = _ =>
+            Post["/new", Authenticated] = _ =>
             {
                 if (string.IsNullOrEmpty(Request.Form.Title) || string.IsNullOrEmpty(Request.Form.Description))
                 {
