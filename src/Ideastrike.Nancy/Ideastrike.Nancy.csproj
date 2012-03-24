@@ -227,6 +227,7 @@
     <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="Modules\ApiModule.Secured.cs" />
+    <Compile Include="Modules\IdeastrikeModule.cs" />
     <Compile Include="Modules\CommentModule.cs" />
     <Compile Include="Modules\FeatureModule.cs" />
     <Compile Include="Modules\IdeaModule.Secured.cs" />
