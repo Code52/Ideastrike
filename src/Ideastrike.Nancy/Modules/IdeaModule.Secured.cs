@@ -47,8 +47,7 @@ namespace Ideastrike.Nancy.Modules
                 var idea = _ideas.Get(id);
 
                 //hack...
-                if ((!Context.CurrentUser.Claims.Contains("admin") || !Context.CurrentUser.Claims.Contains("moderator")) ||
-                    idea.Author.UserName != Context.CurrentUser.UserName)
+                if (!(Context.CurrentUser.Claims.Contains("admin") || Context.CurrentUser.Claims.Contains("moderator")) && idea.Author.UserName != Context.CurrentUser.UserName)
                 {
                     //not an admin or moderator, or the idea author
                     return View["Shared/401"];
@@ -85,8 +84,7 @@ namespace Ideastrike.Nancy.Modules
                     return View["404"];
 
                 //hack...
-                if ((!Context.CurrentUser.Claims.Contains("admin") || !Context.CurrentUser.Claims.Contains("moderator")) ||
-                    idea.Author.UserName != Context.CurrentUser.UserName) 
+                if (!(Context.CurrentUser.Claims.Contains("admin") || Context.CurrentUser.Claims.Contains("moderator")) && idea.Author.UserName != Context.CurrentUser.UserName) 
                 {
                     //not an admin or moderator, or the idea author
                     return View["Shared/401"];
