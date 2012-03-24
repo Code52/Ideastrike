@@ -10,5 +10,10 @@ namespace IdeaStrike.Tests
             var cookie = FormsAuthentication.UserLoggedInResponse(user.Id).Cookies[0].Value;
             ctx.Cookie(FormsAuthentication.FormsAuthenticationCookieName, cookie);
         }
+
+        public static void NoUserSet(this BrowserContext ctx)
+        {
+            
+        }
     }
 }

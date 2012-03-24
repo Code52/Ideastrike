@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using System;
+using Nancy;
 
 namespace Ideastrike.Nancy.Modules
 {
