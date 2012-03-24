@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using Ideastrike.Nancy.Localization;
 using Ideastrike.Nancy.Models;
@@ -10,13 +11,13 @@ namespace Ideastrike.Nancy.Modules
 {
     public class LoginModule : NancyModule
     {
-        public const string apikey = "46ad5595cb74064655718a434126ef9f11a51a70";
-
+        public string Apikey;
         private IUserRepository _user;
 
         public LoginModule(IUserRepository userRepository)
         {
             _user = userRepository;
+            Apikey = ConfigurationManager.AppSettings["JanrainKey"];
 
             Post["/login/token"] = x =>
             {
@@ -29,7 +30,7 @@ namespace Ideastrike.Nancy.Modules
                                     Message = Strings.LoginModule_BadResponse_NoToken
                                 }];
 
-                var response = new WebClient().DownloadString(string.Format("https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}",apikey, Request.Form.token));
+                var response = new WebClient().DownloadString(string.Format("https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}",Apikey, Request.Form.token));
 
                 if (string.IsNullOrWhiteSpace(response))
                     return
