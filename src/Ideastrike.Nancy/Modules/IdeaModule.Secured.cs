@@ -17,7 +17,7 @@ namespace Ideastrike.Nancy.Modules
         private readonly ISettingsRepository _settings;
         private readonly IImageRepository _imageRepository;
 
-        public IdeaSecuredModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings, IImageRepository imageRepository)
+        public IdeaSecuredModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings, IImageRepository imageRepository, IActivityRepository activities)
             : base("/idea")
         {
             _ideas = ideas;
@@ -46,6 +46,9 @@ namespace Ideastrike.Nancy.Modules
                 int id = parameters.id;
                 var idea = _ideas.Get(id);
 
+                if (!CanUserEdit(Context.CurrentUser, idea))
+                     return View["Shared/401"];
+
                 var m = Context.Model(string.Format(Strings.IdeaSecuredModule_EditIdea, idea.Title, _settings.SiteTitle));
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
@@ -64,6 +67,7 @@ namespace Ideastrike.Nancy.Modules
             // save result of edit to database
             Post["/{id}/edit"] = parameters =>
             {
+                
                 int id = parameters.id;
 
                 if (string.IsNullOrEmpty(Request.Form.Title) || string.IsNullOrEmpty(Request.Form.Description))
@@ -74,6 +78,9 @@ namespace Ideastrike.Nancy.Modules
                 var idea = _ideas.Get(id);
                 if (idea == null)
                     return View["404"];
+
+                if (!CanUserEdit(Context.CurrentUser, idea))
+                    return View["Shared/401"];
 
                 idea.Title = Request.Form.Title;
                 idea.Description = Request.Form.Description;
@@ -171,6 +178,32 @@ namespace Ideastrike.Nancy.Modules
                 return Response.AsJson(new { Status = "Error" });
             };
 
+            Post["/{id}/admincomment"] = parameters =>
+            {
+                this.RequiresValidatedClaims(x => x.Contains("admin"));
+
+                int id = parameters.id;
+                var idea = _ideas.Get(id);
+
+                var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+                activities.Add(id, new AdminActivity
+                                       {
+                                           OldStatus = idea.Status,
+                                           NewStatus = Request.Form.Status,
+                                           User = user,
+                                           Time = DateTime.UtcNow
+                                       });
+                activities.Save();
+                
+                idea.Status = Request.Form.Status;
+                _ideas.Save();
+
+
+
+                return Response.AsRedirect("/idea/" + idea.Id);
+            };
+
             // TODO: do we want unauthenticated users to be allowed to upload posts?
             Post["/uploadimage"] = parameters =>
             {
@@ -202,6 +235,17 @@ namespace Ideastrike.Nancy.Modules
                 imageRepository.Delete(parameters.id);
                 return null;
             };
+        }
+
+
+        private static bool IsUserAdmin(IUserIdentity currentUser)
+        {
+            return (currentUser.Claims.Contains("admin") || currentUser.Claims.Contains("moderator"));
+        }
+
+        private static bool CanUserEdit(IUserIdentity currentUser, Idea idea)
+        {
+            return IsUserAdmin(currentUser) || idea.Author.UserName == currentUser.UserName;
         }
     }
 }

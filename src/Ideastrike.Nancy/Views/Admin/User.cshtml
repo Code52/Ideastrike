@@ -1,0 +1,69 @@
+﻿﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+
+<ul class="pills">
+    <li><a href="/admin/">Admin Home</a></li>
+    <li><a href="/admin/settings">Settings</a></li>
+    <li class="active"><a href="/admin/users">Users</a></li>
+    <li><a href="/admin/moderation">Moderation</a></li>
+</ul>
+
+<div class="pull-right well">
+    <img src="@Model.User.AvatarUrl" alt="@Model.User.UserName" title="@Model.User.UserName" />
+    
+</div>
+<form>
+<fieldset>
+    <legend>User Details</legend>
+    <div class="clearfix">
+        <label for="UserName">User name:</label>
+        <div class="input">
+            <input type="text" value="@Model.User.UserName"  />
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="Email">Email:</label>
+        <div class="input">
+            <input type="text" value="@Model.User.Email"  />
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="Identity">
+            Identity:
+        </label>
+        <div class="input">
+            <input type="text" value="@Model.User.Identity" />
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="Github">
+            Github:
+        </label>
+        <div class="input">
+            <input type="text" value="@Model.User.Github" />
+        </div>
+    </div>
+    <div>
+        <label for="Is Active">
+            Active:
+        </label>
+        <div class="input">
+            <input type="checkbox" @if(Model.User.IsActive)
+                                   { 
+                                       @:checked="checked" 
+                                   }  />
+        </div>
+    </div>
+</fieldset>
+</form>
+
+<div class="actions">
+        
+    <form method="post" action="/admin/user/ban">
+        <input type="hidden" name="Id" value="@Model.User.Id" />
+        <button class="btn danger">Drop the Ban-Hammer&#8482;</button>
+    </form>
+        
+</div>

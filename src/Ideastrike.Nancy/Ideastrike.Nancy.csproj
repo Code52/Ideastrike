@@ -144,6 +144,10 @@
     <Content Include="Resources\social.js" />
     <Content Include="Resources\style.css" />
     <Content Include="Resources\Validation\newidea.js" />
+    <Content Include="Views\Shared\401.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Shared\Templates\admin.cshtml" />
     <None Include="Views\Shared\Templates\comment.cshtml" />
     <None Include="Views\Shared\Templates\github.cshtml" />
     <None Include="Views\Shared\Templates\download.cshtml" />
@@ -189,7 +193,12 @@
     <Compile Include="Migrations\201201270809242_Claims.Designer.cs">
       <DependentUpon>201201270809242_Claims.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201203240608050_AdminActivity.cs" />
+    <Compile Include="Migrations\201203240608050_AdminActivity.Designer.cs">
+      <DependentUpon>201203240608050_AdminActivity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\IdeastrikeDbConfiguration.cs" />
+    <Compile Include="Models\AdminActivity.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Repositories\IUserRepository.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
@@ -201,6 +210,7 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\UserClaim.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
+    <Compile Include="Models\ViewModels\AdminActivityViewModel.cs" />
     <Compile Include="Models\ViewModels\CommentViewModel.cs" />
     <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
     <Compile Include="Models\ViewModels\GitHubActivityViewModel.cs" />
@@ -299,6 +309,7 @@
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\Uservoice.cshtml" />
+    <Content Include="Views\Admin\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Localization\Strings.fi.resx">

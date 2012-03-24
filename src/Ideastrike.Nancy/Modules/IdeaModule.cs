@@ -39,6 +39,12 @@ namespace Ideastrike.Nancy.Modules
                 var viewModel = new IdeaViewModel(idea);
                 var model = Context.Model(string.Format("{0} - {1}", idea.Title, _settings.SiteTitle));
                 model.Idea = viewModel;
+                model.CanChangeIdeaStatus = false;
+                model.StatusChoices = _settings.IdeaStatusChoices.Split(',');
+                if (user != null) 
+                {
+                    model.CanChangeIdeaStatus = Context.CurrentUser.Claims.Contains("admin");
+                }
                 return View["Idea/Index", model];
             };
 
@@ -110,6 +116,10 @@ namespace Ideastrike.Nancy.Modules
             var comment = activity as Comment;
             if (comment != null)
                 return new { template = "comment", item = new CommentViewModel(comment) };
+
+            var admin = activity as AdminActivity;
+            if (admin != null)
+                return new { template = "admin", item = new AdminActivityViewModel(admin) };
 
             return null;
         }

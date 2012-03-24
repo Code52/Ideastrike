@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
@@ -12,20 +13,17 @@ namespace Ideastrike.Nancy.Modules
 {
     public class AdminModule : NancyModule
     {
-        private ISettingsRepository _settings;
-        private IUserRepository _users;
-        private IIdeaRepository _ideas;
-        private IActivityRepository _activities;
-        public AdminModule(IdeastrikeContext dbContext, ISettingsRepository settings, IUserRepository users, IIdeaRepository ideas, IActivityRepository activities)
+        private readonly IUserRepository _users;
+        private readonly IIdeaRepository _ideas;
+
+        public AdminModule(ISettingsRepository settings, IUserRepository users, IIdeaRepository ideas, IActivityRepository activities)
             : base("/admin")
         {
             this.RequiresAuthentication();
             this.RequiresValidatedClaims(c => c.Contains("admin"));
 
-            _settings = settings;
             _users = users;
             _ideas = ideas;
-            _activities = activities;
 
             Get["/"] = _ =>
             {
@@ -48,13 +46,49 @@ namespace Ideastrike.Nancy.Modules
                 return View["Admin/Users", m];
             };
 
+            Get["/user/{id}"] = parameters => 
+            {
+                var m = Context.Model(string.Format("Admin - {0}", settings.SiteTitle));
+                Guid userIdAsGuid;
+                if (!Guid.TryParse(parameters.id.ToString(), out userIdAsGuid)) 
+                {
+                    //not a valid guid.
+                    return 404;
+                }
+                var user = _users.Get(userIdAsGuid);
+                if (user == null) 
+                {
+                    //user can't be found, throw 404
+                    return 404;
+                }
+                //give them a bigger gravatar picture...
+                user.AvatarUrl = user.Email.ToGravatarUrl(180);
+
+                m.User = user;
+
+                return View["Admin/User", m];
+            };
+
+            Post["/user/ban"] = _ => 
+            {
+                var userId = Guid.Parse(Request.Form.Id);
+                
+                _users.Delete(userId);
+                
+                return Response.AsRedirect("/admin/users");
+            };
             Get["/moderation"] = _ =>
             {
                 var m = Context.Model(string.Format("Admin - {0}", settings.SiteTitle));
-                m.Name = settings.Name;
-                m.WelcomeMessage = settings.WelcomeMessage;
-                m.HomePage = settings.HomePage;
-                m.GAnalyticsKey = settings.GAnalyticsKey;
+                //get a list of the latest ideas that are flagged as 'new'
+                //this query is going to suck performance wise...
+                var newIdeas = _ideas
+                    .FindBy(x => x.Status == "New")
+                    .OrderByDescending(x => x.Time)
+                    .ToList();
+                //var newIdeas = _ideas.GetAll().ToList();
+                m.Ideas = newIdeas;
+
                 return View["Admin/Moderation", m];
             };
 
