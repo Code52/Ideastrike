@@ -117,6 +117,10 @@ namespace Ideastrike.Nancy.Modules
             if (comment != null)
                 return new { template = "comment", item = new CommentViewModel(comment) };
 
+            var admin = activity as AdminActivity;
+            if (admin != null)
+                return new { template = "admin", item = new AdminActivityViewModel(admin) };
+
             return null;
         }
     }

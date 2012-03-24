@@ -200,6 +200,7 @@ else
 }
 @section PageScript {
     @Html.Partial("Shared/Templates/github.cshtml")
+    @Html.Partial("Shared/Templates/admin.cshtml")
     @Html.Partial("Shared/Templates/comment.cshtml")
     <script src="/Resources/social.js"></script>
     <script type="text/javascript">
@@ -263,6 +264,8 @@ else
                             var template = document.getElementById('comment_template').innerHTML;
                             if (node.template == "github") {
                                 template = document.getElementById('github_template').innerHTML;
+                            } else if (node.template == "admin") {
+                                template = document.getElementById('admin_template').innerHTML;
                             }
 
                             node.item.Text= converter.makeHtml(node.item.Text);

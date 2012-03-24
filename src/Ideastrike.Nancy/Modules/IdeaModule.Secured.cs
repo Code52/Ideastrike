@@ -17,7 +17,7 @@ namespace Ideastrike.Nancy.Modules
         private readonly ISettingsRepository _settings;
         private readonly IImageRepository _imageRepository;
 
-        public IdeaSecuredModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings, IImageRepository imageRepository)
+        public IdeaSecuredModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings, IImageRepository imageRepository, IActivityRepository activities)
             : base("/idea")
         {
             _ideas = ideas;
@@ -104,20 +104,6 @@ namespace Ideastrike.Nancy.Modules
                 return Response.AsRedirect(string.Format("/idea/{0}", idea.Id));
             };
 
-            Post["/{id}/admincomment"] = parameters => 
-            {
-                this.RequiresValidatedClaims(x => x.Contains("admin"));
-
-                int id = parameters.id;
-                var idea = _ideas.Get(id);
-                idea.Status = Request.Form.Status;
-                //idea.AdminResponse = Request.Form.AdminResponse;
-
-                _ideas.Save();
-
-                return Response.AsRedirect("/idea/" + idea.Id);
-            };
-
             // save result of create to database
             Post["/new"] = _ =>
             {
@@ -190,6 +176,32 @@ namespace Ideastrike.Nancy.Modules
 
                 // TODO: test
                 return Response.AsJson(new { Status = "Error" });
+            };
+
+            Post["/{id}/admincomment"] = parameters =>
+            {
+                this.RequiresValidatedClaims(x => x.Contains("admin"));
+
+                int id = parameters.id;
+                var idea = _ideas.Get(id);
+
+                var user = _users.FindBy(u => u.UserName == Context.CurrentUser.UserName).FirstOrDefault();
+
+                activities.Add(id, new AdminActivity
+                                       {
+                                           OldStatus = idea.Status,
+                                           NewStatus = Request.Form.Status,
+                                           User = user,
+                                           Time = DateTime.Now
+                                       });
+                activities.Save();
+                
+                idea.Status = Request.Form.Status;
+                _ideas.Save();
+
+
+
+                return Response.AsRedirect("/idea/" + idea.Id);
             };
 
             // TODO: do we want unauthenticated users to be allowed to upload posts?
