@@ -10,3 +10,19 @@
     <li class="active"><a href="/admin/moderation">@Ideastrike.Nancy.Localization.Strings.Admin_Moderation</a></li>
 
 </ul>
+
+<h2>New Ideas</h2>
+
+<table>
+@foreach (var idea in @Model.Ideas) {
+    <tr>
+        <td>
+            <a href="/idea/@idea.Id/edit">@idea.Title</a>
+
+        </td>
+        <td>
+            Created @Ideastrike.Nancy.Helpers.FriendlyTimeHelper.Parse(idea.Time)
+        </td>
+    </tr>
+}
+</table>

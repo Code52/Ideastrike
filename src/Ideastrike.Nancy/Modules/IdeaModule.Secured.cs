@@ -64,6 +64,7 @@ namespace Ideastrike.Nancy.Modules
             // save result of edit to database
             Post["/{id}/edit"] = parameters =>
             {
+                
                 int id = parameters.id;
 
                 if (string.IsNullOrEmpty(Request.Form.Title) || string.IsNullOrEmpty(Request.Form.Description))
@@ -75,6 +76,13 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return View["404"];
 
+                //hack...
+                if ((!Context.CurrentUser.Claims.Contains("admin") || !Context.CurrentUser.Claims.Contains("moderator")) ||
+                    idea.Author.UserName != Context.CurrentUser.UserName) 
+                {
+                    //not an admin or moderator, or the idea author
+                    return View["401"];
+                }
                 idea.Title = Request.Form.Title;
                 idea.Description = Request.Form.Description;
                 idea.Status = Request.Form.Status;
@@ -95,6 +103,20 @@ namespace Ideastrike.Nancy.Modules
                 _ideas.Save();
 
                 return Response.AsRedirect(string.Format("/idea/{0}", idea.Id));
+            };
+
+            Post["/{id}/change-status"] = parameters => 
+            {
+                this.RequiresValidatedClaims(x => x.Contains("admin"));
+
+                Idea idea = _ideas.Get(parameters.id);
+
+                idea.Status = Request.Form.Status;
+                idea.AdminResponse = Request.Form.AdminResponse;
+
+                _ideas.Save();
+
+                return Response.AsRedirect("/idea/" + idea.Id);
             };
 
             // save result of create to database
