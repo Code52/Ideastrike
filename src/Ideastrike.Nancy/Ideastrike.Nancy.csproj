@@ -208,6 +208,7 @@
     <Compile Include="Modules\IdeaModule.cs" />
     <Compile Include="ProductionDatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -13,8 +13,8 @@ namespace Ideastrike.Nancy.Modules
     {
         private readonly IIdeaRepository _ideas;
         private readonly IUserRepository _users;
-        private readonly ISettingsRepository _settings;
-        public IdeaModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings, IImageRepository imageRepository)
+        private readonly dynamic _settings;
+        public IdeaModule(IIdeaRepository ideas, IUserRepository users, Settings settings, IImageRepository imageRepository)
             : base("/idea")
         {
             _ideas = ideas;
@@ -37,7 +37,7 @@ namespace Ideastrike.Nancy.Modules
                 }
 
                 var viewModel = new IdeaViewModel(idea);
-                var model = Context.Model(string.Format("{0} - {1}", idea.Title, _settings.Title));
+                var model = Context.Model(string.Format("{0} - {1}", idea.Title, (string)_settings.Title));
                 model.Idea = viewModel;
                 return View["Idea/Index", model];
             };

@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Dynamic;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
 using Nancy.Security;
-using System.Collections.Generic;
-using System.Net;
 using Newtonsoft.Json;
 
 namespace Ideastrike.Nancy.Modules
 {
     public class AdminModule : NancyModule
     {
-        private ISettingsRepository _settings;
+        private dynamic _settings;
         private IUserRepository _users;
         private IIdeaRepository _ideas;
         private IActivityRepository _activities;
-        public AdminModule(IdeastrikeContext dbContext, ISettingsRepository settings, IUserRepository users, IIdeaRepository ideas, IActivityRepository activities)
+        public AdminModule(IdeastrikeContext dbContext, Settings settings, IUserRepository users, IIdeaRepository ideas, IActivityRepository activities)
             : base("/admin")
         {
             this.RequiresAuthentication();
@@ -28,53 +27,53 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
-                m.Name = settings.Name;
-                m.WelcomeMessage = settings.WelcomeMessage;
-                m.HomePage = settings.HomePage;
-                m.GAnalyticsKey = settings.GAnalyticsKey;
+                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.Title));
+                m.Name = _settings.Name;
+                m.WelcomeMessage = _settings.WelcomeMessage;
+                m.HomePage = _settings.HomePage;
+                m.GAnalyticsKey = _settings.GAnalyticsKey;
                 return View["Admin/Index", m];
             };
 
             Get["/users"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
-                m.Name = settings.Name;
-                m.WelcomeMessage = settings.WelcomeMessage;
-                m.HomePage = settings.HomePage;
-                m.GAnalyticsKey = settings.GAnalyticsKey;
+                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.Title));
+                m.Name = _settings.Name;
+                m.WelcomeMessage = _settings.WelcomeMessage;
+                m.HomePage = _settings.HomePage;
+                m.GAnalyticsKey = _settings.GAnalyticsKey;
                 m.Users = users.GetAll();
                 return View["Admin/Users", m];
             };
 
             Get["/moderation"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
-                m.Name = settings.Name;
-                m.WelcomeMessage = settings.WelcomeMessage;
-                m.HomePage = settings.HomePage;
-                m.GAnalyticsKey = settings.GAnalyticsKey;
+                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.Title));
+                m.Name = _settings.Name;
+                m.WelcomeMessage = _settings.WelcomeMessage;
+                m.HomePage = _settings.HomePage;
+                m.GAnalyticsKey = _settings.GAnalyticsKey;
                 return View["Admin/Moderation", m];
             };
 
             Get["/settings"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", settings.Title));
-                m.Name = settings.Name;
-                m.WelcomeMessage = settings.WelcomeMessage;
-                m.HomePage = settings.HomePage;
-                m.GAnalyticsKey = settings.GAnalyticsKey;
+                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.Title));
+                m.Name = _settings.Name;
+                m.WelcomeMessage = _settings.WelcomeMessage;
+                m.HomePage = _settings.HomePage;
+                m.GAnalyticsKey = _settings.GAnalyticsKey;
 
                 return View["Admin/Settings", m];
             };
 
             Post["/settings"] = _ =>
             {
-                settings.WelcomeMessage = Request.Form.welcomemessage;
-                settings.Title = Request.Form.title;
-                settings.Name = Request.Form.yourname;
-                settings.HomePage = Request.Form.homepage;
-                settings.GAnalyticsKey = Request.Form.analyticskey;
+                _settings.WelcomeMessage = Request.Form.welcomemessage;
+                _settings.Title = Request.Form.title;
+                _settings.Name = Request.Form.yourname;
+                _settings.HomePage = Request.Form.homepage;
+                _settings.GAnalyticsKey = Request.Form.analyticskey;
                 try
                 {
                     dbContext.SaveChanges();

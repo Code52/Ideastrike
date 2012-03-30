@@ -13,10 +13,10 @@ namespace Ideastrike.Nancy.Modules
     {
         private readonly IIdeaRepository _ideas;
         private readonly IUserRepository _users;
-        private readonly ISettingsRepository _settings;
+        private readonly dynamic _settings;
         private readonly IImageRepository _imageRepository;
 
-        public IdeaSecuredModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings, IImageRepository imageRepository)
+        public IdeaSecuredModule(IIdeaRepository ideas, IUserRepository users, Settings settings, IImageRepository imageRepository)
             : base("/idea")
         {
             _ideas = ideas;
@@ -28,7 +28,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/new"] = _ =>
             {
-                var m = Context.Model(string.Format("New Idea - {0}", _settings.Title));
+                var m = Context.Model(string.Format("New Idea - {0}", (string)_settings.Title));
                 m.Ideas = _ideas.GetAll();
                 return View["Idea/New", m];
             };
@@ -41,7 +41,7 @@ namespace Ideastrike.Nancy.Modules
                 if (idea == null)
                     return View["404"];
 
-                var m = Context.Model(string.Format("Edit Idea: '{0}' - {1}", idea.Title, _settings.Title));
+                var m = Context.Model(string.Format("Edit Idea: '{0}' - {1}", idea.Title, (string)_settings.Title));
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
                 m.StatusChoices = _settings.IdeaStatusChoices.Split(',');
@@ -94,7 +94,7 @@ namespace Ideastrike.Nancy.Modules
                                 Time = DateTime.UtcNow,
                                 Title = Request.Form.Title,
                                 Description = Request.Form.Description,
-                                Status = settings.IdeaStatusDefault
+                                Status = _settings.IdeaStatusDefault
                             };
 
                 IEnumerable<string> keys = Context.Request.Form;

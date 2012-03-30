@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Moq;
-using Nancy;
-using Nancy.Security;
 using Nancy.Testing;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace IdeaStrike.Tests
 {
