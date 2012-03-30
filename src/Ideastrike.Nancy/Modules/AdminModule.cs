@@ -61,6 +61,7 @@ namespace Ideastrike.Nancy.Modules
             Get["/settings"] = _ =>
             {
                 var m = Context.Model(string.Format("Admin - {0}", (string)_settings.SiteTitle));
+                m.Name = _settings.Name;
                 m.SiteTitle = _settings.SiteTitle;
                 m.WelcomeMessage = _settings.WelcomeMessage;
                 m.HomePage = _settings.HomePage;
