@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Ideastrike.Nancy.Models
 {
@@ -10,11 +9,6 @@ namespace Ideastrike.Nancy.Models
             Configuration.ProxyCreationEnabled = false;
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-        }
-
         public DbSet<Idea> Ideas { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Feature> Features { get; set; }
@@ -22,5 +16,7 @@ namespace Ideastrike.Nancy.Models
         public DbSet<Vote> Votes { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Claim> Claims { get; set; }
+        public DbSet<UserClaim> UserClaims { get; set; }
     }
 }

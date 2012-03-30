@@ -1,13 +1,13 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using MarkdownDeep;
+using Nancy.ViewEngines.Razor;
 
 namespace Ideastrike.Nancy.Helpers
 {
 	/// <summary>
 	/// Helper class for transforming Markdown.
 	/// </summary>
-	public static partial class MarkdownHelper
+	public static class MarkdownHelper
 	{
 		/// <summary>
 		/// Transforms a string of Markdown into HTML.
@@ -18,10 +18,10 @@ namespace Ideastrike.Nancy.Helpers
 		{
 			// Transform the supplied text (Markdown) into HTML.
 			var markdownTransformer = new Markdown();
-			string html = markdownTransformer.Transform(text);
+			var html = markdownTransformer.Transform(text);
 
 			// Wrap the html in an MvcHtmlString otherwise it'll be HtmlEncoded and displayed to the user as HTML :(
-			return new MvcHtmlString(html);
+		    return html.ToHtmlString();
 		}
 
 		/// <summary>

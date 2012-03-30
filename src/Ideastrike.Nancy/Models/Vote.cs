@@ -13,6 +13,8 @@ namespace Ideastrike.Nancy.Models
         [Key, ForeignKey("Idea"), Column(Order = 1)]
         public int IdeaId { get; set; }
 
+        public DateTime? Time { get; set; }
+
         public virtual User User { get; set; }
         public virtual Idea Idea { get; set; }
     }

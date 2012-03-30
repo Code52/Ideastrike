@@ -1,10 +1,9 @@
 using System;
-using System.Web;
-using System.Web.Mvc;
+using Nancy.ViewEngines.Razor;
 
 namespace Ideastrike.Nancy.Helpers
 {
-    public static partial class FriendlyTimeHelper
+    public static class FriendlyTimeHelper
     {
         const int SECOND = 1;
         const int MINUTE = 60 * SECOND;
@@ -18,47 +17,49 @@ namespace Ideastrike.Nancy.Helpers
             double delta = Math.Abs(ts.TotalSeconds);
             if (delta < 0)
             {
-                return new MvcHtmlString("not yet");
+                return HtmlString("not yet");
             }
             if (delta < 1 * MINUTE)
             {
-                return new MvcHtmlString(ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago");
+                return HtmlString(ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago");
             }
             if (delta < 2 * MINUTE)
             {
-                return new MvcHtmlString("a minute ago");
+                return HtmlString("a minute ago");
             }
             if (delta < 45 * MINUTE)
             {
-                return new MvcHtmlString(ts.Minutes + " minutes ago");
+                return HtmlString(ts.Minutes + " minutes ago");
             }
             if (delta < 90 * MINUTE)
             {
-                return new MvcHtmlString("an hour ago");
+                return HtmlString("an hour ago");
             }
             if (delta < 24 * HOUR)
             {
-                return new MvcHtmlString(ts.Hours + " hours ago");
+                return HtmlString(ts.Hours + " hours ago");
             }
             if (delta < 48 * HOUR)
             {
-                return new MvcHtmlString("yesterday");
+                return HtmlString("yesterday");
             }
             if (delta < 30 * DAY)
             {
-                return new MvcHtmlString(ts.Days + " days ago");
+                return HtmlString(ts.Days + " days ago");
             }
             if (delta < 12 * MONTH)
             {
-                int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
-                return new MvcHtmlString(months <= 1 ? "one month ago" : months + " months ago");
+                var months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
+                return HtmlString(months <= 1 ? "one month ago" : months + " months ago");
             }
-            else
-            {
-                int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
-                return new MvcHtmlString(years <= 1 ? "one year ago" : years + " years ago");
-            }
+            
+            var years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
+            return HtmlString(years <= 1 ? "one year ago" : years + " years ago");
+        }
 
+        private static IHtmlString HtmlString(string value)
+        {
+            return value.ToHtmlString();
         }
     }
 }

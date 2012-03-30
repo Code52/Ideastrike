@@ -65,17 +65,17 @@ namespace Ideastrike.Nancy.Models.Repositories
 
         public void Dispose()
         {
-            if (Context != null)
-            {
-                try
-                {
-                    Context.Dispose();
-                }
-                catch(Exception ex)
-                {
+            //if (Context != null)
+            //{
+            //    try
+            //    {
+            //        Context.Dispose();
+            //    }
+            //    catch(Exception ex)
+            //    {
                     
-                }
-            }
+            //    }
+            //}
         }
     }
 }

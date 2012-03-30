@@ -1,5 +1,7 @@
 ﻿@using Nancy;
 @using Ideastrike.Nancy.Helpers;
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+              
 <!doctype html>
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
@@ -54,28 +56,32 @@
     <div class="topbar" data-dropdown="dropdown">
         <div class="fill">
             <div class="container">
-                <a class="brand" href="/"></a>
+                <a class="brand" href="/"><h1>Ideastrike</h1></a>
                 <ul class="nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/idea/new">New Idea</a></li>
-                    <li><a href="/inbox">Inbox</a></li>
+                    <li><a href="/">@Ideastrike.Nancy.Localization.Strings.Layout_Home</a></li>
+                    <li><a href="/idea/new">@Ideastrike.Nancy.Localization.Strings.Layout_NewIdea</a></li>
+                    @*<li><a href="/inbox">Inbox</a></li>*@
                 </ul>
                 <div class="pull-right loggedin">
                 @if(Model.IsLoggedIn)
                 {
                     <ul class="nav secondary-nav">
                         <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" style="min-width:160px;">@*<img src="@@Model.GravatarUrl" />*@ @Model.UserName </a>
+                          <a href="#" class="dropdown-toggle" style="min-width:40px;">@*<img src="@Model.GravatarUrl" />*@@Model.UserName</a>
                           <ul class="dropdown-menu">
-                            <li><a href="/profile/edit">Profile</a></li>
-                            <li><a href="/logout">Log out</a></li>
+                              <li><a href="/profile">Profile</a></li>
+                              @if (Model.Claims != null && Model.Claims.Contains("admin"))
+                              {
+                                  <li><a href="/admin/">@Ideastrike.Nancy.Localization.Strings.Layout_AdminPanel</a></li>
+                              }
+                            <li><a href="/logout">@Ideastrike.Nancy.Localization.Strings.Layout_LogOut</a></li>
                           </ul>
                         </li>
                     </ul>
                 }
                 else
                 { 
-                    <ul class="nav secondary-nav"><li><a class="janrainEngage" href="#">Sign In</a></li></ul>
+                    <ul class="nav secondary-nav"><li><a class="janrainEngage" href="#">@Ideastrike.Nancy.Localization.Strings.Layout_SignIn</a></li></ul>
                 }
                 </div>
             </div>
@@ -91,7 +97,6 @@
         </div>
         <footer>
             <p><a href="https://github.com/code52/ideastrike">Powered by Ideastrike</a></p>
-            <p><a href="/admin/">Admin Panel</a></p>
         </footer>
     </div>
     <!-- /container -->

@@ -1,25 +1,23 @@
-using System;
-using System.Web;
-using System.Web.Mvc;
+using Nancy.ViewEngines.Razor;
 
 namespace Ideastrike.Nancy.Helpers
 {
-    public static partial class StatusColorHelper
+    public static class StatusColorHelper
     {
-        public static IHtmlString ColorClass(string Status)
+        public static IHtmlString ColorClass(string status)
         {
-            switch (Status)
+            switch (status)
             {
                 case "New":
-                    return new MvcHtmlString("warning");
+                    return "warning".ToHtmlString();
                 case "Active":
-                    return new MvcHtmlString("success");
+                    return "success".ToHtmlString();
                 case "Declined":
-                    return new MvcHtmlString("important");
+                    return "important".ToHtmlString();
                 case "Completed":
-                    return new MvcHtmlString("notice");
+                    return "notice".ToHtmlString();
                 default:
-                    return new MvcHtmlString(String.Empty);
+                    return string.Empty.ToHtmlString();
             }
         }
     }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
+using Ideastrike.Nancy.Localization;
 using Ideastrike.Nancy.Models;
 using Nancy;
 using System.Net;
@@ -9,13 +11,13 @@ namespace Ideastrike.Nancy.Modules
 {
     public class LoginModule : NancyModule
     {
-        public const string apikey = "46ad5595cb74064655718a434126ef9f11a51a70";
-
+        public string Apikey;
         private IUserRepository _user;
 
         public LoginModule(IUserRepository userRepository)
         {
             _user = userRepository;
+            Apikey = ConfigurationManager.AppSettings["JanrainKey"];
 
             Post["/login/token"] = x =>
             {
@@ -24,19 +26,19 @@ namespace Ideastrike.Nancy.Modules
                         View["Login/Error",
                             new
                                 {
-                                    Title = "Login Error",
-                                    Message = "Bad response from login provider - could not find login token."
+                                    Title = Strings.LoginModule_LoginError,
+                                    Message = Strings.LoginModule_BadResponse_NoToken
                                 }];
 
-                var response = new WebClient().DownloadString(string.Format("https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}",apikey, Request.Form.token));
+                var response = new WebClient().DownloadString(string.Format("https://rpxnow.com/api/v2/auth_info?apiKey={0}&token={1}",Apikey, Request.Form.token));
 
                 if (string.IsNullOrWhiteSpace(response))
                     return
                         View["Login/Error",
                             new
                                 {
-                                    Title = "Login Error",
-                                    Message = "Bad response from login provider - could not find user."
+                                    Title = Strings.LoginModule_LoginError,
+                                    Message = Strings.LoginModule_BadResponse_NoUser
                                 }];
 
                 var j = JsonConvert.DeserializeObject<dynamic>(response);
@@ -46,8 +48,8 @@ namespace Ideastrike.Nancy.Modules
                         View["Login/Error",
                             new
                                 {
-                                    Title = "Login Error",
-                                    Message = "Bad response from login provider."
+                                    Title = Strings.LoginModule_LoginError,
+                                    Message = Strings.LoginModule_BadResponse
                                 }];
 
                 var userIdentity = j.profile.identifier.ToString();
@@ -68,6 +70,10 @@ namespace Ideastrike.Nancy.Modules
                                     Github = (!string.IsNullOrEmpty(username)) ? username : "",
                                     IsActive = true,
                                 };
+
+                    if (!_user.GetAll().Any())
+                        _user.AddRole(u, "Admin");
+
                     if (j.profile.photo != null)
                         u.AvatarUrl = j.profile.photo.ToString();
 

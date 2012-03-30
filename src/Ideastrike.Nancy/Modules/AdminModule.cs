@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Ideastrike.Nancy.Models;
@@ -20,6 +19,8 @@ namespace Ideastrike.Nancy.Modules
             : base("/admin")
         {
             this.RequiresAuthentication();
+            this.RequiresValidatedClaims(c => c.Contains("admin"));
+
             _settings = settings;
             _users = users;
             _ideas = ideas;
@@ -27,7 +28,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.Title));
+                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.SiteTitle));
                 m.Name = _settings.Name;
                 m.WelcomeMessage = _settings.WelcomeMessage;
                 m.HomePage = _settings.HomePage;
@@ -37,7 +38,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/users"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.Title));
+                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.SiteTitle));
                 m.Name = _settings.Name;
                 m.WelcomeMessage = _settings.WelcomeMessage;
                 m.HomePage = _settings.HomePage;
@@ -48,7 +49,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/moderation"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.Title));
+                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.SiteTitle));
                 m.Name = _settings.Name;
                 m.WelcomeMessage = _settings.WelcomeMessage;
                 m.HomePage = _settings.HomePage;
@@ -58,11 +59,12 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/settings"] = _ =>
             {
-                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.Title));
-                m.Name = _settings.Name;
+                var m = Context.Model(string.Format("Admin - {0}", (string)_settings.SiteTitle));
+                m.SiteTitle = _settings.SiteTitle;
                 m.WelcomeMessage = _settings.WelcomeMessage;
                 m.HomePage = _settings.HomePage;
                 m.GAnalyticsKey = _settings.GAnalyticsKey;
+                m.MaxThumbnailWidth = settings.MaxThumbnailWidth;
 
                 return View["Admin/Settings", m];
             };
@@ -70,19 +72,12 @@ namespace Ideastrike.Nancy.Modules
             Post["/settings"] = _ =>
             {
                 _settings.WelcomeMessage = Request.Form.welcomemessage;
-                _settings.Title = Request.Form.title;
+                _settings.SiteTitle = Request.Form.sitetitle;
                 _settings.Name = Request.Form.yourname;
                 _settings.HomePage = Request.Form.homepage;
                 _settings.GAnalyticsKey = Request.Form.analyticskey;
-                try
-                {
-                    dbContext.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    var y = ex.Message;
-                }
-
+                settings.MaxThumbnailWidth = Request.Form.maxthumbnailwidth;
+               
                 return Response.AsRedirect("/admin/settings");
             };
 

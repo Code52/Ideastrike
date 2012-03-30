@@ -6,6 +6,15 @@ Once an idea gets enough interest to kick start a project, the other systems tha
 
 The existing tools out there are decent at what they do, but we want something more customisable and extensible.
 
+### Features
+
+ * The website uses NancyFx - hosted on ASP.NET but can be supported on any OWIN-capable host.
+ * User authentication via Janrain (RPXNow) - use Google/Facebook/Twitter to sign in
+ * Markdown support just about everywhere on the site. And a preview mode too, using Showdown.
+ * Twitter Bootstrap has been used as the baseline for our site theme.
+ * Image Uploading using the jQuery File Upload plugin.
+ * AppHarbor support 
+
 ### Getting started
 
 **Getting started with Git and GitHub**
@@ -19,9 +28,9 @@ Once you're familiar with Git and GitHub, clone the repository and run the ```.\
 ### Discussing ideas 
 
 * [Trello Board](https://trello.com/board/ideastrike/4f137b417201526045146b8a) - add ideas, or claim an idea and start working on it!
-* [JabbR Chatroom](http://jabbr.net/#/rooms/code52) - discuss things in real-time with people all over the world!
+* [JabbR Chatroom](http://jabbr.net/#/rooms/Ideastrike) - discuss things in real-time with people all over the world!
 
 ### Libraries used
 
  * NancyFx
- * Entity Framework 4.1 Magic Unicorn Edition
+ * Entity Framework 4.3-beta1 - with Code Migrations

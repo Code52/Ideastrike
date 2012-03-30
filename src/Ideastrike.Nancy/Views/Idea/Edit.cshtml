@@ -1,20 +1,32 @@
-﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
 @{ var idea = Model.Idea; }
 <div class="row">
     <div class="span10">
-        <h2>Edit an idea</h2>
+        <div class="fill">
+            @{
+                var displayError = Model.Errors ? "block" : "none";
+            }
+
+            <div class="alert-message error" style="display: @displayError">
+                <a class="close" href="#">&times;</a>
+                <p>
+                    @Ideastrike.Nancy.Localization.Strings.Idea_Edit_Error
+                </p>
+            </div>
+        </div>
+        <h2>@Ideastrike.Nancy.Localization.Strings.Idea_Edit</h2>
         <form action="/idea/@idea.Id/edit" method="POST">
         <div class="clearfix">
-            <label for="Title">Title</label>
+            <label for="title">@Ideastrike.Nancy.Localization.Strings.Idea_Title</label>
             <div class="input">
-                <input id="Title" name="Title" type="text" value="@idea.Title" />
+                <input id="title" name="title" type="text" value="@idea.Title" />
             </div>
         </div>
         <div class="clearfix">
-            <label for="Status">Status</label>
+            <label for="Status">@Ideastrike.Nancy.Localization.Strings.Idea_Status</label>
             <div class="input">
                 <select id="Status" name="Status">
                 @foreach (string statusChoice in Model.StatusChoices)
@@ -30,7 +42,7 @@
             </div>
         </div>
         <div class="clearfix">
-            <label for="Description">Description</label>
+            <label for="Description">@Ideastrike.Nancy.Localization.Strings.Idea_Description</label>
             <div class="input">
                 <div class="options">
                     <button type="button"
@@ -53,7 +65,7 @@
                 <div id="new-idea-view"></div>
             </div>
         </div>
-        <label for="Images">Images</label>
+        <label for="Images">@Ideastrike.Nancy.Localization.Strings.Idea_Images</label>
         <div class="input">
             <div class="container">
                 <div id="fileupload" enctype="multipart/form-data">
@@ -62,7 +74,7 @@
                             <div class="progressbar fileupload-progressbar fade">
                                 <div style="width: 0%;"></div>
                             </div>
-                            <span class="btn success fileinput-button"><span>Add image</span>
+                            <span class="btn success fileinput-button"><span>@Ideastrike.Nancy.Localization.Strings.Idea_Edit_AddImages</span>
                                 <input type="file" name="files[]" multiple="multiple" />
                             </span>
                         </div>
@@ -86,11 +98,11 @@
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <a class="btn primary next">Next</a> <a class="btn info prev">Previous</a> <a class="btn success download" target="_blank">Download</a>
+                <a class="btn primary next">@Ideastrike.Nancy.Localization.Strings.Idea_Next</a> <a class="btn info prev">@Ideastrike.Nancy.Localization.Strings.Idea_Previous</a> <a class="btn success download" target="_blank">@Ideastrike.Nancy.Localization.Strings.Idea_Download</a>
             </div>
         </div>
         <div class="actions">
-            <button type="submit" class="btn primary" id="submitButton">Submit</button>
+            <button type="submit" class="btn primary" id="submitButton">@Ideastrike.Nancy.Localization.Strings.Idea_Submit</button>
         </div>
         </form>
     </div>
@@ -124,8 +136,8 @@
         emptyResult: 'Empty file upload result'
     };
     </script>
-    @Html.Partial("Shared/Templates/upload.html")
-    @Html.Partial("Shared/Templates/download.html")
+    @Html.Partial("Shared/Templates/upload.cshtml")
+    @Html.Partial("Shared/Templates/download.cshtml")
     <script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
     <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
@@ -134,6 +146,7 @@
     <script src="@Url.Content("~/Resources/jquery.iframe-transport.js")"></script>
     <script src="@Url.Content("~/Resources/jquery.fileupload.js")"></script>
     <script src="@Url.Content("~/Resources/jquery.fileupload-ui.js")"></script>
+    <script src="@Url.Content("~/Resources/Validation/newidea.js")"></script>
     <script type="text/javascript">
         $('#fileupload').fileupload({
             url: '/idea/uploadimage',

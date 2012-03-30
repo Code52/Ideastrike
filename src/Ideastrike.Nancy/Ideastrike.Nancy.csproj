@@ -41,11 +41,9 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\packages\Autofac.2.5.2.830\lib\NET40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Devtalk.EF.CodeFirst">
-      <HintPath>..\packages\EFCodeFirst.CreateTablesOnly.1.0.2\lib\Devtalk.EF.CodeFirst.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.4.3.0-beta1\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownDeep">
       <HintPath>..\packages\MarkdownDeep.NET.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
@@ -55,27 +53,34 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy">
-      <HintPath>..\packages\Nancy.0.9.0\lib\net40\Nancy.dll</HintPath>
+    <Reference Include="Nancy, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.0.10.0\lib\net40\Nancy.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Authentication.Forms">
-      <HintPath>..\packages\Nancy.Authentication.Forms.0.9.0\lib\net40\Nancy.Authentication.Forms.dll</HintPath>
+    <Reference Include="Nancy.Authentication.Forms, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.Authentication.Forms.0.10.0\lib\net40\Nancy.Authentication.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Bootstrappers.Autofac">
-      <HintPath>..\packages\Nancy.Bootstrappers.Autofac.0.9.0\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
+    <Reference Include="Nancy.Bootstrappers.Autofac, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.Bootstrappers.Autofac.0.10.0\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Hosting.Aspnet">
-      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.9.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+    <Reference Include="Nancy.Hosting.Aspnet, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.10.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.ViewEngines.Razor">
-      <HintPath>..\packages\Nancy.Viewengines.Razor.0.9.0\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+    <Reference Include="Nancy.ViewEngines.Razor, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.Viewengines.Razor.0.10.0\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -87,17 +92,20 @@
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Nancy.Viewengines.Razor.0.9.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Nancy.Viewengines.Razor.0.10.0\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="WebActivator">
-      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    <Reference Include="WebActivator, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivator.1.5\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.0.1566\lib\xunit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -135,24 +143,23 @@
     <Content Include="Resources\showdown.js" />
     <Content Include="Resources\social.js" />
     <Content Include="Resources\style.css" />
-    <Content Include="Views\Shared\Templates\comment.html" />
-    <Content Include="Views\Shared\Templates\github.html" />
-    <Content Include="Views\Shared\Templates\download.html" />
-    <Content Include="Views\Shared\Templates\upload.html" />
+    <Content Include="Resources\Validation\newidea.js" />
+    <None Include="Views\Shared\Templates\comment.cshtml" />
+    <None Include="Views\Shared\Templates\github.cshtml" />
+    <None Include="Views\Shared\Templates\download.cshtml" />
+    <None Include="Views\Shared\Templates\upload.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AppHarborDatabaseInitializer.cs" />
-    <Compile Include="App_Start\DatabaseSelector.cs" />
-    <Compile Include="DevelopmentDatabaseInitializer.cs" />
     <Compile Include="Helpers\ElmahErrorHandler.cs" />
     <Compile Include="Helpers\StatusColorHelper.cs" />
     <Compile Include="Helpers\GravatarExtensions.cs" />
@@ -162,7 +169,28 @@
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="Helpers\FormsAuthentication.cs" />
     <Compile Include="Helpers\FormsAuthenticationConfiguration.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
+    <Compile Include="Localization\Strings.fi.Designer.cs">
+      <DependentUpon>Strings.fi.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Localization\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201201260958254_VoteTime.cs" />
+    <Compile Include="Migrations\201201260958254_VoteTime.Designer.cs">
+      <DependentUpon>201201260958254_VoteTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201201270809242_Claims.cs" />
+    <Compile Include="Migrations\201201270809242_Claims.Designer.cs">
+      <DependentUpon>201201270809242_Claims.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\IdeastrikeDbConfiguration.cs" />
+    <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Repositories\IUserRepository.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="IdeastrikeBootstrapper.cs" />
@@ -171,6 +199,7 @@
     <Compile Include="Models\Repositories\IGenericRepository.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\UserClaim.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
     <Compile Include="Models\ViewModels\CommentViewModel.cs" />
     <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
@@ -202,11 +231,10 @@
     <Compile Include="Modules\FeatureModule.cs" />
     <Compile Include="Modules\IdeaModule.Secured.cs" />
     <Compile Include="Modules\SelectedTab.cs" />
-    <Compile Include="Modules\UserModule.cs" />
+    <Compile Include="Modules\ProfileModule.cs" />
     <Compile Include="Modules\LoginModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\IdeaModule.cs" />
-    <Compile Include="ProductionDatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Settings.cs" />
   </ItemGroup>
@@ -217,22 +245,32 @@
     <Content Include="Resources\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Layout.cshtml" />
+    <Content Include="Views\Shared\Layout.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Comment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Idea\Index.cshtml" />
+    <Content Include="Views\Idea\Index.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\404.cshtml" />
+    <Content Include="Views\Shared\404.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Feature\Index.cshtml" />
@@ -241,10 +279,14 @@
     <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Idea\New.cshtml" />
+    <Content Include="Views\Idea\New.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Idea\Edit.cshtml" />
+    <Content Include="Views\Idea\Edit.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
@@ -258,6 +300,18 @@
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\Uservoice.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Strings.fi.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.fi.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -281,6 +335,10 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
