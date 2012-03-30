@@ -77,9 +77,9 @@ namespace Ideastrike.Nancy.Modules
                 {
                     var drawingImage = System.Drawing.Image.FromStream(memoryStream);
                     int thumbWidth = (int)parameters.width;
-                    if (thumbWidth > settings.MaxThumbnailWidth)
+                    if (thumbWidth > int.Parse(_settings.MaxThumbnailWidth))
                     {
-                        thumbWidth = settings.MaxThumbnailWidth;
+                        thumbWidth = int.Parse(_settings.MaxThumbnailWidth);
                     }
                     var thumb = drawingImage.ToThumbnail(thumbWidth);
                     using (var thumbnailStream = new MemoryStream())

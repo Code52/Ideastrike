@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Ideastrike.Nancy.Models;
@@ -64,7 +65,7 @@ namespace Ideastrike.Nancy.Modules
                 m.WelcomeMessage = _settings.WelcomeMessage;
                 m.HomePage = _settings.HomePage;
                 m.GAnalyticsKey = _settings.GAnalyticsKey;
-                m.MaxThumbnailWidth = settings.MaxThumbnailWidth;
+                m.MaxThumbnailWidth = _settings.MaxThumbnailWidth;
 
                 return View["Admin/Settings", m];
             };
@@ -76,7 +77,7 @@ namespace Ideastrike.Nancy.Modules
                 _settings.Name = Request.Form.yourname;
                 _settings.HomePage = Request.Form.homepage;
                 _settings.GAnalyticsKey = Request.Form.analyticskey;
-                settings.MaxThumbnailWidth = Request.Form.maxthumbnailwidth;
+                _settings.MaxThumbnailWidth = Request.Form.maxthumbnailwidth;
                
                 return Response.AsRedirect("/admin/settings");
             };

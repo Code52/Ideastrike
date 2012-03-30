@@ -10,6 +10,7 @@ using Ideastrike.Nancy;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Moq;
+using Nancy;
 using Nancy.Responses;
 using Nancy.Testing;
 using Nancy.ViewEngines;
