@@ -1,5 +1,21 @@
 ## Ideastrike
 
+# This repository is temporarily frozen (think carbonite)
+
+After much deliberation and agonizing, we have decided to take a fresh start to Ideastrike and switch to using MVC4. 
+
+The repository is [here](https://github.com/shiftkey/thoughtstrike) and once we are happy with the transition we will bring the changes across to here.
+
+So if you would like to add features to Ideastrike, please use the other repository. We will not be accepting new pull requests on this repository in the short term.
+
+Regards,
+
+@shiftkey
+
+
+
+### About
+
 We want a tool where people can suggest ideas and others can actively refine and enhance the ideas over time. 
 
 Once an idea gets enough interest to kick start a project, the other systems that we use  - at this point in time GitHub and Trello - should integrate nicely to automate the mundane tasks of project management.
