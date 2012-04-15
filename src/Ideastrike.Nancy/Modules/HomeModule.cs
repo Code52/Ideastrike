@@ -11,9 +11,9 @@ namespace Ideastrike.Nancy.Modules
     {
         private readonly IIdeaRepository _ideas;
         private readonly IUserRepository _users;
-        private readonly ISettingsRepository _settings;
+        private readonly dynamic _settings;
 
-        public HomeModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings)
+        public HomeModule(IIdeaRepository ideas, IUserRepository users, Settings settings)
         {
             _ideas = ideas;
             _users = users;
@@ -43,7 +43,7 @@ namespace Ideastrike.Nancy.Modules
             }
 
 
-            var m = Context.Model(_settings.SiteTitle);
+            var m = Context.Model((string)_settings.SiteTitle);
             m.Name = _settings.Name;
             m.WelcomeMessage = _settings.WelcomeMessage;
             m.Ideas = ideas;

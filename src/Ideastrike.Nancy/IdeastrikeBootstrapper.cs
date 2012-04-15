@@ -56,6 +56,10 @@ namespace Ideastrike.Nancy
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
+            builder.RegisterType<Settings>()
+                .AsSelf()
+                .InstancePerDependency();
+
             builder.Update(existingContainer.ComponentRegistry);
         }
 

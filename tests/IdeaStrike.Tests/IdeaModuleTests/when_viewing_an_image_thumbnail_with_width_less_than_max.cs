@@ -22,7 +22,7 @@ namespace IdeaStrike.Tests.IdeaModuleTests
                 IdeaId = 1
             };
             _Images.Setup(i => i.Get(1)).Returns(testImage);
-            _Settings.SetupGet(s => s.MaxThumbnailWidth).Returns(1000);
+            _Settings.Setup(s => s.Get("MaxThumbnailWidth")).Returns("1000");
             Get("/idea/imagethumb/1/500");
         }
 

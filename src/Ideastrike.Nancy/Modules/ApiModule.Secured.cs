@@ -1,16 +1,20 @@
 ﻿using System;
-using System.Linq;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
 using Nancy.ModelBinding;
-using Nancy.Security;
 
 namespace Ideastrike.Nancy.Modules
 {
     public class ApiSecuredModule : NancyModule
     {
-        public ApiSecuredModule(IIdeaRepository ideas, ISettingsRepository settings) : base("/api") {
+        private dynamic _settings;
+
+        public ApiSecuredModule(IIdeaRepository ideas, Settings settings) : base("/api")
+        {
+
+            _settings = settings;
+
             this.Before.AddItemToEndOfPipeline(ctx => {
                 if (ctx.CurrentUser == null)
                     return HttpStatusCode.Unauthorized;
@@ -25,7 +29,7 @@ namespace Ideastrike.Nancy.Modules
                     Description = model.description,
                     Time = DateTime.UtcNow,
                     Author = (User)Context.CurrentUser,
-                    Status = settings.IdeaStatusDefault
+                    Status = _settings.IdeaStatusDefault
                 };
                 ideas.Add(idea);
 

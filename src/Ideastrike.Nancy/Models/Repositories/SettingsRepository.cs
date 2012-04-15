@@ -5,7 +5,6 @@ namespace Ideastrike.Nancy.Models.Repositories
 {
     public class SettingsRepository : ISettingsRepository
     {
-
         private readonly IdeastrikeContext db;
 
         public SettingsRepository(IdeastrikeContext db)
