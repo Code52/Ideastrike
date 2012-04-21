@@ -13,8 +13,8 @@ namespace Ideastrike.Nancy.Modules
     {
         private readonly IIdeaRepository _ideas;
         private readonly IUserRepository _users;
-        private readonly ISettingsRepository _settings;
-        public IdeaModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings, IImageRepository imageRepository)
+        private readonly dynamic _settings;
+        public IdeaModule(IIdeaRepository ideas, IUserRepository users, Settings settings, IImageRepository imageRepository)
             : base("/idea")
         {
             _ideas = ideas;
@@ -37,7 +37,7 @@ namespace Ideastrike.Nancy.Modules
                 }
 
                 var viewModel = new IdeaViewModel(idea);
-                var model = Context.Model(string.Format("{0} - {1}", idea.Title, _settings.SiteTitle));
+                var model = Context.Model(string.Format("{0} - {1}", idea.Title, (string)_settings.SiteTitle));
                 model.Idea = viewModel;
                 return View["Idea/Index", model];
             };
@@ -77,9 +77,9 @@ namespace Ideastrike.Nancy.Modules
                 {
                     var drawingImage = System.Drawing.Image.FromStream(memoryStream);
                     int thumbWidth = (int)parameters.width;
-                    if (thumbWidth > settings.MaxThumbnailWidth)
+                    if (thumbWidth > int.Parse(_settings.MaxThumbnailWidth))
                     {
-                        thumbWidth = settings.MaxThumbnailWidth;
+                        thumbWidth = int.Parse(_settings.MaxThumbnailWidth);
                     }
                     var thumb = drawingImage.ToThumbnail(thumbWidth);
                     using (var thumbnailStream = new MemoryStream())

@@ -14,10 +14,10 @@ namespace Ideastrike.Nancy.Modules
     {
         private readonly IIdeaRepository _ideas;
         private readonly IUserRepository _users;
-        private readonly ISettingsRepository _settings;
+        private readonly dynamic _settings;
         private readonly IImageRepository _imageRepository;
 
-        public IdeaSecuredModule(IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings, IImageRepository imageRepository)
+        public IdeaSecuredModule(IIdeaRepository ideas, IUserRepository users, Settings settings, IImageRepository imageRepository)
             : base("/idea")
         {
             _ideas = ideas;
@@ -29,7 +29,7 @@ namespace Ideastrike.Nancy.Modules
 
             Get["/new"] = _ =>
             {
-                var m = Context.Model(string.Format("New Idea - {0}", _settings.SiteTitle));
+                var m = Context.Model(string.Format("New Idea - {0}", (string)_settings.SiteTitle));
                 m.Ideas = _ideas.GetAll();
                 m.Errors = false;
 
@@ -46,7 +46,7 @@ namespace Ideastrike.Nancy.Modules
                 int id = parameters.id;
                 var idea = _ideas.Get(id);
 
-                var m = Context.Model(string.Format(Strings.IdeaSecuredModule_EditIdea, idea.Title, _settings.SiteTitle));
+                var m = Context.Model(string.Format(Strings.IdeaSecuredModule_EditIdea, idea.Title, (string)_settings.SiteTitle));
                 m.PopularIdeas = _ideas.GetAll();
                 m.Idea = idea;
                 m.StatusChoices = _settings.IdeaStatusChoices.Split(',');
@@ -116,7 +116,7 @@ namespace Ideastrike.Nancy.Modules
                                 Time = DateTime.UtcNow,
                                 Title = Request.Form.Title,
                                 Description = Request.Form.Description,
-                                Status = settings.IdeaStatusDefault
+                                Status = _settings.IdeaStatusDefault
                             };
 
                 IEnumerable<string> keys = Context.Request.Form;

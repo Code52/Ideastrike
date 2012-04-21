@@ -1,12 +1,12 @@
 using System;
 using System.Data.Objects.SqlClient;
+using System.IO;
 using System.Linq;
+using Ideastrike.Nancy.Helpers;
 using Ideastrike.Nancy.Models;
 using Ideastrike.Nancy.Models.Repositories;
 using Nancy;
 using Newtonsoft.Json;
-using System.IO;
-using Ideastrike.Nancy.Helpers;
 
 namespace Ideastrike.Nancy.Modules
 {
@@ -16,8 +16,13 @@ namespace Ideastrike.Nancy.Modules
     // make unannounced changes to the public surface.
     public class ApiModule : NancyModule
     {
-        public ApiModule(IdeastrikeContext db, IIdeaRepository ideas, IUserRepository users, ISettingsRepository settings)
+        private dynamic _settings;
+
+        public ApiModule(IdeastrikeContext db, IIdeaRepository ideas, IUserRepository users, Settings settings)
             : base("/api") {
+            
+            _settings = settings;
+
             Get["/ideas"] = _ => {
                 return Response.AsJson(db.Ideas.Select(idea =>
                     new {
